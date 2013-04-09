@@ -12,7 +12,7 @@ scene2 = main.Scene(\
 	description="You're dead.",
 	name='Death')
 action1 = main.Action(\
-	name='Go south',
+	name='go south',
 	effectsIfTrue=[main.Effect(effects.goToScene, game, scene2)],
 	effectsIfFalse=[main.Effect(effects.cmdOutputText, "You suck!")],
 	conditions=[main.Condition(conditionType=conditions.dictionary.get('equals'), leftHandSide=game.globalResources[0].value, rightHandSide=10)])
@@ -20,8 +20,7 @@ scene1.actions.append(action1)
 game.startingScene = scene1
 
 # Initialise
-if game.currentScene == None:
-	effects.goToScene(game, game.startingScene)
+effects.goToScene(game, game.startingScene)
 
 # Main game loop
 while (True):
