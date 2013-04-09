@@ -1,8 +1,5 @@
-# External (Output) effects
 def cmdOutputText(text):
 	print text
-
-# Internal effects
 def editResource(resource, value):
 	resource.value = value
 def goToScene(hierarchy, scene):
@@ -11,3 +8,10 @@ def goToScene(hierarchy, scene):
 def outputSceneActions(scene):
 	possibleActions = [ action.name for action in scene.actions ]
 	cmdOutputText(str(possibleActions))
+
+dictionary = {
+	'cmdOutputText'			: cmdOutputText,
+	'editResource'			: editResource,
+	'goToScene'				: goToScene,
+	'outputSceneActions'	: outputSceneActions,
+}

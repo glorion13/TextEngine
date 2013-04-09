@@ -1,6 +1,3 @@
-import conditionTypes
-import effects
-
 class Hierarchy:
 	def __init__(self):
 		self.startingScene = None
@@ -43,13 +40,11 @@ class Condition:
 		self.leftHandSide = leftHandSide
 		self.rightHandSide = rightHandSide
 	def evaluate(self):
-		return conditionTypes.dictionary.get(self.conditionType) \
-		(self.leftHandSide, self.rightHandSide)
+		return self.conditionType(self.leftHandSide, self.rightHandSide)
 
 class Effect:
-	def __init__(self, effectFunction):
+	def __init__(self, effectFunction, *args):
 		self.effectFunction = effectFunction
+		self.args = args
 	def resolve(self):
-		exec(self.effectFunction)
-
-game = Hierarchy()
+		self.effectFunction(*self.args)
