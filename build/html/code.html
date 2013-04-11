@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Documentation for the Code &mdash; TAINT 1.0 documentation</title>
+    <title>Source code documentation &mdash; TAINT 1.0 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -48,121 +48,18 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="module-statemachine">
-<span id="documentation-for-the-code"></span><h1>Documentation for the Code<a class="headerlink" href="#module-statemachine" title="Permalink to this headline">¶</a></h1>
-<p>A finite state machine specialized for regular-expression-based text filters,
-this module defines the following classes:</p>
+  <div class="section" id="module-core.components">
+<span id="source-code-documentation"></span><h1>Source code documentation<a class="headerlink" href="#module-core.components" title="Permalink to this headline">¶</a></h1>
+<p>The core of the system, which is used as the basis for both the Python-based editor and the
+Python-based interpreter. This module defines the following classes:</p>
 <ul class="simple">
-<li><cite>StateMachine</cite>, a state machine</li>
-<li><cite>State</cite>, a state superclass</li>
-<li><cite>StateMachineWS</cite>, a whitespace-sensitive version of <cite>StateMachine</cite></li>
-<li><cite>StateWS</cite>, a state superclass for use with <cite>StateMachineWS</cite></li>
-<li><cite>SearchStateMachine</cite>, uses <cite>re.search()</cite> instead of <cite>re.match()</cite></li>
-<li><cite>SearchStateMachineWS</cite>, uses <cite>re.search()</cite> instead of <cite>re.match()</cite></li>
-<li><cite>ViewList</cite>, extends standard Python lists.</li>
-<li><cite>StringList</cite>, string-specific ViewList.</li>
+<li><cite>Hierarchy</cite>, which represents the hierarchical structure of the game (interactive novel or text adventure).</li>
+<li><cite>Resource</cite>, which represents global information, such as the date or the weather in the fictional world, or values like the health state of the player.</li>
+<li><cite>Scene</cite>, which represents a location or a state in the fictional world.</li>
+<li><cite>Action</cite>, which represents an action that can be triggered by the player. An Action consists of a <cite>Condition</cite> and an <cite>Effect</cite>. The <cite>Effect</cite> is only resolved if the condition is True. An action can be visible (in the case of an interactive novel) or invisible (in the case of a text adventure). In fact, within the same game there might be cases when Actions are visible and cases when actions are invisible.</li>
+<li><cite>Condition</cite>, which The Condition class represents a logical evaluation which can be part of an Action. When evaluated it returns a value of True or False.</li>
+<li><cite>Effect</cite>, which represents the outcome of a given Action that the player performs. An Effect can be anything from changing the scene, interacting with the world or even losing the game.</li>
 </ul>
-<p>Exception classes:</p>
-<ul class="simple">
-<li><cite>StateMachineError</cite></li>
-<li><cite>UnknownStateError</cite></li>
-<li><cite>DuplicateStateError</cite></li>
-<li><cite>UnknownTransitionError</cite></li>
-<li><cite>DuplicateTransitionError</cite></li>
-<li><cite>TransitionPatternNotFound</cite></li>
-<li><cite>TransitionMethodNotFound</cite></li>
-<li><cite>UnexpectedIndentationError</cite></li>
-<li><cite>TransitionCorrection</cite>: Raised to switch to another transition.</li>
-<li><cite>StateCorrection</cite>: Raised to switch to another state &amp; transition.</li>
-</ul>
-<p>Functions:</p>
-<ul class="simple">
-<li><cite>string2lines()</cite>: split a multi-line string into a list of one-line strings</li>
-</ul>
-<div class="section" id="how-to-use-this-module">
-<h2>How To Use This Module<a class="headerlink" href="#how-to-use-this-module" title="Permalink to this headline">¶</a></h2>
-<p>(See the individual classes, methods, and attributes for details.)</p>
-<ol class="arabic">
-<li><p class="first">Import it: <tt class="docutils literal"><span class="pre">import</span> <span class="pre">statemachine</span></tt> or <tt class="docutils literal"><span class="pre">from</span> <span class="pre">statemachine</span> <span class="pre">import</span> <span class="pre">...</span></tt>.
-You will also need to <tt class="docutils literal"><span class="pre">import</span> <span class="pre">re</span></tt>.</p>
-</li>
-<li><p class="first">Derive a subclass of <cite>State</cite> (or <cite>StateWS</cite>) for each state in your state
-machine:</p>
-<div class="highlight-python"><pre>class MyState(statemachine.State):</pre>
-</div>
-<p>Within the state&#8217;s class definition:</p>
-<ol class="loweralpha">
-<li><p class="first">Include a pattern for each transition, in <cite>State.patterns</cite>:</p>
-<div class="highlight-python"><pre>patterns = {'atransition': r'pattern', ...}</pre>
-</div>
-</li>
-<li><p class="first">Include a list of initial transitions to be set up automatically, in
-<cite>State.initial_transitions</cite>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">initial_transitions</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;atransition&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
-</pre></div>
-</div>
-</li>
-<li><p class="first">Define a method for each transition, with the same name as the
-transition pattern:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">atransition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">next_state</span><span class="p">):</span>
-    <span class="c"># do something</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>  <span class="c"># a list</span>
-    <span class="k">return</span> <span class="n">context</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">result</span>
-    <span class="c"># context, next_state may be altered</span>
-</pre></div>
-</div>
-<p>Transition methods may raise an <cite>EOFError</cite> to cut processing short.</p>
-</li>
-<li><p class="first">You may wish to override the <cite>State.bof()</cite> and/or <cite>State.eof()</cite> implicit
-transition methods, which handle the beginning- and end-of-file.</p>
-</li>
-<li><p class="first">In order to handle nested processing, you may wish to override the
-attributes <cite>State.nested_sm</cite> and/or <cite>State.nested_sm_kwargs</cite>.</p>
-<p>If you are using <cite>StateWS</cite> as a base class, in order to handle nested
-indented blocks, you may wish to:</p>
-<ul class="simple">
-<li>override the attributes <cite>StateWS.indent_sm</cite>,
-<cite>StateWS.indent_sm_kwargs</cite>, <cite>StateWS.known_indent_sm</cite>, and/or
-<cite>StateWS.known_indent_sm_kwargs</cite>;</li>
-<li>override the <cite>StateWS.blank()</cite> method; and/or</li>
-<li>override or extend the <cite>StateWS.indent()</cite>, <cite>StateWS.known_indent()</cite>,
-and/or <cite>StateWS.firstknown_indent()</cite> methods.</li>
-</ul>
-</li>
-</ol>
-</li>
-<li><p class="first">Create a state machine object:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">sm</span> <span class="o">=</span> <span class="n">StateMachine</span><span class="p">(</span><span class="n">state_classes</span><span class="o">=</span><span class="p">[</span><span class="n">MyState</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
-                  <span class="n">initial_state</span><span class="o">=</span><span class="s">&#39;MyState&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</li>
-<li><p class="first">Obtain the input text, which needs to be converted into a tab-free list of
-one-line strings. For example, to read text from a file called
-&#8216;inputfile&#8217;:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">input_string</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;inputfile&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-<span class="n">input_lines</span> <span class="o">=</span> <span class="n">statemachine</span><span class="o">.</span><span class="n">string2lines</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
-</pre></div>
-</div>
-</li>
-<li><p class="first">Run the state machine on the input text and collect the results, a list:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">results</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">input_lines</span><span class="p">)</span>
-</pre></div>
-</div>
-</li>
-<li><p class="first">Remove any lingering circular references:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">sm</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
-</pre></div>
-</div>
-</li>
-</ol>
-</div>
-</div>
-<div class="section" id="module-core.components">
-<span id="documentation-for-the-other-code"></span><h1>Documentation for the other Code<a class="headerlink" href="#module-core.components" title="Permalink to this headline">¶</a></h1>
-<p>Raise from within a transition method to switch to another state.
-Raise with one or two arguments: new state name, and an optional new
-transition name.</p>
 </div>
 
 
@@ -171,15 +68,6 @@ transition name.</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Documentation for the Code</a><ul>
-<li><a class="reference internal" href="#how-to-use-this-module">How To Use This Module</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-core.components">Documentation for the other Code</a></li>
-</ul>
-
   <h4>Previous topic</h4>
   <p class="topless"><a href="index.html"
                         title="previous chapter">Welcome to TAINT&#8217;s documentation!</a></p>

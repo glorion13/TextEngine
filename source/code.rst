@@ -1,7 +1,4 @@
-Documentation for the Code
+Source code documentation
 ===============================================================================
-.. automodule:: statemachine
 
-Documentation for the other Code
-===============================================================================
 .. automodule:: core.components
