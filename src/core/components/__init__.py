@@ -18,11 +18,12 @@ class Scene:
 		self.actions = []
 
 class Action:
-	def __init__(self, name='default action', effectsIfTrue=[], effectsIfFalse=[], conditions=[]):
+	def __init__(self, name='default action', effectsIfTrue=[], effectsIfFalse=[], conditions=[], visible=True):
 		self.name = name
 		self.conditions = conditions
 		self.effectsIfTrue = effectsIfTrue
 		self.effectsIfFalse = effectsIfFalse
+		self.visible = visible
 	def conditionsAreTrue(self):
 		booleanCount = sum( [condition.evaluate() for condition in self.conditions] )
 		return booleanCount == len(self.conditions)
