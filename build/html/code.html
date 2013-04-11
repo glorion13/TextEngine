@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Documentation for the Code &mdash; TAINT 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="TAINT 1.0 documentation" href="index.html" />
+    <link rel="prev" title="Welcome to TAINT’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to TAINT’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">TAINT 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-statemachine">
+<span id="documentation-for-the-code"></span><h1>Documentation for the Code<a class="headerlink" href="#module-statemachine" title="Permalink to this headline">¶</a></h1>
+<p>A finite state machine specialized for regular-expression-based text filters,
+this module defines the following classes:</p>
+<ul class="simple">
+<li><cite>StateMachine</cite>, a state machine</li>
+<li><cite>State</cite>, a state superclass</li>
+<li><cite>StateMachineWS</cite>, a whitespace-sensitive version of <cite>StateMachine</cite></li>
+<li><cite>StateWS</cite>, a state superclass for use with <cite>StateMachineWS</cite></li>
+<li><cite>SearchStateMachine</cite>, uses <cite>re.search()</cite> instead of <cite>re.match()</cite></li>
+<li><cite>SearchStateMachineWS</cite>, uses <cite>re.search()</cite> instead of <cite>re.match()</cite></li>
+<li><cite>ViewList</cite>, extends standard Python lists.</li>
+<li><cite>StringList</cite>, string-specific ViewList.</li>
+</ul>
+<p>Exception classes:</p>
+<ul class="simple">
+<li><cite>StateMachineError</cite></li>
+<li><cite>UnknownStateError</cite></li>
+<li><cite>DuplicateStateError</cite></li>
+<li><cite>UnknownTransitionError</cite></li>
+<li><cite>DuplicateTransitionError</cite></li>
+<li><cite>TransitionPatternNotFound</cite></li>
+<li><cite>TransitionMethodNotFound</cite></li>
+<li><cite>UnexpectedIndentationError</cite></li>
+<li><cite>TransitionCorrection</cite>: Raised to switch to another transition.</li>
+<li><cite>StateCorrection</cite>: Raised to switch to another state &amp; transition.</li>
+</ul>
+<p>Functions:</p>
+<ul class="simple">
+<li><cite>string2lines()</cite>: split a multi-line string into a list of one-line strings</li>
+</ul>
+<div class="section" id="how-to-use-this-module">
+<h2>How To Use This Module<a class="headerlink" href="#how-to-use-this-module" title="Permalink to this headline">¶</a></h2>
+<p>(See the individual classes, methods, and attributes for details.)</p>
+<ol class="arabic">
+<li><p class="first">Import it: <tt class="docutils literal"><span class="pre">import</span> <span class="pre">statemachine</span></tt> or <tt class="docutils literal"><span class="pre">from</span> <span class="pre">statemachine</span> <span class="pre">import</span> <span class="pre">...</span></tt>.
+You will also need to <tt class="docutils literal"><span class="pre">import</span> <span class="pre">re</span></tt>.</p>
+</li>
+<li><p class="first">Derive a subclass of <cite>State</cite> (or <cite>StateWS</cite>) for each state in your state
+machine:</p>
+<div class="highlight-python"><pre>class MyState(statemachine.State):</pre>
+</div>
+<p>Within the state&#8217;s class definition:</p>
+<ol class="loweralpha">
+<li><p class="first">Include a pattern for each transition, in <cite>State.patterns</cite>:</p>
+<div class="highlight-python"><pre>patterns = {'atransition': r'pattern', ...}</pre>
+</div>
+</li>
+<li><p class="first">Include a list of initial transitions to be set up automatically, in
+<cite>State.initial_transitions</cite>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">initial_transitions</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;atransition&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Define a method for each transition, with the same name as the
+transition pattern:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">atransition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">next_state</span><span class="p">):</span>
+    <span class="c"># do something</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>  <span class="c"># a list</span>
+    <span class="k">return</span> <span class="n">context</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">result</span>
+    <span class="c"># context, next_state may be altered</span>
+</pre></div>
+</div>
+<p>Transition methods may raise an <cite>EOFError</cite> to cut processing short.</p>
+</li>
+<li><p class="first">You may wish to override the <cite>State.bof()</cite> and/or <cite>State.eof()</cite> implicit
+transition methods, which handle the beginning- and end-of-file.</p>
+</li>
+<li><p class="first">In order to handle nested processing, you may wish to override the
+attributes <cite>State.nested_sm</cite> and/or <cite>State.nested_sm_kwargs</cite>.</p>
+<p>If you are using <cite>StateWS</cite> as a base class, in order to handle nested
+indented blocks, you may wish to:</p>
+<ul class="simple">
+<li>override the attributes <cite>StateWS.indent_sm</cite>,
+<cite>StateWS.indent_sm_kwargs</cite>, <cite>StateWS.known_indent_sm</cite>, and/or
+<cite>StateWS.known_indent_sm_kwargs</cite>;</li>
+<li>override the <cite>StateWS.blank()</cite> method; and/or</li>
+<li>override or extend the <cite>StateWS.indent()</cite>, <cite>StateWS.known_indent()</cite>,
+and/or <cite>StateWS.firstknown_indent()</cite> methods.</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p class="first">Create a state machine object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sm</span> <span class="o">=</span> <span class="n">StateMachine</span><span class="p">(</span><span class="n">state_classes</span><span class="o">=</span><span class="p">[</span><span class="n">MyState</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
+                  <span class="n">initial_state</span><span class="o">=</span><span class="s">&#39;MyState&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Obtain the input text, which needs to be converted into a tab-free list of
+one-line strings. For example, to read text from a file called
+&#8216;inputfile&#8217;:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">input_string</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;inputfile&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">input_lines</span> <span class="o">=</span> <span class="n">statemachine</span><span class="o">.</span><span class="n">string2lines</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Run the state machine on the input text and collect the results, a list:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">results</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">input_lines</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Remove any lingering circular references:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sm</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="module-core.components">
+<span id="documentation-for-the-other-code"></span><h1>Documentation for the other Code<a class="headerlink" href="#module-core.components" title="Permalink to this headline">¶</a></h1>
+<p>Raise from within a transition method to switch to another state.
+Raise with one or two arguments: new state name, and an optional new
+transition name.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Documentation for the Code</a><ul>
+<li><a class="reference internal" href="#how-to-use-this-module">How To Use This Module</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-core.components">Documentation for the other Code</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to TAINT&#8217;s documentation!</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/code.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to TAINT’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">TAINT 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Alexandros Gouvatsos.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

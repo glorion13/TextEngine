@@ -1,3 +1,12 @@
+# Author: Alexandros Gouvatsos <alexandros@gouvatsos.com>
+# Copyright: This module has been placed in the public domain.
+
+"""
+Raise from within a transition method to switch to another state.
+Raise with one or two arguments: new state name, and an optional new
+transition name.
+"""
+
 class Hierarchy:
 	def __init__(self):
 		self.startingScene = None
