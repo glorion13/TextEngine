@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Source code documentation &mdash; TAINT 1.0 documentation</title>
+    <title>The core module &mdash; TAINT 1.0 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -48,18 +48,51 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="module-core.components">
-<span id="source-code-documentation"></span><h1>Source code documentation<a class="headerlink" href="#module-core.components" title="Permalink to this headline">¶</a></h1>
-<p>The core of the system, which is used as the basis for both the Python-based editor and the
-Python-based interpreter. This module defines the following classes:</p>
+  <div class="section" id="the-core-module">
+<h1>The core module<a class="headerlink" href="#the-core-module" title="Permalink to this headline">¶</a></h1>
+<p>The core of the system, which are used as the basis of both the <cite>Editor</cite> and the
+<cite>Interpreter</cite> of the system.</p>
+<p>This module wraps the following sub-modules:</p>
 <ul class="simple">
-<li><cite>Hierarchy</cite>, which represents the hierarchical structure of the game (interactive novel or text adventure).</li>
-<li><cite>Resource</cite>, which represents global information, such as the date or the weather in the fictional world, or values like the health state of the player.</li>
-<li><cite>Scene</cite>, which represents a location or a state in the fictional world.</li>
-<li><cite>Action</cite>, which represents an action that can be triggered by the player. An Action consists of a <cite>Condition</cite> and an <cite>Effect</cite>. The <cite>Effect</cite> is only resolved if the condition is True. An action can be visible (in the case of an interactive novel) or invisible (in the case of a text adventure). In fact, within the same game there might be cases when Actions are visible and cases when actions are invisible.</li>
-<li><cite>Condition</cite>, which The Condition class represents a logical evaluation which can be part of an Action. When evaluated it returns a value of True or False.</li>
-<li><cite>Effect</cite>, which represents the outcome of a given Action that the player performs. An Effect can be anything from changing the scene, interacting with the world or even losing the game.</li>
+<li><a class="reference internal" href="#module-core.components" title="core.components"><tt class="xref py py-mod docutils literal"><span class="pre">core.components</span></tt></a></li>
 </ul>
+<div class="section" id="module-core.components">
+<span id="core-components"></span><h2>core.components<a class="headerlink" href="#module-core.components" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="#core.components.Hierarchy" title="core.components.Hierarchy"><tt class="xref py py-class docutils literal"><span class="pre">Hierarchy</span></tt></a>, which represents the hierarchical structure of the game (interactive novel or text adventure)</li>
+<li><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt>, which represents global information, such as the date or the weather in the fictional world, or values like the health state of the player.</li>
+<li><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt>, which represents a location or a state in the fictional world.</li>
+<li><a class="reference internal" href="#core.components.Action" title="core.components.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a>, which represents an action that can be triggered by the player. An Action consists of a <cite>Condition</cite> and an <cite>Effect</cite>. The <cite>Effect</cite> is only resolved if the condition is True. An action can be visible (in the case of an interactive novel) or invisible (in the case of a text adventure). In fact, within the same game there might be cases when Actions are visible and cases when actions are invisible.</li>
+<li><tt class="xref py py-class docutils literal"><span class="pre">Condition</span></tt>, which The Condition class represents a logical evaluation which can be part of an Action. When evaluated it returns a value of True or False.</li>
+<li><tt class="xref py py-class docutils literal"><span class="pre">Effect</span></tt>, which represents the outcome of a given Action that the player performs. An Effect can be anything from changing the scene, interacting with the world or even losing the game.</li>
+</ul>
+<dl class="class">
+<dt id="core.components.Action">
+<em class="property">class </em><tt class="descclassname">core.components.</tt><tt class="descname">Action</tt><big>(</big><em>name='default action'</em>, <em>effectsIfTrue=</em><span class="optional">[</span><span class="optional">]</span>, <em>effectsIfFalse=</em><span class="optional">[</span><span class="optional">]</span>, <em>conditions=</em><span class="optional">[</span><span class="optional">]</span>, <em>visible=True</em><big>)</big><a class="reference internal" href="_modules/core/components.html#Action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Action" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialise an <a class="reference internal" href="#core.components.Action" title="core.components.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a> object.</p>
+<dl class="method">
+<dt id="core.components.Action.conditionsAreTrue">
+<tt class="descname">conditionsAreTrue</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/core/components.html#Action.conditionsAreTrue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Action.conditionsAreTrue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Glorious function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Params :</th><td class="field-body">self</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="core.components.Hierarchy">
+<em class="property">class </em><tt class="descclassname">core.components.</tt><tt class="descname">Hierarchy</tt><a class="reference internal" href="_modules/core/components.html#Hierarchy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Hierarchy" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class rocks.</p>
+</dd></dl>
+
+</div>
 </div>
 
 
@@ -68,6 +101,14 @@ Python-based interpreter. This module defines the following classes:</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The core module</a><ul>
+<li><a class="reference internal" href="#module-core.components">core.components</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="index.html"
                         title="previous chapter">Welcome to TAINT&#8217;s documentation!</a></p>

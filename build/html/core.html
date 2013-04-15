@@ -1,0 +1,1193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The core module &mdash; TAINT 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="TAINT 1.0 documentation" href="index.html" />
+    <link rel="prev" title="Welcome to TAINT’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to TAINT’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">TAINT 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-core-module">
+<h1>The core module<a class="headerlink" href="#the-core-module" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>The core of the system, which are used as the basis of both the <cite>Editor</cite> and the
+<cite>Interpreter</cite> of the system.</p>
+<dl class="docutils">
+<dt>This module contains the following sub-modules:</dt>
+<dd><ul class="first last simple">
+<li><a class="reference internal" href="#module-core.components" title="core.components"><tt class="xref py py-mod docutils literal"><span class="pre">core.components</span></tt></a></li>
+</ul>
+</dd>
+</dl>
+</div></blockquote>
+<div class="section" id="core-components">
+<h2>core.components<a class="headerlink" href="#core-components" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><span class="target" id="module-core.components"></span><p>The <a class="reference internal" href="#module-core.components" title="core.components"><tt class="xref py py-mod docutils literal"><span class="pre">core.components</span></tt></a> module contains the following classes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#core.components.Game" title="core.components.Game"><tt class="xref py py-class docutils literal"><span class="pre">Game</span></tt></a>, which represents the structure of the game (interactive novel or text adventure).</li>
+<li><a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a>, which represents global information, such as the date or the weather in the fictional world, or values like the health state of the player.</li>
+<li><a class="reference internal" href="#core.components.Scene" title="core.components.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a>, which represents a location or a state in the fictional world.</li>
+<li><a class="reference internal" href="#core.components.Action" title="core.components.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a>, which represents an action that can be triggered by the player. An <a class="reference internal" href="#core.components.Action" title="core.components.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a> consists of a <a class="reference internal" href="#core.components.Condition" title="core.components.Condition"><tt class="xref py py-class docutils literal"><span class="pre">Condition</span></tt></a> and an <a class="reference internal" href="#core.components.Effect" title="core.components.Effect"><tt class="xref py py-class docutils literal"><span class="pre">Effect</span></tt></a>. The <a class="reference internal" href="#core.components.Effect" title="core.components.Effect"><tt class="xref py py-class docutils literal"><span class="pre">Effect</span></tt></a> is only resolved if the condition is <tt class="docutils literal"><span class="pre">True</span></tt>.</li>
+<li><a class="reference internal" href="#core.components.Condition" title="core.components.Condition"><tt class="xref py py-class docutils literal"><span class="pre">Condition</span></tt></a>, which represents a logical evaluation which can be part of an <a class="reference internal" href="#core.components.Action" title="core.components.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a>. When evaluated it returns a value of <tt class="docutils literal"><span class="pre">True</span></tt> or <tt class="docutils literal"><span class="pre">False</span></tt>.</li>
+<li><a class="reference internal" href="#core.components.Effect" title="core.components.Effect"><tt class="xref py py-class docutils literal"><span class="pre">Effect</span></tt></a>, which represents the outcome of a given Action that the player performs. An <a class="reference internal" href="#core.components.Effect" title="core.components.Effect"><tt class="xref py py-class docutils literal"><span class="pre">Effect</span></tt></a> can be anything from changing the scene, interacting with the world or even losing the game.</li>
+</ul>
+</div></blockquote>
+<dl class="class">
+<dt id="core.components.Action">
+<em class="property">class </em><tt class="descclassname">core.components.</tt><tt class="descname">Action</tt><big>(</big><em>name='default action'</em>, <em>effectsIfTrue=</em><span class="optional">[</span><span class="optional">]</span>, <em>effectsIfFalse=</em><span class="optional">[</span><span class="optional">]</span>, <em>conditions=</em><span class="optional">[</span><span class="optional">]</span>, <em>visible=True</em><big>)</big><a class="reference internal" href="_modules/core/components.html#Action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Action" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#core.components.Action" title="core.components.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a> object.</p>
+<dl class="method">
+<dt id="core.components.Action.conditionsAreTrue">
+<tt class="descname">conditionsAreTrue</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/core/components.html#Action.conditionsAreTrue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Action.conditionsAreTrue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Glorious function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Params :</th><td class="field-body">self</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="core.components.Condition">
+<em class="property">class </em><tt class="descclassname">core.components.</tt><tt class="descname">Condition</tt><big>(</big><em>conditionType</em>, <em>leftHandSide</em>, <em>rightHandSide</em><big>)</big><a class="reference internal" href="_modules/core/components.html#Condition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Condition" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#core.components.Condition" title="core.components.Condition"><tt class="xref py py-class docutils literal"><span class="pre">Condition</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="core.components.Effect">
+<em class="property">class </em><tt class="descclassname">core.components.</tt><tt class="descname">Effect</tt><big>(</big><em>effectFunction</em>, <em>*args</em><big>)</big><a class="reference internal" href="_modules/core/components.html#Effect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Effect" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <a class="reference internal" href="#core.components.Effect" title="core.components.Effect"><tt class="xref py py-class docutils literal"><span class="pre">Effect</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="core.components.Game">
+<em class="property">class </em><tt class="descclassname">core.components.</tt><tt class="descname">Game</tt><a class="headerlink" href="#core.components.Game" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#core.components.Game" title="core.components.Game"><tt class="xref py py-class docutils literal"><span class="pre">Game</span></tt></a> class basically represents the structure of the game (interactive novel or
+text adventure). Therefore it contains the various <a class="reference internal" href="#core.components.Scene" title="core.components.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a>, global <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a> and
+global <a class="reference internal" href="#core.components.Action" title="core.components.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a> instances of the game. It also keeps track of the starting scene and the
+current scene.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Attributes :</th><td class="field-body"><ul class="first last simple">
+<li><cite>startingScene</cite> A <a class="reference internal" href="#core.components.Scene" title="core.components.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> object which is the first scene that the game will load.</li>
+<li><cite>currentScene</cite> A <a class="reference internal" href="#core.components.Scene" title="core.components.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> object which is the scene the player is currently in.</li>
+<li><cite>scenes</cite> A <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#core.components.Scene" title="core.components.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> objects which holds all of the scenes of the game, along with their corresponding attributes.</li>
+<li><cite>globalResources</cite> A <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a> for storing global resources, such as player HP.</li>
+<li><cite>globalActions</cite> A <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#core.components.Action" title="core.components.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a> for storing global actions, such as actions which are      always available to the player (e.g. <cite>&#8216;help&#8217;</cite>) or actions such as checking if the player&#8217;s HP falls under a certain     threshold.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="core.components.Resource">
+<em class="property">class </em><tt class="descclassname">core.components.</tt><tt class="descname">Resource</tt><big>(</big><em>name</em>, <em>value</em><big>)</big><a class="reference internal" href="_modules/core/components.html#Resource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Resource" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a> class represents global information, such as the date or the weather
+in the fictional world, or values like the health state of the player. It is basically a tuple,
+containing a <cite>name</cite> attribute and a <cite>value</cite> attribute.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Attributes :</th><td class="field-body"><ul class="first last simple">
+<li><cite>name</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">string</span></tt> which holds the name of the <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a>, e.g. &#8216;HP&#8217;.</li>
+<li><cite>value</cite>: This attribute holds the actual value of the resource, which can be of any type.     For example, if the resource represents the player&#8217;s HP, the <cite>value</cite> of the <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a> can be an <tt class="xref py py-class docutils literal"><span class="pre">int</span></tt> of value 10.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="core.components.Scene">
+<em class="property">class </em><tt class="descclassname">core.components.</tt><tt class="descname">Scene</tt><big>(</big><em>description</em>, <em>name='default room'</em><big>)</big><a class="reference internal" href="_modules/core/components.html#Scene"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>An action can be visible (in the case of an interactive novel) or invisible (in the case of a text
+adventure), by toggling the . In fact, even within the same game there might be cases when actions
+are visible and cases when actions are invisible.</p>
+</dd></dl>
+
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="statemachine">
+<h1>StateMachine<a class="headerlink" href="#statemachine" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><span class="target" id="module-statemachine"></span><p>A finite state machine specialized for regular-expression-based text filters,
+this module defines the following classes:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#statemachine.StateMachine" title="statemachine.StateMachine"><tt class="xref py py-class docutils literal"><span class="pre">StateMachine</span></tt></a>, a state machine</li>
+<li><a class="reference internal" href="#statemachine.State" title="statemachine.State"><tt class="xref py py-class docutils literal"><span class="pre">State</span></tt></a>, a state superclass</li>
+<li><a class="reference internal" href="#statemachine.StateMachineWS" title="statemachine.StateMachineWS"><tt class="xref py py-class docutils literal"><span class="pre">StateMachineWS</span></tt></a>, a whitespace-sensitive version of <cite>StateMachine</cite></li>
+<li><a class="reference internal" href="#statemachine.StateWS" title="statemachine.StateWS"><tt class="xref py py-class docutils literal"><span class="pre">StateWS</span></tt></a>, a state superclass for use with <cite>StateMachineWS</cite></li>
+<li><a class="reference internal" href="#statemachine.SearchStateMachine" title="statemachine.SearchStateMachine"><tt class="xref py py-class docutils literal"><span class="pre">SearchStateMachine</span></tt></a>, uses <cite>re.search()</cite> instead of <cite>re.match()</cite></li>
+<li><a class="reference internal" href="#statemachine.SearchStateMachineWS" title="statemachine.SearchStateMachineWS"><tt class="xref py py-class docutils literal"><span class="pre">SearchStateMachineWS</span></tt></a>, uses <cite>re.search()</cite> instead of <cite>re.match()</cite></li>
+<li><a class="reference internal" href="#statemachine.ViewList" title="statemachine.ViewList"><tt class="xref py py-class docutils literal"><span class="pre">ViewList</span></tt></a>, extends standard Python lists.</li>
+<li><a class="reference internal" href="#statemachine.StringList" title="statemachine.StringList"><tt class="xref py py-class docutils literal"><span class="pre">StringList</span></tt></a>, string-specific ViewList.</li>
+</ul>
+<p>Exception classes:</p>
+<ul class="simple">
+<li><tt class="xref py py-class docutils literal"><span class="pre">StateMachineError</span></tt></li>
+<li><tt class="xref py py-class docutils literal"><span class="pre">UnknownStateError</span></tt></li>
+<li><tt class="xref py py-class docutils literal"><span class="pre">DuplicateStateError</span></tt></li>
+<li><tt class="xref py py-class docutils literal"><span class="pre">UnknownTransitionError</span></tt></li>
+<li><tt class="xref py py-class docutils literal"><span class="pre">DuplicateTransitionError</span></tt></li>
+<li><tt class="xref py py-class docutils literal"><span class="pre">TransitionPatternNotFound</span></tt></li>
+<li><tt class="xref py py-class docutils literal"><span class="pre">TransitionMethodNotFound</span></tt></li>
+<li><tt class="xref py py-class docutils literal"><span class="pre">UnexpectedIndentationError</span></tt></li>
+<li><a class="reference internal" href="#statemachine.TransitionCorrection" title="statemachine.TransitionCorrection"><tt class="xref py py-class docutils literal"><span class="pre">TransitionCorrection</span></tt></a>: Raised to switch to another transition.</li>
+<li><a class="reference internal" href="#statemachine.StateCorrection" title="statemachine.StateCorrection"><tt class="xref py py-class docutils literal"><span class="pre">StateCorrection</span></tt></a>: Raised to switch to another state &amp; transition.</li>
+</ul>
+<p>Functions:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#statemachine.string2lines" title="statemachine.string2lines"><tt class="xref py py-func docutils literal"><span class="pre">string2lines()</span></tt></a>: split a multi-line string into a list of one-line strings</li>
+</ul>
+<div class="section" id="how-to-use-this-module">
+<h2>How To Use This Module<a class="headerlink" href="#how-to-use-this-module" title="Permalink to this headline">¶</a></h2>
+<p>(See the individual classes, methods, and attributes for details.)</p>
+<ol class="arabic">
+<li><p class="first">Import it: <tt class="docutils literal"><span class="pre">import</span> <span class="pre">statemachine</span></tt> or <tt class="docutils literal"><span class="pre">from</span> <span class="pre">statemachine</span> <span class="pre">import</span> <span class="pre">...</span></tt>.
+You will also need to <tt class="docutils literal"><span class="pre">import</span> <span class="pre">re</span></tt>.</p>
+</li>
+<li><p class="first">Derive a subclass of <cite>State</cite> (or <cite>StateWS</cite>) for each state in your state
+machine:</p>
+<div class="highlight-python"><pre>class MyState(statemachine.State):</pre>
+</div>
+<p>Within the state&#8217;s class definition:</p>
+<ol class="loweralpha">
+<li><p class="first">Include a pattern for each transition, in <cite>State.patterns</cite>:</p>
+<div class="highlight-python"><pre>patterns = {'atransition': r'pattern', ...}</pre>
+</div>
+</li>
+<li><p class="first">Include a list of initial transitions to be set up automatically, in
+<cite>State.initial_transitions</cite>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">initial_transitions</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;atransition&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Define a method for each transition, with the same name as the
+transition pattern:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">atransition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">match</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">next_state</span><span class="p">):</span>
+    <span class="c"># do something</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>  <span class="c"># a list</span>
+    <span class="k">return</span> <span class="n">context</span><span class="p">,</span> <span class="n">next_state</span><span class="p">,</span> <span class="n">result</span>
+    <span class="c"># context, next_state may be altered</span>
+</pre></div>
+</div>
+<p>Transition methods may raise an <cite>EOFError</cite> to cut processing short.</p>
+</li>
+<li><p class="first">You may wish to override the <cite>State.bof()</cite> and/or <cite>State.eof()</cite> implicit
+transition methods, which handle the beginning- and end-of-file.</p>
+</li>
+<li><p class="first">In order to handle nested processing, you may wish to override the
+attributes <cite>State.nested_sm</cite> and/or <cite>State.nested_sm_kwargs</cite>.</p>
+<p>If you are using <cite>StateWS</cite> as a base class, in order to handle nested
+indented blocks, you may wish to:</p>
+<ul class="simple">
+<li>override the attributes <cite>StateWS.indent_sm</cite>,
+<cite>StateWS.indent_sm_kwargs</cite>, <cite>StateWS.known_indent_sm</cite>, and/or
+<cite>StateWS.known_indent_sm_kwargs</cite>;</li>
+<li>override the <cite>StateWS.blank()</cite> method; and/or</li>
+<li>override or extend the <cite>StateWS.indent()</cite>, <cite>StateWS.known_indent()</cite>,
+and/or <cite>StateWS.firstknown_indent()</cite> methods.</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p class="first">Create a state machine object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sm</span> <span class="o">=</span> <span class="n">StateMachine</span><span class="p">(</span><span class="n">state_classes</span><span class="o">=</span><span class="p">[</span><span class="n">MyState</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
+                  <span class="n">initial_state</span><span class="o">=</span><span class="s">&#39;MyState&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Obtain the input text, which needs to be converted into a tab-free list of
+one-line strings. For example, to read text from a file called
+&#8216;inputfile&#8217;:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">input_string</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;inputfile&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">input_lines</span> <span class="o">=</span> <span class="n">statemachine</span><span class="o">.</span><span class="n">string2lines</span><span class="p">(</span><span class="n">input_string</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Run the state machine on the input text and collect the results, a list:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">results</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">input_lines</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Remove any lingering circular references:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sm</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<dl class="class">
+<dt id="statemachine.SearchStateMachine">
+<em class="property">class </em><tt class="descclassname">statemachine.</tt><tt class="descname">SearchStateMachine</tt><big>(</big><em>state_classes</em>, <em>initial_state</em>, <em>debug=False</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#SearchStateMachine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.SearchStateMachine" title="Permalink to this definition">¶</a></dt>
+<dd><p><cite>StateMachine</cite> which uses <cite>re.search()</cite> instead of <cite>re.match()</cite>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="statemachine.SearchStateMachineWS">
+<em class="property">class </em><tt class="descclassname">statemachine.</tt><tt class="descname">SearchStateMachineWS</tt><big>(</big><em>state_classes</em>, <em>initial_state</em>, <em>debug=False</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#SearchStateMachineWS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.SearchStateMachineWS" title="Permalink to this definition">¶</a></dt>
+<dd><p><cite>StateMachineWS</cite> which uses <cite>re.search()</cite> instead of <cite>re.match()</cite>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="statemachine.State">
+<em class="property">class </em><tt class="descclassname">statemachine.</tt><tt class="descname">State</tt><big>(</big><em>state_machine</em>, <em>debug=False</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#State"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.State" title="Permalink to this definition">¶</a></dt>
+<dd><p>State superclass. Contains a list of transitions, and transition methods.</p>
+<p>Transition methods all have the same signature. They take 3 parameters:</p>
+<ul class="simple">
+<li>An <cite>re</cite> match object. <tt class="docutils literal"><span class="pre">match.string</span></tt> contains the matched input line,
+<tt class="docutils literal"><span class="pre">match.start()</span></tt> gives the start index of the match, and
+<tt class="docutils literal"><span class="pre">match.end()</span></tt> gives the end index.</li>
+<li>A context object, whose meaning is application-defined (initial value
+<tt class="docutils literal"><span class="pre">None</span></tt>). It can be used to store any information required by the state
+machine, and the retured context is passed on to the next transition
+method unchanged.</li>
+<li>The name of the next state, a string, taken from the transitions list;
+normally it is returned unchanged, but it may be altered by the
+transition method if necessary.</li>
+</ul>
+<p>Transition methods all return a 3-tuple:</p>
+<ul class="simple">
+<li>A context object, as (potentially) modified by the transition method.</li>
+<li>The next state name (a return value of <tt class="docutils literal"><span class="pre">None</span></tt> means no state change).</li>
+<li>The processing result, a list, which is accumulated by the state
+machine.</li>
+</ul>
+<p>Transition methods may raise an <cite>EOFError</cite> to cut processing short.</p>
+<p>There are two implicit transitions, and corresponding transition methods
+are defined: <cite>bof()</cite> handles the beginning-of-file, and <cite>eof()</cite> handles
+the end-of-file. These methods have non-standard signatures and return
+values. <cite>bof()</cite> returns the initial context and results, and may be used
+to return a header string, or do any other processing needed. <cite>eof()</cite>
+should handle any remaining context and wrap things up; it returns the
+final processing result.</p>
+<p>Typical applications need only subclass <cite>State</cite> (or a subclass), set the
+<cite>patterns</cite> and <cite>initial_transitions</cite> class attributes, and provide
+corresponding transition methods. The default object initialization will
+take care of constructing the list of transitions.</p>
+<dl class="method">
+<dt id="statemachine.State.add_initial_transitions">
+<tt class="descname">add_initial_transitions</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/statemachine.html#State.add_initial_transitions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.State.add_initial_transitions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make and add transitions listed in <cite>self.initial_transitions</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.State.add_transition">
+<tt class="descname">add_transition</tt><big>(</big><em>name</em>, <em>transition</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#State.add_transition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.State.add_transition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a transition to the start of the transition list.</p>
+<p>Parameter <cite>transition</cite>: a ready-made transition 3-tuple.</p>
+<p>Exception: <cite>DuplicateTransitionError</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.State.add_transitions">
+<tt class="descname">add_transitions</tt><big>(</big><em>names</em>, <em>transitions</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#State.add_transitions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.State.add_transitions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a list of transitions to the start of the transition list.</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li><cite>names</cite>: a list of transition names.</li>
+<li><cite>transitions</cite>: a mapping of names to transition tuples.</li>
+</ul>
+<p>Exceptions: <cite>DuplicateTransitionError</cite>, <cite>UnknownTransitionError</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.State.bof">
+<tt class="descname">bof</tt><big>(</big><em>context</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#State.bof"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.State.bof" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle beginning-of-file. Return unchanged <cite>context</cite>, empty result.</p>
+<p>Override in subclasses.</p>
+<p>Parameter <cite>context</cite>: application-defined storage.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="statemachine.State.debug">
+<tt class="descname">debug</tt><em class="property"> = None</em><a class="headerlink" href="#statemachine.State.debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Debugging mode on/off.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.State.eof">
+<tt class="descname">eof</tt><big>(</big><em>context</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#State.eof"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.State.eof" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle end-of-file. Return empty result.</p>
+<p>Override in subclasses.</p>
+<p>Parameter <cite>context</cite>: application-defined storage.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="statemachine.State.initial_transitions">
+<tt class="descname">initial_transitions</tt><em class="property"> = None</em><a class="headerlink" href="#statemachine.State.initial_transitions" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of transitions to initialize when a <cite>State</cite> is instantiated.
+Each entry is either a transition name string, or a (transition name, next
+state name) pair. See <cite>make_transitions()</cite>. Override in subclasses.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.State.make_transition">
+<tt class="descname">make_transition</tt><big>(</big><em>name</em>, <em>next_state=None</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#State.make_transition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.State.make_transition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make &amp; return a transition tuple based on <cite>name</cite>.</p>
+<p>This is a convenience function to simplify transition creation.</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li><cite>name</cite>: a string, the name of the transition pattern &amp; method. This
+<cite>State</cite> object must have a method called &#8216;<cite>name</cite>&#8216;, and a dictionary
+<cite>self.patterns</cite> containing a key &#8216;<cite>name</cite>&#8216;.</li>
+<li><cite>next_state</cite>: a string, the name of the next <cite>State</cite> object for this
+transition. A value of <tt class="docutils literal"><span class="pre">None</span></tt> (or absent) implies no state change
+(i.e., continue with the same state).</li>
+</ul>
+<p>Exceptions: <cite>TransitionPatternNotFound</cite>, <cite>TransitionMethodNotFound</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.State.make_transitions">
+<tt class="descname">make_transitions</tt><big>(</big><em>name_list</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#State.make_transitions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.State.make_transitions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of transition names and a transition mapping.</p>
+<p>Parameter <cite>name_list</cite>: a list, where each entry is either a transition
+name string, or a 1- or 2-tuple (transition name, optional next state
+name).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="statemachine.State.nested_sm">
+<tt class="descname">nested_sm</tt><em class="property"> = None</em><a class="headerlink" href="#statemachine.State.nested_sm" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <cite>StateMachine</cite> class for handling nested processing.</p>
+<p>If left as <tt class="docutils literal"><span class="pre">None</span></tt>, <cite>nested_sm</cite> defaults to the class of the state&#8217;s
+controlling state machine. Override it in subclasses to avoid the default.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="statemachine.State.nested_sm_kwargs">
+<tt class="descname">nested_sm_kwargs</tt><em class="property"> = None</em><a class="headerlink" href="#statemachine.State.nested_sm_kwargs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Keyword arguments dictionary, passed to the <cite>nested_sm</cite> constructor.</p>
+<p>Two keys must have entries in the dictionary:</p>
+<ul class="simple">
+<li>Key &#8216;state_classes&#8217; must be set to a list of <cite>State</cite> classes.</li>
+<li>Key &#8216;initial_state&#8217; must be set to the name of the initial state class.</li>
+</ul>
+<p>If <cite>nested_sm_kwargs</cite> is left as <tt class="docutils literal"><span class="pre">None</span></tt>, &#8216;state_classes&#8217; defaults to the
+class of the current state, and &#8216;initial_state&#8217; defaults to the name of
+the class of the current state. Override in subclasses to avoid the
+defaults.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.State.no_match">
+<tt class="descname">no_match</tt><big>(</big><em>context</em>, <em>transitions</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#State.no_match"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.State.no_match" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when there is no match from <cite>StateMachine.check_line()</cite>.</p>
+<p>Return the same values returned by transition methods:</p>
+<ul class="simple">
+<li>context: unchanged;</li>
+<li>next state name: <tt class="docutils literal"><span class="pre">None</span></tt>;</li>
+<li>empty result list.</li>
+</ul>
+<p>Override in subclasses to catch this event.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.State.nop">
+<tt class="descname">nop</tt><big>(</big><em>match</em>, <em>context</em>, <em>next_state</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#State.nop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.State.nop" title="Permalink to this definition">¶</a></dt>
+<dd><p>A &#8220;do nothing&#8221; transition method.</p>
+<p>Return unchanged <cite>context</cite> &amp; <cite>next_state</cite>, empty result. Useful for
+simple state changes (actionless transitions).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="statemachine.State.patterns">
+<tt class="descname">patterns</tt><em class="property"> = None</em><a class="headerlink" href="#statemachine.State.patterns" title="Permalink to this definition">¶</a></dt>
+<dd><p>{Name: pattern} mapping, used by <cite>make_transition()</cite>. Each pattern may
+be a string or a compiled <cite>re</cite> pattern. Override in subclasses.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.State.remove_transition">
+<tt class="descname">remove_transition</tt><big>(</big><em>name</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#State.remove_transition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.State.remove_transition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a transition by <cite>name</cite>.</p>
+<p>Exception: <cite>UnknownTransitionError</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.State.runtime_init">
+<tt class="descname">runtime_init</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/statemachine.html#State.runtime_init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.State.runtime_init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize this <cite>State</cite> before running the state machine; called from
+<cite>self.state_machine.run()</cite>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="statemachine.State.state_machine">
+<tt class="descname">state_machine</tt><em class="property"> = None</em><a class="headerlink" href="#statemachine.State.state_machine" title="Permalink to this definition">¶</a></dt>
+<dd><p>A reference to the controlling <cite>StateMachine</cite> object.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="statemachine.State.transition_order">
+<tt class="descname">transition_order</tt><em class="property"> = None</em><a class="headerlink" href="#statemachine.State.transition_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of transition names in search order.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="statemachine.State.transitions">
+<tt class="descname">transitions</tt><em class="property"> = None</em><a class="headerlink" href="#statemachine.State.transitions" title="Permalink to this definition">¶</a></dt>
+<dd><p>A mapping of transition names to 3-tuples containing
+(compiled_pattern, transition_method, next_state_name). Initialized as
+an instance attribute dynamically (instead of as a class attribute)
+because it may make forward references to patterns and methods in this
+or other classes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.State.unlink">
+<tt class="descname">unlink</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/statemachine.html#State.unlink"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.State.unlink" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove circular references to objects no longer required.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="statemachine.StateCorrection">
+<em class="property">exception </em><tt class="descclassname">statemachine.</tt><tt class="descname">StateCorrection</tt><a class="reference internal" href="_modules/statemachine.html#StateCorrection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateCorrection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raise from within a transition method to switch to another state.</p>
+<p>Raise with one or two arguments: new state name, and an optional new
+transition name.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="statemachine.StateMachine">
+<em class="property">class </em><tt class="descclassname">statemachine.</tt><tt class="descname">StateMachine</tt><big>(</big><em>state_classes</em>, <em>initial_state</em>, <em>debug=False</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateMachine"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateMachine" title="Permalink to this definition">¶</a></dt>
+<dd><p>A finite state machine for text filters using regular expressions.</p>
+<p>The input is provided in the form of a list of one-line strings (no
+newlines). States are subclasses of the <cite>State</cite> class. Transitions consist
+of regular expression patterns and transition methods, and are defined in
+each state.</p>
+<p>The state machine is started with the <cite>run()</cite> method, which returns the
+results of processing in a list.</p>
+<dl class="method">
+<dt id="statemachine.StateMachine.abs_line_number">
+<tt class="descname">abs_line_number</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateMachine.abs_line_number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateMachine.abs_line_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return line number of current line (counting from 1).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StateMachine.abs_line_offset">
+<tt class="descname">abs_line_offset</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateMachine.abs_line_offset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateMachine.abs_line_offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return line offset of current line, from beginning of file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StateMachine.add_state">
+<tt class="descname">add_state</tt><big>(</big><em>state_class</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateMachine.add_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateMachine.add_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize &amp; add a <cite>state_class</cite> (<cite>State</cite> subclass) object.</p>
+<p>Exception: <cite>DuplicateStateError</cite> raised if <cite>state_class</cite> was already
+added.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StateMachine.add_states">
+<tt class="descname">add_states</tt><big>(</big><em>state_classes</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateMachine.add_states"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateMachine.add_states" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add <cite>state_classes</cite> (a list of <cite>State</cite> subclasses).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StateMachine.at_bof">
+<tt class="descname">at_bof</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateMachine.at_bof"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateMachine.at_bof" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return 1 if the input is at or before beginning-of-file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StateMachine.at_eof">
+<tt class="descname">at_eof</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateMachine.at_eof"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateMachine.at_eof" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return 1 if the input is at or past end-of-file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StateMachine.attach_observer">
+<tt class="descname">attach_observer</tt><big>(</big><em>observer</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateMachine.attach_observer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateMachine.attach_observer" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <cite>observer</cite> parameter is a function or bound method which takes two
+arguments, the source and offset of the current line.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StateMachine.check_line">
+<tt class="descname">check_line</tt><big>(</big><em>context</em>, <em>state</em>, <em>transitions=None</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateMachine.check_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateMachine.check_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Examine one line of input for a transition match &amp; execute its method.</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li><cite>context</cite>: application-dependent storage.</li>
+<li><cite>state</cite>: a <cite>State</cite> object, the current state.</li>
+<li><cite>transitions</cite>: an optional ordered list of transition names to try,
+instead of <tt class="docutils literal"><span class="pre">state.transition_order</span></tt>.</li>
+</ul>
+<p>Return the values returned by the transition method:</p>
+<ul class="simple">
+<li>context: possibly modified from the parameter <cite>context</cite>;</li>
+<li>next state name (<cite>State</cite> subclass name);</li>
+<li>the result output of the transition, a list.</li>
+</ul>
+<p>When there is no match, <tt class="docutils literal"><span class="pre">state.no_match()</span></tt> is called and its return
+value is returned.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="statemachine.StateMachine.current_state">
+<tt class="descname">current_state</tt><em class="property"> = None</em><a class="headerlink" href="#statemachine.StateMachine.current_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the current state (key to <cite>self.states</cite>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="statemachine.StateMachine.debug">
+<tt class="descname">debug</tt><em class="property"> = None</em><a class="headerlink" href="#statemachine.StateMachine.debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Debugging mode on/off.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StateMachine.error">
+<tt class="descname">error</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateMachine.error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateMachine.error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Report error details.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StateMachine.get_source">
+<tt class="descname">get_source</tt><big>(</big><em>line_offset</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateMachine.get_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateMachine.get_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return source of line at absolute line offset <cite>line_offset</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StateMachine.get_source_and_line">
+<tt class="descname">get_source_and_line</tt><big>(</big><em>lineno=None</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateMachine.get_source_and_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateMachine.get_source_and_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return (source, line) tuple for current or given line number.</p>
+<p>Looks up the source and line number in the <cite>self.input_lines</cite>
+StringList instance to count for included source files.</p>
+<p>If the optional argument <cite>lineno</cite> is given, convert it from an
+absolute line number to the corresponding (source, line) pair.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StateMachine.get_state">
+<tt class="descname">get_state</tt><big>(</big><em>next_state=None</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateMachine.get_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateMachine.get_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return current state object; set it first if <cite>next_state</cite> given.</p>
+<p>Parameter <cite>next_state</cite>: a string, the name of the next state.</p>
+<p>Exception: <cite>UnknownStateError</cite> raised if <cite>next_state</cite> unknown.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StateMachine.get_text_block">
+<tt class="descname">get_text_block</tt><big>(</big><em>flush_left=False</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateMachine.get_text_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateMachine.get_text_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a contiguous block of text.</p>
+<p>If <cite>flush_left</cite> is true, raise <cite>UnexpectedIndentationError</cite> if an
+indented line is encountered before the text block ends (with a blank
+line).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StateMachine.goto_line">
+<tt class="descname">goto_line</tt><big>(</big><em>line_offset</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateMachine.goto_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateMachine.goto_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Jump to absolute line offset <cite>line_offset</cite>, load and return it.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="statemachine.StateMachine.initial_state">
+<tt class="descname">initial_state</tt><em class="property"> = None</em><a class="headerlink" href="#statemachine.StateMachine.initial_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the initial state (key to <cite>self.states</cite>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="statemachine.StateMachine.input_lines">
+<tt class="descname">input_lines</tt><em class="property"> = None</em><a class="headerlink" href="#statemachine.StateMachine.input_lines" title="Permalink to this definition">¶</a></dt>
+<dd><p><cite>StringList</cite> of input lines (without newlines).
+Filled by <cite>self.run()</cite>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="statemachine.StateMachine.input_offset">
+<tt class="descname">input_offset</tt><em class="property"> = None</em><a class="headerlink" href="#statemachine.StateMachine.input_offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Offset of <cite>self.input_lines</cite> from the beginning of the file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StateMachine.is_next_line_blank">
+<tt class="descname">is_next_line_blank</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateMachine.is_next_line_blank"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateMachine.is_next_line_blank" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return 1 if the next line is blank or non-existant.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="statemachine.StateMachine.line">
+<tt class="descname">line</tt><em class="property"> = None</em><a class="headerlink" href="#statemachine.StateMachine.line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Current input line.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="statemachine.StateMachine.line_offset">
+<tt class="descname">line_offset</tt><em class="property"> = None</em><a class="headerlink" href="#statemachine.StateMachine.line_offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Current input line offset from beginning of <cite>self.input_lines</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StateMachine.next_line">
+<tt class="descname">next_line</tt><big>(</big><em>n=1</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateMachine.next_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateMachine.next_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load <cite>self.line</cite> with the <cite>n</cite>&#8216;th next line and return it.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="statemachine.StateMachine.observers">
+<tt class="descname">observers</tt><em class="property"> = None</em><a class="headerlink" href="#statemachine.StateMachine.observers" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of bound methods or functions to call whenever the current
+line changes.  Observers are called with one argument, <tt class="docutils literal"><span class="pre">self</span></tt>.
+Cleared at the end of <cite>run()</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StateMachine.previous_line">
+<tt class="descname">previous_line</tt><big>(</big><em>n=1</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateMachine.previous_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateMachine.previous_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load <cite>self.line</cite> with the <cite>n</cite>&#8216;th previous line and return it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StateMachine.run">
+<tt class="descname">run</tt><big>(</big><em>input_lines</em>, <em>input_offset=0</em>, <em>context=None</em>, <em>input_source=None</em>, <em>initial_state=None</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateMachine.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateMachine.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the state machine on <cite>input_lines</cite>. Return results (a list).</p>
+<p>Reset <cite>self.line_offset</cite> and <cite>self.current_state</cite>. Run the
+beginning-of-file transition. Input one line at a time and check for a
+matching transition. If a match is found, call the transition method
+and possibly change the state. Store the context returned by the
+transition method to be passed on to the next transition matched.
+Accumulate the results returned by the transition methods in a list.
+Run the end-of-file transition. Finally, return the accumulated
+results.</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li><cite>input_lines</cite>: a list of strings without newlines, or <cite>StringList</cite>.</li>
+<li><cite>input_offset</cite>: the line offset of <cite>input_lines</cite> from the beginning
+of the file.</li>
+<li><cite>context</cite>: application-specific storage.</li>
+<li><cite>input_source</cite>: name or path of source of <cite>input_lines</cite>.</li>
+<li><cite>initial_state</cite>: name of initial state.</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StateMachine.runtime_init">
+<tt class="descname">runtime_init</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateMachine.runtime_init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateMachine.runtime_init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize <cite>self.states</cite>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="statemachine.StateMachine.states">
+<tt class="descname">states</tt><em class="property"> = None</em><a class="headerlink" href="#statemachine.StateMachine.states" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mapping of {state_name: State_object}.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StateMachine.unlink">
+<tt class="descname">unlink</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateMachine.unlink"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateMachine.unlink" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove circular references to objects no longer required.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="statemachine.StateMachineWS">
+<em class="property">class </em><tt class="descclassname">statemachine.</tt><tt class="descname">StateMachineWS</tt><big>(</big><em>state_classes</em>, <em>initial_state</em>, <em>debug=False</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateMachineWS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateMachineWS" title="Permalink to this definition">¶</a></dt>
+<dd><p><cite>StateMachine</cite> subclass specialized for whitespace recognition.</p>
+<p>There are three methods provided for extracting indented text blocks:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#statemachine.StateMachineWS.get_indented" title="statemachine.StateMachineWS.get_indented"><tt class="xref py py-func docutils literal"><span class="pre">get_indented()</span></tt></a>: use when the indent is unknown.</li>
+<li><cite>get_known_indented()</cite>: use when the indent is known for all lines.</li>
+<li><cite>get_first_known_indented()</cite>: use when only the first line&#8217;s indent is
+known.</li>
+</ul>
+<dl class="method">
+<dt id="statemachine.StateMachineWS.get_first_known_indented">
+<tt class="descname">get_first_known_indented</tt><big>(</big><em>indent</em>, <em>until_blank=False</em>, <em>strip_indent=True</em>, <em>strip_top=True</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateMachineWS.get_first_known_indented"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateMachineWS.get_first_known_indented" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an indented block and info.</p>
+<p>Extract an indented block where the indent is known for the first line
+and unknown for all other lines.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><ul class="first simple">
+<li><cite>indent</cite>: The first line&#8217;s indent (# of columns/characters).</li>
+<li><cite>until_blank</cite>: Stop collecting at the first blank line if true
+(1).</li>
+<li><cite>strip_indent</cite>: Strip <cite>indent</cite> characters of indentation if true
+(1, default).</li>
+<li><cite>strip_top</cite>: Strip blank lines from the beginning of the block.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return :</th><td class="field-body"><ul class="first last simple">
+<li>the indented block,</li>
+<li>its indent,</li>
+<li>its first line offset from BOF, and</li>
+<li>whether or not it finished with a blank line.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StateMachineWS.get_indented">
+<tt class="descname">get_indented</tt><big>(</big><em>until_blank=False</em>, <em>strip_indent=True</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateMachineWS.get_indented"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateMachineWS.get_indented" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a block of indented lines of text, and info.</p>
+<p>Extract an indented block where the indent is unknown for all lines.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><ul class="first simple">
+<li><cite>until_blank</cite>: Stop collecting at the first blank line if true.</li>
+<li><cite>strip_indent</cite>: Strip common leading indent if true (default).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return :</th><td class="field-body"><ul class="first last simple">
+<li>the indented block (a list of lines of text),</li>
+<li>its indent,</li>
+<li>its first line offset from BOF, and</li>
+<li>whether or not it finished with a blank line.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StateMachineWS.get_known_indented">
+<tt class="descname">get_known_indented</tt><big>(</big><em>indent</em>, <em>until_blank=False</em>, <em>strip_indent=True</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateMachineWS.get_known_indented"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateMachineWS.get_known_indented" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an indented block and info.</p>
+<p>Extract an indented block where the indent is known for all lines.
+Starting with the current line, extract the entire text block with at
+least <cite>indent</cite> indentation (which must be whitespace, except for the
+first line).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><ul class="first simple">
+<li><cite>indent</cite>: The number of indent columns/characters.</li>
+<li><cite>until_blank</cite>: Stop collecting at the first blank line if true.</li>
+<li><cite>strip_indent</cite>: Strip <cite>indent</cite> characters of indentation if true
+(default).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return :</th><td class="field-body"><ul class="first last simple">
+<li>the indented block,</li>
+<li>its first line offset from BOF, and</li>
+<li>whether or not it finished with a blank line.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="statemachine.StateWS">
+<em class="property">class </em><tt class="descclassname">statemachine.</tt><tt class="descname">StateWS</tt><big>(</big><em>state_machine</em>, <em>debug=False</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateWS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateWS" title="Permalink to this definition">¶</a></dt>
+<dd><p>State superclass specialized for whitespace (blank lines &amp; indents).</p>
+<p>Use this class with <cite>StateMachineWS</cite>.  The transitions &#8216;blank&#8217; (for blank
+lines) and &#8216;indent&#8217; (for indented text blocks) are added automatically,
+before any other transitions.  The transition method <cite>blank()</cite> handles
+blank lines and <cite>indent()</cite> handles nested indented blocks.  Indented
+blocks trigger a new state machine to be created by <cite>indent()</cite> and run.
+The class of the state machine to be created is in <cite>indent_sm</cite>, and the
+constructor keyword arguments are in the dictionary <cite>indent_sm_kwargs</cite>.</p>
+<p>The methods <cite>known_indent()</cite> and <cite>firstknown_indent()</cite> are provided for
+indented blocks where the indent (all lines&#8217; and first line&#8217;s only,
+respectively) is known to the transition method, along with the attributes
+<cite>known_indent_sm</cite> and <cite>known_indent_sm_kwargs</cite>.  Neither transition method
+is triggered automatically.</p>
+<dl class="method">
+<dt id="statemachine.StateWS.add_initial_transitions">
+<tt class="descname">add_initial_transitions</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateWS.add_initial_transitions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateWS.add_initial_transitions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add whitespace-specific transitions before those defined in subclass.</p>
+<p>Extends <cite>State.add_initial_transitions()</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StateWS.blank">
+<tt class="descname">blank</tt><big>(</big><em>match</em>, <em>context</em>, <em>next_state</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateWS.blank"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateWS.blank" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle blank lines. Does nothing. Override in subclasses.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StateWS.first_known_indent">
+<tt class="descname">first_known_indent</tt><big>(</big><em>match</em>, <em>context</em>, <em>next_state</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateWS.first_known_indent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateWS.first_known_indent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle an indented text block (first line&#8217;s indent known).</p>
+<p>Extend or override in subclasses.</p>
+<p>Recursively run the registered state machine for known-indent indented
+blocks (<cite>self.known_indent_sm</cite>). The indent is the length of the
+match, <tt class="docutils literal"><span class="pre">match.end()</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StateWS.indent">
+<tt class="descname">indent</tt><big>(</big><em>match</em>, <em>context</em>, <em>next_state</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateWS.indent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateWS.indent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle an indented text block. Extend or override in subclasses.</p>
+<p>Recursively run the registered state machine for indented blocks
+(<cite>self.indent_sm</cite>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="statemachine.StateWS.indent_sm">
+<tt class="descname">indent_sm</tt><em class="property"> = None</em><a class="headerlink" href="#statemachine.StateWS.indent_sm" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <cite>StateMachine</cite> class handling indented text blocks.</p>
+<p>If left as <tt class="docutils literal"><span class="pre">None</span></tt>, <cite>indent_sm</cite> defaults to the value of
+<cite>State.nested_sm</cite>.  Override it in subclasses to avoid the default.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="statemachine.StateWS.indent_sm_kwargs">
+<tt class="descname">indent_sm_kwargs</tt><em class="property"> = None</em><a class="headerlink" href="#statemachine.StateWS.indent_sm_kwargs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Keyword arguments dictionary, passed to the <cite>indent_sm</cite> constructor.</p>
+<p>If left as <tt class="docutils literal"><span class="pre">None</span></tt>, <cite>indent_sm_kwargs</cite> defaults to the value of
+<cite>State.nested_sm_kwargs</cite>. Override it in subclasses to avoid the default.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StateWS.known_indent">
+<tt class="descname">known_indent</tt><big>(</big><em>match</em>, <em>context</em>, <em>next_state</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StateWS.known_indent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StateWS.known_indent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle a known-indent text block. Extend or override in subclasses.</p>
+<p>Recursively run the registered state machine for known-indent indented
+blocks (<cite>self.known_indent_sm</cite>). The indent is the length of the
+match, <tt class="docutils literal"><span class="pre">match.end()</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="statemachine.StateWS.known_indent_sm">
+<tt class="descname">known_indent_sm</tt><em class="property"> = None</em><a class="headerlink" href="#statemachine.StateWS.known_indent_sm" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <cite>StateMachine</cite> class handling known-indented text blocks.</p>
+<p>If left as <tt class="docutils literal"><span class="pre">None</span></tt>, <cite>known_indent_sm</cite> defaults to the value of
+<cite>indent_sm</cite>.  Override it in subclasses to avoid the default.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="statemachine.StateWS.known_indent_sm_kwargs">
+<tt class="descname">known_indent_sm_kwargs</tt><em class="property"> = None</em><a class="headerlink" href="#statemachine.StateWS.known_indent_sm_kwargs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Keyword arguments dictionary, passed to the <cite>known_indent_sm</cite> constructor.</p>
+<p>If left as <tt class="docutils literal"><span class="pre">None</span></tt>, <cite>known_indent_sm_kwargs</cite> defaults to the value of
+<cite>indent_sm_kwargs</cite>. Override it in subclasses to avoid the default.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="statemachine.StateWS.ws_initial_transitions">
+<tt class="descname">ws_initial_transitions</tt><em class="property"> = ('blank', 'indent')</em><a class="headerlink" href="#statemachine.StateWS.ws_initial_transitions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default initial whitespace transitions, added before those listed in
+<cite>State.initial_transitions</cite>.  May be overridden in subclasses.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="statemachine.StateWS.ws_patterns">
+<tt class="descname">ws_patterns</tt><em class="property"> = {'indent': ' +', 'blank': ' *$'}</em><a class="headerlink" href="#statemachine.StateWS.ws_patterns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Patterns for default whitespace transitions.  May be overridden in
+subclasses.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="statemachine.StringList">
+<em class="property">class </em><tt class="descclassname">statemachine.</tt><tt class="descname">StringList</tt><big>(</big><em>initlist=None</em>, <em>source=None</em>, <em>items=None</em>, <em>parent=None</em>, <em>parent_offset=None</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StringList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StringList" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <cite>ViewList</cite> with string-specific methods.</p>
+<dl class="method">
+<dt id="statemachine.StringList.get_indented">
+<tt class="descname">get_indented</tt><big>(</big><em>start=0</em>, <em>until_blank=False</em>, <em>strip_indent=True</em>, <em>block_indent=None</em>, <em>first_indent=None</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StringList.get_indented"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StringList.get_indented" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract and return a StringList of indented lines of text.</p>
+<p>Collect all lines with indentation, determine the minimum indentation,
+remove the minimum indentation from all indented lines (unless
+<cite>strip_indent</cite> is false), and return them. All lines up to but not
+including the first unindented line will be returned.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><ul class="first simple">
+<li><cite>start</cite>: The index of the first line to examine.</li>
+<li><cite>until_blank</cite>: Stop collecting at the first blank line if true.</li>
+<li><cite>strip_indent</cite>: Strip common leading indent if true (default).</li>
+<li><cite>block_indent</cite>: The indent of the entire block, if known.</li>
+<li><cite>first_indent</cite>: The indent of the first line, if known.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return :</th><td class="field-body"><ul class="first last simple">
+<li>a StringList of indented lines with mininum indent removed;</li>
+<li>the amount of the indent;</li>
+<li>a boolean: did the indented block finish with a blank line or EOF?</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StringList.get_text_block">
+<tt class="descname">get_text_block</tt><big>(</big><em>start</em>, <em>flush_left=False</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StringList.get_text_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StringList.get_text_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a contiguous block of text.</p>
+<p>If <cite>flush_left</cite> is true, raise <cite>UnexpectedIndentationError</cite> if an
+indented line is encountered before the text block ends (with a blank
+line).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StringList.pad_double_width">
+<tt class="descname">pad_double_width</tt><big>(</big><em>pad_char</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StringList.pad_double_width"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StringList.pad_double_width" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pad all double-width characters in self by appending <cite>pad_char</cite> to each.
+For East Asian language support.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StringList.replace">
+<tt class="descname">replace</tt><big>(</big><em>old</em>, <em>new</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StringList.replace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StringList.replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace all occurrences of substring <cite>old</cite> with <cite>new</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.StringList.trim_left">
+<tt class="descname">trim_left</tt><big>(</big><em>length</em>, <em>start=0</em>, <em>end=2147483647</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#StringList.trim_left"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.StringList.trim_left" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trim <cite>length</cite> characters off the beginning of each item, in-place,
+from index <cite>start</cite> to <cite>end</cite>.  No whitespace-checking is done on the
+trimmed text.  Does not affect slice parent.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="statemachine.TransitionCorrection">
+<em class="property">exception </em><tt class="descclassname">statemachine.</tt><tt class="descname">TransitionCorrection</tt><a class="reference internal" href="_modules/statemachine.html#TransitionCorrection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.TransitionCorrection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raise from within a transition method to switch to another transition.</p>
+<p>Raise with one argument, the new transition name.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="statemachine.ViewList">
+<em class="property">class </em><tt class="descclassname">statemachine.</tt><tt class="descname">ViewList</tt><big>(</big><em>initlist=None</em>, <em>source=None</em>, <em>items=None</em>, <em>parent=None</em>, <em>parent_offset=None</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#ViewList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.ViewList" title="Permalink to this definition">¶</a></dt>
+<dd><p>List with extended functionality: slices of ViewList objects are child
+lists, linked to their parents. Changes made to a child list also affect
+the parent list.  A child list is effectively a &#8220;view&#8221; (in the SQL sense)
+of the parent list.  Changes to parent lists, however, do <em>not</em> affect
+active child lists.  If a parent list is changed, any active child lists
+should be recreated.</p>
+<p>The start and end of the slice can be trimmed using the <cite>trim_start()</cite> and
+<cite>trim_end()</cite> methods, without affecting the parent list.  The link between
+child and parent lists can be broken by calling <cite>disconnect()</cite> on the
+child list.</p>
+<p>Also, ViewList objects keep track of the source &amp; offset of each item.
+This information is accessible via the <cite>source()</cite>, <cite>offset()</cite>, and
+<cite>info()</cite> methods.</p>
+<dl class="attribute">
+<dt id="statemachine.ViewList.data">
+<tt class="descname">data</tt><em class="property"> = None</em><a class="headerlink" href="#statemachine.ViewList.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>The actual list of data, flattened from various sources.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.ViewList.disconnect">
+<tt class="descname">disconnect</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/statemachine.html#ViewList.disconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.ViewList.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Break link between this list and parent list.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.ViewList.info">
+<tt class="descname">info</tt><big>(</big><em>i</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#ViewList.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.ViewList.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return source &amp; offset for index <cite>i</cite>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="statemachine.ViewList.items">
+<tt class="descname">items</tt><em class="property"> = None</em><a class="headerlink" href="#statemachine.ViewList.items" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of (source, offset) pairs, same length as <cite>self.data</cite>: the
+source of each line and the offset of each line from the beginning of
+its source.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.ViewList.offset">
+<tt class="descname">offset</tt><big>(</big><em>i</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#ViewList.offset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.ViewList.offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return offset for index <cite>i</cite>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="statemachine.ViewList.parent">
+<tt class="descname">parent</tt><em class="property"> = None</em><a class="headerlink" href="#statemachine.ViewList.parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>The parent list.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="statemachine.ViewList.parent_offset">
+<tt class="descname">parent_offset</tt><em class="property"> = None</em><a class="headerlink" href="#statemachine.ViewList.parent_offset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Offset of this list from the beginning of the parent list.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.ViewList.pprint">
+<tt class="descname">pprint</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/statemachine.html#ViewList.pprint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.ViewList.pprint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print the list in <cite>grep</cite> format (<cite>source:offset:value</cite> lines)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.ViewList.source">
+<tt class="descname">source</tt><big>(</big><em>i</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#ViewList.source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.ViewList.source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return source for index <cite>i</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.ViewList.trim_end">
+<tt class="descname">trim_end</tt><big>(</big><em>n=1</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#ViewList.trim_end"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.ViewList.trim_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove items from the end of the list, without touching the parent.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.ViewList.trim_start">
+<tt class="descname">trim_start</tt><big>(</big><em>n=1</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#ViewList.trim_start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.ViewList.trim_start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove items from the start of the list, without touching the parent.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="statemachine.ViewList.xitems">
+<tt class="descname">xitems</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/statemachine.html#ViewList.xitems"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.ViewList.xitems" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return iterator yielding (source, offset, value) tuples.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="statemachine.string2lines">
+<tt class="descclassname">statemachine.</tt><tt class="descname">string2lines</tt><big>(</big><em>astring</em>, <em>tab_width=8</em>, <em>convert_whitespace=False</em>, <em>whitespace=&lt;_sre.SRE_Pattern object at 0x025BEF70&gt;</em><big>)</big><a class="reference internal" href="_modules/statemachine.html#string2lines"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#statemachine.string2lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of one-line strings with tabs expanded, no newlines, and
+trailing whitespace stripped.</p>
+<p>Each tab is expanded with between 1 and <cite>tab_width</cite> spaces, so that the
+next character&#8217;s index becomes a multiple of <cite>tab_width</cite> (8 by default).</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li><cite>astring</cite>: a multi-line string.</li>
+<li><cite>tab_width</cite>: the number of columns between tab stops.</li>
+<li><cite>convert_whitespace</cite>: convert form feeds and vertical tabs to spaces?</li>
+</ul>
+</dd></dl>
+
+</div>
+</div></blockquote>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The core module</a><ul>
+<li><a class="reference internal" href="#core-components">core.components</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#statemachine">StateMachine</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to TAINT&#8217;s documentation!</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/core.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to TAINT’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">TAINT 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Alexandros Gouvatsos.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

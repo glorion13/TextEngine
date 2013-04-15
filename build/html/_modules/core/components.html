@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>core.components &mdash; TAINT 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="TAINT 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">TAINT 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for core.components</h1><pre>
+# Author: Alexandros Gouvatsos &lt;alexandros@gouvatsos.com&gt;
+# Copyright: This module has been placed in the public domain.
+
+"""
+The core of the system, which is used as the basis for both the Python-based editor and the
+Python-based interpreter. This module defines the following classes:
+
+- :class:`Hierarchy`, which represents the hierarchical structure of the game (interactive novel or text adventure).
+- :class:`Resource`, which represents global information, such as the date or the weather in the fictional world, or values like the health state of the player.
+- :class:`Scene`, which represents a location or a state in the fictional world.
+- :class:`Action`, which represents an action that can be triggered by the player. An Action consists of a `Condition` and an `Effect`. The `Effect` is only resolved if the condition is True. An action can be visible (in the case of an interactive novel) or invisible (in the case of a text adventure). In fact, within the same game there might be cases when Actions are visible and cases when actions are invisible.
+- :class:`Condition`, which The Condition class represents a logical evaluation which can be part of an Action. When evaluated it returns a value of True or False.
+- :class:`Effect`, which represents the outcome of a given Action that the player performs. An Effect can be anything from changing the scene, interacting with the world or even losing the game.
+"""
+
+<div class="viewcode-block" id="Hierarchy"><a class="viewcode-back" href="../../core.html#core.components.Hierarchy">[docs]</a>class Hierarchy:
+	"""
+	This class rocks.
+	"""
+	def __init__(self):
+		"""
+		Initialise a `Hierarchy` object.
+		"""
+		self.startingScene = None
+		self.currentScene = None
+		self.scenes = []
+		self.globalResources = []
+		self.globalActions = []
+</div>
+<div class="viewcode-block" id="Resource"><a class="viewcode-back" href="../../core.html#core.components.Resource">[docs]</a>class Resource:
+	def __init__(self, name, value):
+		self.name = name
+		self.value = value
+</div>
+<div class="viewcode-block" id="Scene"><a class="viewcode-back" href="../../core.html#core.components.Scene">[docs]</a>class Scene:
+	def __init__(self, description, name='default room'):
+		self.name = name
+		self.description = description
+		self.actions = []
+</div>
+<div class="viewcode-block" id="Action"><a class="viewcode-back" href="../../core.html#core.components.Action">[docs]</a>class Action:
+	def __init__(self, name='default action', effectsIfTrue=[], effectsIfFalse=[], conditions=[], visible=True):
+		self.name = name
+		self.conditions = conditions
+		self.effectsIfTrue = effectsIfTrue
+		self.effectsIfFalse = effectsIfFalse
+		self.visible = visible
+<div class="viewcode-block" id="Action.conditionsAreTrue"><a class="viewcode-back" href="../../core.html#core.components.Action.conditionsAreTrue">[docs]</a>	def conditionsAreTrue(self):
+		booleanCount = sum( [condition.evaluate() for condition in self.conditions] )
+		return booleanCount == len(self.conditions)</div>
+	def perform(self):
+		if self.conditionsAreTrue():
+			for effect in self.effectsIfTrue:
+				effect.resolve()
+		else:
+			for effect in self.effectsIfFalse:
+				effect.resolve()
+</div>
+<div class="viewcode-block" id="Condition"><a class="viewcode-back" href="../../core.html#core.components.Condition">[docs]</a>class Condition:
+	def __init__(self, conditionType, leftHandSide, rightHandSide):
+		self.conditionType = conditionType
+		self.leftHandSide = leftHandSide
+		self.rightHandSide = rightHandSide
+	def evaluate(self):
+		return self.conditionType(self.leftHandSide, self.rightHandSide)
+</div>
+<div class="viewcode-block" id="Effect"><a class="viewcode-back" href="../../core.html#core.components.Effect">[docs]</a>class Effect:
+	def __init__(self, effectFunction, *args):
+		self.effectFunction = effectFunction
+		self.args = args
+	def resolve(self):
+		self.effectFunction(*self.args)</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">TAINT 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Alexandros Gouvatsos.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

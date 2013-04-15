@@ -4,7 +4,7 @@ import customisable
 # Load data
 
 # Initialise game
-game = core.components.Hierarchy()
+game = core.components.Game()
 
 # Global resources
 hp = core.components.Resource('HP', 10)
@@ -23,14 +23,17 @@ game.globalActions.append(showVisibleScenesAction)
 
 # Initialise scene data
 scene1 = core.components.Scene(\
-	description="You are in a cave. The rocks are glistening. They are glistener rocks.",
+	description="You are in a cave. You can hear a stream running nearby, to the south.",
 	name='A cave')
 scene2 = core.components.Scene(\
 	description="You're dead.",
 	name='Death')
+scene3 = core.components.Scene(\
+	description="You see a slumbering troll, right in front of you.",
+	name='Death')
 action1 = core.components.Action(\
 	name='Go south',
-	effectsIfTrue=[core.components.Effect(customisable.effects.goToScene, game, scene2)],
+	effectsIfTrue=[core.components.Effect(customisable.effects.goToScene, game, scene3)],
 	effectsIfFalse=[core.components.Effect(customisable.effects.cmdOutputText, "You suck!")],
 	conditions=[core.components.Condition(conditionType=customisable.conditions.dictionary.get('equals'), leftHandSide=game.globalResources[0].value, rightHandSide=10)])
 action2 = core.components.Action(\
