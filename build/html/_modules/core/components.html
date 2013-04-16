@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -46,79 +48,119 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <h1>Source code for core.components</h1><pre>
-# Author: Alexandros Gouvatsos &lt;alexandros@gouvatsos.com&gt;
-# Copyright: This module has been placed in the public domain.
+  <h1>Source code for core.components</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The :mod:`core.components` module contains the following classes:</span>
 
-"""
-The core of the system, which is used as the basis for both the Python-based editor and the
-Python-based interpreter. This module defines the following classes:
+<span class="sd">   - :class:`Game`, which represents the structure of the game (interactive novel or text adventure).</span>
+<span class="sd">   - :class:`Resource`, which represents global information, such as the date or the weather in the fictional world, or values like the health state of the player.</span>
+<span class="sd">   - :class:`Scene`, which represents a location or a state in the fictional world.</span>
+<span class="sd">   - :class:`Action`, which represents an action that can be triggered by the player. An :class:`Action` consists of a :class:`Condition` and an :class:`Effect`. The :class:`Effect` is only resolved if the condition is ``True``.</span>
+<span class="sd">   - :class:`Condition`, which represents a logical evaluation which can be part of an :class:`Action`. When evaluated it returns a value of ``True`` or ``False``.</span>
+<span class="sd">   - :class:`Effect`, which represents the outcome of a given Action that the player performs. An :class:`Effect` can be anything from changing the scene, interacting with the world or even losing the game.</span>
 
-- :class:`Hierarchy`, which represents the hierarchical structure of the game (interactive novel or text adventure).
-- :class:`Resource`, which represents global information, such as the date or the weather in the fictional world, or values like the health state of the player.
-- :class:`Scene`, which represents a location or a state in the fictional world.
-- :class:`Action`, which represents an action that can be triggered by the player. An Action consists of a `Condition` and an `Effect`. The `Effect` is only resolved if the condition is True. An action can be visible (in the case of an interactive novel) or invisible (in the case of a text adventure). In fact, within the same game there might be cases when Actions are visible and cases when actions are invisible.
-- :class:`Condition`, which The Condition class represents a logical evaluation which can be part of an Action. When evaluated it returns a value of True or False.
-- :class:`Effect`, which represents the outcome of a given Action that the player performs. An Effect can be anything from changing the scene, interacting with the world or even losing the game.
-"""
+<span class="sd">&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Hierarchy"><a class="viewcode-back" href="../../core.html#core.components.Hierarchy">[docs]</a>class Hierarchy:
-	"""
-	This class rocks.
-	"""
-	def __init__(self):
-		"""
-		Initialise a `Hierarchy` object.
-		"""
-		self.startingScene = None
-		self.currentScene = None
-		self.scenes = []
-		self.globalResources = []
-		self.globalActions = []
+<div class="viewcode-block" id="Game"><a class="viewcode-back" href="../../core.html#core.components.Game">[docs]</a><span class="k">class</span> <span class="nc">Game</span><span class="p">:</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	The :class:`Game` class basically represents the structure of the game (interactive novel or</span>
+<span class="sd">	text adventure). Therefore it contains the various :class:`Scene`, global :class:`Resource` and</span>
+<span class="sd">	global :class:`Action` instances of the game. It also keeps track of the starting scene and the</span>
+<span class="sd">	current scene.</span>
+
+<span class="sd">	:Attributes:</span>
+<span class="sd">		- `startingScene` A :class:`Scene` object which is the first scene that the game will load.</span>
+<span class="sd">		- `currentScene` A :class:`Scene` object which is the scene the player is currently in.</span>
+<span class="sd">		- `scenes` A :class:`list` of :class:`Scene` objects which holds all of the scenes of the game, along with their corresponding attributes.</span>
+<span class="sd">		- `globalResources` A :class:`list` of :class:`Resource` for storing global resources, such as player HP.</span>
+<span class="sd">		- `globalActions` A :class:`list` of :class:`Action` for storing global actions, such as actions which are	always available to the player (e.g. `&#39;help&#39;`) or actions such as checking if the player&#39;s HP falls under a certain	threshold.</span>
+
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;Initialise a :class:`Game` object.&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">startingScene</span> <span class="o">=</span> <span class="bp">None</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">currentScene</span> <span class="o">=</span> <span class="bp">None</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">scenes</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">globalResources</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">globalActions</span> <span class="o">=</span> <span class="p">[]</span>
 </div>
-<div class="viewcode-block" id="Resource"><a class="viewcode-back" href="../../core.html#core.components.Resource">[docs]</a>class Resource:
-	def __init__(self, name, value):
-		self.name = name
-		self.value = value
+<div class="viewcode-block" id="Resource"><a class="viewcode-back" href="../../core.html#core.components.Resource">[docs]</a><span class="k">class</span> <span class="nc">Resource</span><span class="p">:</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	The :class:`Resource` class represents global information, such as the date or the weather</span>
+<span class="sd">	in the fictional world, or values like the health state of the player. It is basically a tuple,</span>
+<span class="sd">	containing a `name` attribute and a `value` attribute.</span>
+
+<span class="sd">	:Attributes:</span>
+<span class="sd">		- `name`: A :class:`string` which holds the name of the :class:`Resource`, e.g. &#39;HP&#39;.</span>
+<span class="sd">		- `value`: This attribute holds the actual value of the resource, which can be of any type.	For example, if the resource represents the player&#39;s HP, the `value` of the :class:`Resource` can be an :class:`int` of value 10.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;Initialise a :class:`Resource` object.&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
 </div>
-<div class="viewcode-block" id="Scene"><a class="viewcode-back" href="../../core.html#core.components.Scene">[docs]</a>class Scene:
-	def __init__(self, description, name='default room'):
-		self.name = name
-		self.description = description
-		self.actions = []
+<div class="viewcode-block" id="Scene"><a class="viewcode-back" href="../../core.html#core.components.Scene">[docs]</a><span class="k">class</span> <span class="nc">Scene</span><span class="p">:</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	An action can be visible (in the case of an interactive novel) or invisible (in the case of a text</span>
+<span class="sd">	adventure), by toggling the . In fact, even within the same game there might be cases when actions</span>
+<span class="sd">	are visible and cases when actions are invisible.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;default room&#39;</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;Initialise a :class:`Scene` object.&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">actions</span> <span class="o">=</span> <span class="p">[]</span>
 </div>
-<div class="viewcode-block" id="Action"><a class="viewcode-back" href="../../core.html#core.components.Action">[docs]</a>class Action:
-	def __init__(self, name='default action', effectsIfTrue=[], effectsIfFalse=[], conditions=[], visible=True):
-		self.name = name
-		self.conditions = conditions
-		self.effectsIfTrue = effectsIfTrue
-		self.effectsIfFalse = effectsIfFalse
-		self.visible = visible
-<div class="viewcode-block" id="Action.conditionsAreTrue"><a class="viewcode-back" href="../../core.html#core.components.Action.conditionsAreTrue">[docs]</a>	def conditionsAreTrue(self):
-		booleanCount = sum( [condition.evaluate() for condition in self.conditions] )
-		return booleanCount == len(self.conditions)</div>
-	def perform(self):
-		if self.conditionsAreTrue():
-			for effect in self.effectsIfTrue:
-				effect.resolve()
-		else:
-			for effect in self.effectsIfFalse:
-				effect.resolve()
+<div class="viewcode-block" id="Action"><a class="viewcode-back" href="../../core.html#core.components.Action">[docs]</a><span class="k">class</span> <span class="nc">Action</span><span class="p">:</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	:class:`Action` object.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;default action&#39;</span><span class="p">,</span> <span class="n">effectsIfTrue</span><span class="o">=</span><span class="p">[],</span> <span class="n">effectsIfFalse</span><span class="o">=</span><span class="p">[],</span> <span class="n">conditions</span><span class="o">=</span><span class="p">[],</span> <span class="n">visible</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;Initialise an :class:`Action` object.&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">conditions</span> <span class="o">=</span> <span class="n">conditions</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">effectsIfTrue</span> <span class="o">=</span> <span class="n">effectsIfTrue</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">effectsIfFalse</span> <span class="o">=</span> <span class="n">effectsIfFalse</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="n">visible</span>
+<div class="viewcode-block" id="Action.conditionsAreTrue"><a class="viewcode-back" href="../../core.html#core.components.Action.conditionsAreTrue">[docs]</a>	<span class="k">def</span> <span class="nf">conditionsAreTrue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Glorious function.</span>
+
+<span class="sd">		:params: self</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">booleanCount</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span> <span class="p">[</span><span class="n">condition</span><span class="o">.</span><span class="n">evaluate</span><span class="p">()</span> <span class="k">for</span> <span class="n">condition</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">conditions</span><span class="p">]</span> <span class="p">)</span>
+		<span class="k">return</span> <span class="n">booleanCount</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conditions</span><span class="p">)</span></div>
+	<span class="k">def</span> <span class="nf">perform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">conditionsAreTrue</span><span class="p">():</span>
+			<span class="k">for</span> <span class="n">effect</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">effectsIfTrue</span><span class="p">:</span>
+				<span class="n">effect</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">for</span> <span class="n">effect</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">effectsIfFalse</span><span class="p">:</span>
+				<span class="n">effect</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="Condition"><a class="viewcode-back" href="../../core.html#core.components.Condition">[docs]</a>class Condition:
-	def __init__(self, conditionType, leftHandSide, rightHandSide):
-		self.conditionType = conditionType
-		self.leftHandSide = leftHandSide
-		self.rightHandSide = rightHandSide
-	def evaluate(self):
-		return self.conditionType(self.leftHandSide, self.rightHandSide)
+<div class="viewcode-block" id="Condition"><a class="viewcode-back" href="../../core.html#core.components.Condition">[docs]</a><span class="k">class</span> <span class="nc">Condition</span><span class="p">:</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	A :class:`Condition`.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conditionType</span><span class="p">,</span> <span class="n">leftHandSide</span><span class="p">,</span> <span class="n">rightHandSide</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;Initialise a :class:`Condition` object.&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">conditionType</span> <span class="o">=</span> <span class="n">conditionType</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">leftHandSide</span> <span class="o">=</span> <span class="n">leftHandSide</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">rightHandSide</span> <span class="o">=</span> <span class="n">rightHandSide</span>
+	<span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">conditionType</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">leftHandSide</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rightHandSide</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="Effect"><a class="viewcode-back" href="../../core.html#core.components.Effect">[docs]</a>class Effect:
-	def __init__(self, effectFunction, *args):
-		self.effectFunction = effectFunction
-		self.args = args
-	def resolve(self):
-		self.effectFunction(*self.args)</pre></div>
+<div class="viewcode-block" id="Effect"><a class="viewcode-back" href="../../core.html#core.components.Effect">[docs]</a><span class="k">class</span> <span class="nc">Effect</span><span class="p">:</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	An :class:`Effect`.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">effectFunction</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot; Initialise an :class:`Effect` object.&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">effectFunction</span> <span class="o">=</span> <span class="n">effectFunction</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
+	<span class="k">def</span> <span class="nf">resolve</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">effectFunction</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">)</span></div>
+</pre></div>
 
           </div>
         </div>
@@ -157,7 +199,7 @@ Python-based interpreter. This module defines the following classes:
     </div>
     <div class="footer">
         &copy; Copyright 2013, Alexandros Gouvatsos.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>
