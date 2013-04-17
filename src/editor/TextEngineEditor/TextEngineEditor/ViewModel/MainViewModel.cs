@@ -1,7 +1,10 @@
 using GalaSoft.MvvmLight;
-
+using GalaSoft.MvvmLight.Command;
 using IronPython;
 using IronPython.Hosting;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows.Input;
 
 namespace TextEngineEditor.ViewModel
 {
@@ -31,26 +34,42 @@ namespace TextEngineEditor.ViewModel
             else
             {
                 // Code runs "for real"
-                TestText = "test";
+                ChangeHPCommand = new RelayCommand(ChangeHP);
+                
+                // Setup Python runtime environment
                 dynamic python = Python.CreateRuntime();
                 dynamic core = Python.CreateRuntime().ImportModule("Python/core");
-                dynamic hpRes = core.getResource("HP", 50);
-                int hp = hpRes.value;
-                TestText = hp.ToString();
+
+                HpRes = core.getResource("HP", 50);
+
+                SceneNodes = new BindingList<dynamic>();
+                SceneNodes.Add(HpRes);
             }
         }
 
-        private string testText;
-        public string TestText
+        public BindingList<dynamic> SceneNodes { get; private set; }
+
+        dynamic HpRes { get; set; }
+
+        private void ChangeHP()
         {
-            get
-            {
-                return testText;
-            }
-            set
-            {
-                Set(() => TestText, ref testText, value);
-            }
+            HpRes.value += 1;
+            SceneNodes[0] = HpRes;
         }
+
+        //private dynamic selectedItem;
+        //public dynamic SelectedItem
+        //{
+        //    get
+        //    {
+        //        return selectedItem;
+        //    }
+        //    set
+        //    {
+        //        Set(() => SelectedItem, ref selectedItem, value);
+        //    }
+        //}
+
+        public ICommand ChangeHPCommand { get; set; }
     }
 }
