@@ -5,6 +5,7 @@ using IronPython.Hosting;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
+using System.Linq;
 
 namespace TextEngineEditor.ViewModel
 {
@@ -34,42 +35,152 @@ namespace TextEngineEditor.ViewModel
             else
             {
                 // Code runs "for real"
-                ChangeHPCommand = new RelayCommand(ChangeHP);
                 
                 // Setup Python runtime environment
-                dynamic python = Python.CreateRuntime();
-                dynamic core = Python.CreateRuntime().ImportModule("Python/core");
+                PythonEffects = new BindingList<string>();
+                PythonConditions = new BindingList<string>();
+                ReloadPython();
+                //var kek = pythonCore.getEffects().get("outputVisibleSceneActions").__name__;
 
-                HpRes = core.getResource("HP", 50);
+                // Initialise commands
+                NewSceneCommand = new RelayCommand(NewScene);
+                ExportCommand = new RelayCommand(ExportAsXML);
+                ReloadPythonCommand = new RelayCommand(ReloadPython);
 
-                SceneNodes = new BindingList<dynamic>();
-                SceneNodes.Add(HpRes);
+                // Initialise UI objects
+                SceneNodes = new ObservableCollection<SceneNode>();
+
+                // Initialise test objects
+                SceneNode scene1 = new SceneNode();
+                scene1.Name = "cave";
+                scene1.Description = "A big cave.";
+
+                SceneNode scene2 = new SceneNode();
+                scene2.Name = "beach";
+                scene2.Description = "A sandy beach.";
+                ActionNode action1 = new ActionNode();
+                action1.Name = "Action 1";
+                ConditionNode condition1 = new ConditionNode();
+                action1.Conditions.Add(condition1);
+                scene2.Actions.Add(action1);
+
+                // Populate UI objects
+                SceneNodes.Add(scene1);
+                SceneNodes.Add(scene2);
             }
         }
 
-        public BindingList<dynamic> SceneNodes { get; private set; }
+        dynamic pythonCore { get; set; }
+        dynamic pythonCustom { get; set; }
 
-        dynamic HpRes { get; set; }
-
-        private void ChangeHP()
+        private string gameName;
+        public string GameName
         {
-            HpRes.value += 1;
-            SceneNodes[0] = HpRes;
+            get
+            {
+                return gameName;
+            }
+            set
+            {
+                Set(() => GameName, ref gameName, value);
+            }
         }
 
-        //private dynamic selectedItem;
-        //public dynamic SelectedItem
-        //{
-        //    get
-        //    {
-        //        return selectedItem;
-        //    }
-        //    set
-        //    {
-        //        Set(() => SelectedItem, ref selectedItem, value);
-        //    }
-        //}
+        private SceneNode startingScene;
+        public SceneNode StartingScene
+        {
+            get
+            {
+                return startingScene;
+            }
+            set
+            {
+                Set(() => StartingScene, ref startingScene, value);
+            }
+        }
 
-        public ICommand ChangeHPCommand { get; set; }
+        private SceneNode selectedSceneNode;
+        public SceneNode SelectedSceneNode
+        {
+            get
+            {
+                return selectedSceneNode;
+            }
+            set
+            {
+                Set(() => SelectedSceneNode, ref selectedSceneNode, value);
+            }
+        }
+
+        private ActionNode selectedActionNode;
+        public ActionNode SelectedActionNode
+        {
+            get
+            {
+                return selectedActionNode;
+            }
+            set
+            {
+                Set(() => SelectedActionNode, ref selectedActionNode, value);
+            }
+        }
+
+        public ObservableCollection<SceneNode> SceneNodes { get; private set; }
+        public ObservableCollection<ResourceNode> GlobalResourceNodes { get; private set; }
+        public ObservableCollection<ResourceNode> GlobalActionNodes { get; private set; }
+
+        public BindingList<string> PythonConditions { get; set; }
+        public BindingList<string> PythonEffects { get; set; }
+
+        public ICommand NewSceneCommand { get; set; }
+        private void NewScene()
+        {
+            SceneNode tmpSceneNode = new SceneNode();
+            int tmpCount = 1;
+            while (SceneNodes.Any(s => s.Name == tmpSceneNode.Name))
+            {
+                tmpSceneNode.Name = "New Scene (" + tmpCount.ToString() + ")";
+                tmpCount++;
+            }
+            if (SceneNodes.Count == 0)
+            {
+                // Set As Starting Scene
+            }
+            SceneNodes.Add(tmpSceneNode);
+            SelectedSceneNode = tmpSceneNode;
+        }
+
+        public ICommand ExportCommand { get; set; }
+        private void ExportAsXML()
+        {
+        }
+
+        public ICommand ReloadPythonCommand { get; set; }
+        private void ReloadPython()
+        {
+            pythonCore = Python.CreateRuntime().ImportModule("Python/core");
+            pythonCustom = Python.CreateRuntime().ImportModule("Python/customisable");
+
+            PythonEffects.Clear();
+            PythonConditions.Clear();
+
+            int effectCount = pythonCustom.getEffectsKeysLength();
+            dynamic effectKeys = pythonCustom.getEffectsKeys();
+            for (int i = 0; i < effectCount; i++)
+            {
+                PythonEffects.Add(effectKeys[i]);
+            }
+
+            int conditionCount = pythonCustom.getConditionsKeysLength();
+            dynamic conditionKeys = pythonCustom.getConditionsKeys();
+            for (int i = 0; i < conditionCount; i++)
+            {
+                PythonConditions.Add(conditionKeys[i]);
+            }
+
+            // TODO:
+            // Ensure that the pre-existing scenes don't lose their effects and conditions
+            // Print out log of warnings in case there some were deleted
+        }
     }
 }

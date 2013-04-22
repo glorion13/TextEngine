@@ -1,19 +1,100 @@
 ﻿<Window x:Class="TextEngineEditor.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:GalaSoft_MvvmLight_Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF45"
+        
         DataContext="{Binding Main, Source={StaticResource Locator}}"
-        Title="MainWindow" Height="515.032" Width="1022.31">
-    <Grid>
-        <!--<Button Command="{Binding ChangeHPCommand}" />-->
-        <ListBox Margin="50,50,562,50" ItemsSource="{Binding SceneNodes}" SelectedItem="{Binding SelectedItem}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <TextBlock Text="{Binding value}" />
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <TextBlock Text="{Binding SelectedItem.value}" />
+        Title="TAINT Editor" Height="Auto" Width="Auto">
+    
+    <Grid x:Name="mainGrid">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="master_details_view" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="4" />
+                <ColumnDefinition Width="250" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <GridSplitter ResizeDirection="Columns" Grid.Column="1" Grid.ColumnSpan="1" Width="4" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+            
+            <!-- Master view -->
+            <ListBox Grid.Column="0" ItemsSource="{Binding SceneNodes}" SelectedItem="{Binding SelectedSceneNode, Mode=TwoWay}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <!-- Details view -->
+            <Grid Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="4" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <GridSplitter ResizeDirection="Rows" Grid.Row="1" Grid.ColumnSpan="1" Width="Auto" Height="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+
+                <!-- Scene details -->
+                <StackPanel>
+                    <TextBlock Text="Name:" />
+                    <TextBox Text="{Binding SelectedSceneNode.Name, Mode=TwoWay}" />
+                    <TextBlock Text="Description:" />
+                    <TextBox Text="{Binding SelectedSceneNode.Name, Mode=TwoWay}" Height="100" AcceptsReturn="True" AcceptsTab="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" />
+                    <TextBlock Text="Actions:" />
+                    <ListBox ItemsSource="{Binding SelectedSceneNode.Actions}" SelectedItem="{Binding SelectedActionNode, Mode=TwoWay}" Height="100">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+
+                <!-- Action details -->
+                <StackPanel Grid.Row="2">
+                    <TextBox Text="{Binding SelectedActionNode.Name, Mode=TwoWay}" />
+                    <CheckBox Content="Visible" IsChecked="{Binding SelectedActionNode.IsVisible, Mode=TwoWay}" />
+                    <ListBox ItemsSource="{Binding SelectedActionNode.Conditions}" SelectedItem="{Binding SelectedActionNode, Mode=TwoWay}" Height="100">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <ComboBox ItemsSource="{Binding Main.PythonConditions, Source={StaticResource Locator}}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+
+            </Grid>
+
+
+        </Grid>
+
+        <Grid x:Name="toolbar" Grid.Row="1" HorizontalAlignment="Left">
+            
+            <StackPanel Orientation="Horizontal">
+                <Button Width="80" Command="{Binding NewSceneCommand}" Content="New Scene" />
+                <Button Width="80" Command="{Binding ExportCommand}" Content="Export" />
+                <Button Width="80" Command="{Binding ReloadPythonCommand}" Content="Reload Py" />
+            </StackPanel>
+            
+        </Grid>
+        
     </Grid>
+    
 </Window>

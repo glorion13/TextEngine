@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TextEngineEditor.UIElements
+namespace TextEngineEditor
 {
     public class ResourceNode : ViewModelBase
     {
