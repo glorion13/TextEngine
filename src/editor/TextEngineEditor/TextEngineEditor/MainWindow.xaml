@@ -54,9 +54,9 @@
                 <!-- Scene details -->
                 <StackPanel>
                     <TextBlock Text="Name:" />
-                    <TextBox Text="{Binding SelectedSceneNode.Name, Mode=TwoWay}" />
+                    <TextBox Text="{Binding SelectedSceneNode.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBlock Text="Description:" />
-                    <TextBox Text="{Binding SelectedSceneNode.Name, Mode=TwoWay}" Height="100" AcceptsReturn="True" AcceptsTab="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" />
+                    <TextBox Text="{Binding SelectedSceneNode.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="100" AcceptsReturn="True" AcceptsTab="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" />
                     <TextBlock Text="Actions:" />
                     <ListBox ItemsSource="{Binding SelectedSceneNode.Actions}" SelectedItem="{Binding SelectedActionNode, Mode=TwoWay}" Height="100">
                         <ListBox.ItemTemplate>
@@ -69,9 +69,9 @@
 
                 <!-- Action details -->
                 <StackPanel Grid.Row="2">
-                    <TextBox Text="{Binding SelectedActionNode.Name, Mode=TwoWay}" />
+                    <TextBox Text="{Binding SelectedActionNode.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <CheckBox Content="Visible" IsChecked="{Binding SelectedActionNode.IsVisible, Mode=TwoWay}" />
-                    <ListBox ItemsSource="{Binding SelectedActionNode.Conditions}" SelectedItem="{Binding SelectedActionNode, Mode=TwoWay}" Height="100">
+                    <ListBox ItemsSource="{Binding SelectedActionNode.Conditions}" Height="100">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <ComboBox ItemsSource="{Binding Main.PythonConditions, Source={StaticResource Locator}}" />
@@ -88,7 +88,7 @@
         <Grid x:Name="toolbar" Grid.Row="1" HorizontalAlignment="Left">
             
             <StackPanel Orientation="Horizontal">
-                <Button Width="80" Command="{Binding NewSceneCommand}" Content="New Scene" />
+                <Button Width="80" Command="{Binding AddSceneCommand}" Content="New Scene" />
                 <Button Width="80" Command="{Binding ExportCommand}" Content="Export" />
                 <Button Width="80" Command="{Binding ReloadPythonCommand}" Content="Reload Py" />
             </StackPanel>

@@ -43,7 +43,8 @@ namespace TextEngineEditor.ViewModel
                 //var kek = pythonCore.getEffects().get("outputVisibleSceneActions").__name__;
 
                 // Initialise commands
-                NewSceneCommand = new RelayCommand(NewScene);
+                AddSceneCommand = new RelayCommand(AddScene);
+                RemoveSceneCommand = new RelayCommand(RemoveScene);
                 ExportCommand = new RelayCommand(ExportAsXML);
                 ReloadPythonCommand = new RelayCommand(ReloadPython);
 
@@ -132,8 +133,8 @@ namespace TextEngineEditor.ViewModel
         public BindingList<string> PythonConditions { get; set; }
         public BindingList<string> PythonEffects { get; set; }
 
-        public ICommand NewSceneCommand { get; set; }
-        private void NewScene()
+        public ICommand AddSceneCommand { get; set; }
+        private void AddScene()
         {
             SceneNode tmpSceneNode = new SceneNode();
             int tmpCount = 1;
@@ -144,10 +145,15 @@ namespace TextEngineEditor.ViewModel
             }
             if (SceneNodes.Count == 0)
             {
-                // Set As Starting Scene
+                StartingScene = tmpSceneNode;
             }
             SceneNodes.Add(tmpSceneNode);
             SelectedSceneNode = tmpSceneNode;
+        }
+
+        public ICommand RemoveSceneCommand { get; set; }
+        private void RemoveScene()
+        {
         }
 
         public ICommand ExportCommand { get; set; }
@@ -181,6 +187,7 @@ namespace TextEngineEditor.ViewModel
             // TODO:
             // Ensure that the pre-existing scenes don't lose their effects and conditions
             // Print out log of warnings in case there some were deleted
+            // If Python does not work don't load it - somehow evaluate python scripts for errors
         }
     }
 }
