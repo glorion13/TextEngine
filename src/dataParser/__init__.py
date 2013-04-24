@@ -53,68 +53,75 @@ def loadXMLGameData(gameDataFile):
 			leftHandSideNode = condition.find("LeftHandSide")
 			lhsType = leftHandSideNode.attrib.get('Type')
 			if lhsType == "Boolean":
-				leftHandSide = bool(leftHandSideNode.text)
+				leftHandSide = lambda(n): bool(n)
 			elif lhsType == "Number":
-				leftHandSide = float(leftHandSideNode.text)
+				leftHandSide = lambda(n): float(n)
 			elif lhsType == "Text":
-				leftHandSide = str(leftHandSideNode.text)
+				leftHandSide = lambda(n): str(n)
 			elif lhsType == "Resource":
-				leftHandSide = searching.getResourceByName(game, str(leftHandSideNode.text))
+				leftHandSide = lambda(n): searching.getResourceByName(game, str(n))
 			rightHandSideNode = condition.find("RightHandSide")
 			rhsType = rightHandSideNode.attrib.get('Type')
 			if rhsType == "Boolean":
-				rightHandSide = bool(rightHandSideNode.text)
+				rightHandSide = lambda(n): bool(n)
 			elif rhsType == "Number":
-				rightHandSide = float(rightHandSideNode.text)
+				rightHandSide = lambda(n): float(n)
 			elif rhsType == "Text":
-				rightHandSide = str(rightHandSideNode.text)
+				rightHandSide = lambda(n): str(n)
 			elif rhsType == "Resource":
-				rightHandSide = searching.getResourceByName(game, str(rightHandSideNode.text))
+				rightHandSide = lambda(n): searching.getResourceByName(game, str(n))
 			conditionFunction = customisable.conditions.dictionary[condition.find("ConditionFunction").text]
 			conditionObject = core.components.Condition()
 			conditionObject.args = [leftHandSide, rightHandSide]
+			conditionObject.raw = [leftHandSideNode.text, rightHandSideNode.text]
 			conditionObject.conditionFunction = conditionFunction
 			actionObject.conditions.append(conditionObject)
 
 		for effect in effectsTrueNode:
 			argsNode = effect.find("args")
 			args = []
+			raw = []
 			for arg in argsNode:
 				argType = arg.attrib.get('Type')
 				if argType == "Boolean":
-					args.append(bool(arg.text))
+					args.append(lambda(n): bool(n))
 				elif argType == "Number":
-					args.append(float(arg.text))
+					args.append(lambda(n): float(n))
 				elif argType == "Text":
-					args.append(str(arg.text))
+					args.append(lambda(n): str(n))
 				elif argType == "Resource":
-					args.append(searching.getResourceByName(game, str(arg.text)))
+					args.append(lambda(n): searching.getResourceByName(game, str(n)))
 				elif argType == "Scene":
-					args.append(searching.getSceneByID(game, int(arg.text)))
+					args.append(lambda(n): searching.getSceneByID(game, int(n)))
+				raw.append(arg.text)
 			effectFunction = customisable.effects.dictionary[effect.find("EffectFunction").text]
 			effectObject = core.components.Effect()
 			effectObject.args = args
+			effectObject.raw = raw
 			effectObject.effectFunction = effectFunction
 			actionObject.effectsIfTrue.append(effectObject)
 
 		for effect in effectsFalseNode:
 			argsNode = effect.find("args")
 			args = []
+			raw = []
 			for arg in argsNode:
 				argType = arg.attrib.get('Type')
 				if argType == "Boolean":
-					args.append(bool(arg.text))
+					args.append(lambda(n): bool(n))
 				elif argType == "Number":
-					args.append(float(arg.text))
+					args.append(lambda(n): float(n))
 				elif argType == "Text":
-					args.append(str(arg.text))
+					args.append(lambda(n): str(n))
 				elif argType == "Resource":
-					args.append(searching.getResourceByName(game, str(arg.text)))
+					args.append(lambda(n): searching.getResourceByName(game, str(n)))
 				elif argType == "Scene":
-					args.append(searching.getSceneByID(game, int(arg.text)))
+					args.append(lambda(n): searching.getSceneByID(game, int(n)))
+				raw.append(arg.text)
 			effectFunction = customisable.effects.dictionary[effect.find("EffectFunction").text]
 			effectObject = core.components.Effect()
 			effectObject.args = args
+			effectObject.raw = raw
 			effectObject.effectFunction = effectFunction
 			actionObject.effectsIfFalse.append(effectObject)
 
@@ -145,26 +152,27 @@ def loadXMLGameData(gameDataFile):
 				leftHandSideNode = condition.find("LeftHandSide")
 				lhsType = leftHandSideNode.attrib.get('Type')
 				if lhsType == "Boolean":
-					leftHandSide = bool(leftHandSideNode.text)
+					leftHandSide = lambda(n): bool(n)
 				elif lhsType == "Number":
-					leftHandSide = float(leftHandSideNode.text)
+					leftHandSide = lambda(n): float(n)
 				elif lhsType == "Text":
-					leftHandSide = str(leftHandSideNode.text)
+					leftHandSide = lambda(n): str(n)
 				elif lhsType == "Resource":
-					leftHandSide = searching.getResourceByName(game, str(leftHandSideNode.text))
+					leftHandSide = lambda(n): searching.getResourceByName(game, str(n))
 				rightHandSideNode = condition.find("RightHandSide")
 				rhsType = rightHandSideNode.attrib.get('Type')
 				if rhsType == "Boolean":
-					rightHandSide = bool(rightHandSideNode.text)
+					rightHandSide = lambda(n): bool(n)
 				elif rhsType == "Number":
-					rightHandSide = float(rightHandSideNode.text)
+					rightHandSide = lambda(n): float(n)
 				elif rhsType == "Text":
-					rightHandSide = str(rightHandSideNode.text)
+					rightHandSide = lambda(n): str(n)
 				elif rhsType == "Resource":
-					rightHandSide = searching.getResourceByName(game, str(rightHandSideNode.text))
+					rightHandSide = lambda(n): searching.getResourceByName(game, str(n))
 				conditionFunction = customisable.conditions.dictionary[condition.find("ConditionFunction").text]
 				conditionObject = core.components.Condition()
 				conditionObject.args = [leftHandSide, rightHandSide]
+				conditionObject.raw = [leftHandSideNode.text, rightHandSideNode.text]
 				conditionObject.conditionFunction = conditionFunction
 				actionObject.conditions.append(conditionObject)
 
@@ -172,21 +180,24 @@ def loadXMLGameData(gameDataFile):
 			for effect in effectsTrueNode:
 				argsNode = effect.find("args")
 				args = []
+				raw = []
 				for arg in argsNode:
 					argType = arg.attrib.get('Type')
 					if argType == "Boolean":
-						args.append(bool(arg.text))
+						args.append(lambda(n): bool(n))
 					elif argType == "Number":
-						args.append(float(arg.text))
+						args.append(lambda(n): float(n))
 					elif argType == "Text":
-						args.append(str(arg.text))
+						args.append(lambda(n): str(n))
 					elif argType == "Resource":
-						args.append(searching.getResourceByName(game, str(arg.text)))
+						args.append(lambda(n): searching.getResourceByName(game, str(n)))
 					elif argType == "Scene":
-						args.append(searching.getSceneByID(game, int(arg.text)))
+						args.append(lambda(n): searching.getSceneByID(game, int(n)))
+					raw.append(arg.text)
 				effectFunction = customisable.effects.dictionary[effect.find("EffectFunction").text]
 				effectObject = core.components.Effect()
 				effectObject.args = args
+				effectObject.raw = raw
 				effectObject.effectFunction = effectFunction
 				actionObject.effectsIfTrue.append(effectObject)
 
@@ -194,21 +205,24 @@ def loadXMLGameData(gameDataFile):
 			for effect in effectsFalseNode:
 				argsNode = effect.find("args")
 				args = []
+				raw = []
 				for arg in argsNode:
 					argType = arg.attrib.get('Type')
 					if argType == "Boolean":
-						args.append(bool(arg.text))
+						args.append(lambda(n): bool(n))
 					elif argType == "Number":
-						args.append(float(arg.text))
+						args.append(lambda(n): float(n))
 					elif argType == "Text":
-						args.append(str(arg.text))
+						args.append(lambda(n): str(n))
 					elif argType == "Resource":
-						args.append(searching.getResourceByName(game, str(arg.text)))
+						args.append(lambda(n): searching.getResourceByName(game, str(n)))
 					elif argType == "Scene":
-						args.append(searching.getSceneByID(game, int(arg.text)))
+						args.append(lambda(n): searching.getSceneByID(game, int(n)))
+					raw.append(arg.text)
 				effectFunction = customisable.effects.dictionary[effect.find("EffectFunction").text]
 				effectObject = core.components.Effect()
 				effectObject.args = args
+				effectObject.raw = raw
 				effectObject.effectFunction = effectFunction
 				actionObject.effectsIfFalse.append(effectObject)
 

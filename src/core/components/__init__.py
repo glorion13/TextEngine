@@ -1,3 +1,5 @@
+import types
+
 """
 The :mod:`core.components` module contains the following classes:
 
@@ -108,9 +110,10 @@ class Condition:
 		"""Initialise a :class:`Condition` object."""
 		self.conditionFunction = conditionFunction
 		self.args = args
-		self.rawArgs = []
+		self.raw = []
 	def evaluate(self):
-		return self.conditionFunction(*self.args)
+		evalArgs = [arg(n) for arg,n in zip(self.args, self.raw)]
+		return self.conditionFunction(*evalArgs)
 
 class Effect:
 	"""
@@ -120,5 +123,7 @@ class Effect:
 		""" Initialise an :class:`Effect` object."""
 		self.effectFunction = effectFunction
 		self.args = args
+		self.raw = []
 	def resolve(self):
-		self.effectFunction(*self.args)
+		evalArgs = [arg(n) for arg,n in zip(self.args, self.raw)]
+		self.effectFunction(*evalArgs)

@@ -18,9 +18,10 @@ print ""
 game.currentScene = game.startingScene
 customisable.effects.dictionary['Tell player'](game.currentScene.description)
 
-for res in game.globalResources:
-	if res.name == "HP":
-		res.value = 49
+#for res in game.globalResources:
+#	if res.name == "HP":
+#		res.value = 49
+game.globalResources.append(core.components.Resource("Hax", 5))
 
 # Core game loop
 while (True):
