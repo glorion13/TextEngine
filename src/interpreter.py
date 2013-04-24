@@ -1,5 +1,4 @@
 import core
-import customisable
 import dataParser
 
 # Load Data
@@ -16,7 +15,7 @@ print ""
 
 # Start game
 game.currentScene = game.startingScene
-customisable.effects.dictionary['Tell player'](game.currentScene.description)
+game.dictionary['Tell player'](game, game.currentScene.description)
 
 #for res in game.globalResources:
 #	if res.name == "HP":

@@ -46,6 +46,7 @@
 	</GlobalActions>
 	<Scenes>
 		<Scene>
+			<ID>0</ID>
 			<Name>beach</Name>
 			<Description>A sandy beach.</Description>
 			<Actions>
@@ -66,9 +67,9 @@
 					</Conditions>
 					<EffectsIfTrue>
 						<Effect>
-							<EffectFunction>Tell player</EffectFunction>
+							<EffectFunction>Go to scene</EffectFunction>
 							<args>
-								<arg Type="Text">True effect!</arg>
+								<arg Type="Scene">1</arg>
 							</args>
 						</Effect>
 					</EffectsIfTrue>
@@ -84,6 +85,7 @@
 			</Actions>
 		</Scene>
 		<Scene>
+			<ID>1</ID>
 			<Name>cave</Name>
 			<Description>A glorious cave.</Description>
 			<Actions>

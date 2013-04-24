@@ -1,4 +1,5 @@
 import types
+import customisable
 
 """
 The :mod:`core.components` module contains the following classes:
@@ -12,7 +13,7 @@ The :mod:`core.components` module contains the following classes:
 
 """
 
-class Game:
+class Game(customisable.effects.EffectFunctions):
 	"""
 	The :class:`Game` class basically represents the structure of the game (interactive novel or
 	text adventure). Therefore it contains the various :class:`Scene`, global :class:`Resource` and
@@ -111,9 +112,10 @@ class Condition:
 		self.conditionFunction = conditionFunction
 		self.args = args
 		self.raw = []
+		self.evalArgs = []
 	def evaluate(self):
-		evalArgs = [arg(n) for arg,n in zip(self.args, self.raw)]
-		return self.conditionFunction(*evalArgs)
+		self.evalArgs = [arg(n) for arg,n in zip(self.args, self.raw)]
+		return self.conditionFunction(*self.evalArgs)
 
 class Effect:
 	"""
@@ -124,6 +126,7 @@ class Effect:
 		self.effectFunction = effectFunction
 		self.args = args
 		self.raw = []
+		self.evalArgs = []
 	def resolve(self):
-		evalArgs = [arg(n) for arg,n in zip(self.args, self.raw)]
-		self.effectFunction(*evalArgs)
+		self.evalArgs += [arg(n) for arg,n in zip(self.args, self.raw)]
+		self.effectFunction(*self.evalArgs)
