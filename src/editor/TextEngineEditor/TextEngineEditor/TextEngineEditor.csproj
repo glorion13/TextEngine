@@ -108,6 +108,12 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Lib\Python\core\components\__init__.pyc" />
+    <None Include="Lib\Python\core\__init__.pyc" />
+    <None Include="Lib\Python\customisable\conditions.pyc" />
+    <None Include="Lib\Python\customisable\effects.pyc" />
+    <None Include="Lib\Python\customisable\__init__.pyc" />
+    <None Include="Lib\Python\dataParser\__init__.pyc" />
+    <None Include="Lib\Python\searching\__init__.pyc" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -121,6 +127,7 @@
   <ItemGroup>
     <Resource Include="MVVMLight.Nuget.Readme.txt" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Lib\Python\core\components\__init__.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -137,9 +144,12 @@
     <Content Include="Lib\Python\customisable\__init__.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="XMLSerialiser\" />
+    <Content Include="Lib\Python\dataParser\__init__.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Lib\Python\searching\__init__.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

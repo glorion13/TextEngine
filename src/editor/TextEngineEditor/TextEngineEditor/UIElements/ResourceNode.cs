@@ -10,13 +10,39 @@ namespace TextEngineEditor
     public class ResourceNode : ViewModelBase
     {
         private string name;
-        private int value;
-
-        public ResourceNode(string name, int value)
+        public string Name
         {
-            this.name = name;
-            this.value = value;
+            get
+            {
+                return name;
+            }
+            set
+            {
+                Set(() => Name, ref name, value);
+            }
         }
 
+        private string resourceValue;
+        public string Value
+        {
+            get
+            {
+                return resourceValue;
+            }
+            set
+            {
+                Set(() => Value, ref resourceValue, value);
+            }
+        }
+
+        public ResourceNode(string name, string value)
+        {
+            Name = name;
+            Value = value;
+        }
+        public override string ToString()
+        {
+            return "";
+        }
     }
 }

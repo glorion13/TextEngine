@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Game>
+	<GameName>Project 1</GameName>
+	<StartingScene>beach</StartingScene>
+	<CurrentScene>None</CurrentScene>
+	<GlobalResources />
+	<GlobalActions />
+	<Scenes>
+		<Scene>
+			<Name>cave</Name>
+			<Description>A big cave.</Description>
+			<Actions>
+				<Action>
+					<Name>Kill bear</Name>
+					<IsVisible>True</IsVisible>
+					<Conditions />
+					<EffectsIfTrue />
+					<EffectsIfFalse />
+				</Action>
+			</Actions>
+		</Scene>
+		<Scene>
+			<Name>beach</Name>
+			<Description>A sandy beach.</Description>
+			<Actions>
+				<Action>
+					<Name>Action 1</Name>
+					<IsVisible>True</IsVisible>
+					<Conditions>
+						<Condition>
+							<ConditionType>equals</ConditionType>
+							<LeftHandSide Type="Boolean">True<LeftHandSide/>
+							<RightHandSide Type="Boolean">True<LeftHandSide/>
+						</Condition>
+						<Condition>
+							<ConditionType>less than</ConditionType>
+							<LeftHandSide Type="Number">0.5<LeftHandSide/>
+							<RightHandSide Type="Number">0.7<LeftHandSide/>
+						</Condition>
+					</Conditions>
+					<EffectsIfTrue>
+						<Effect>
+							<EffectFunction>Tell player</EffectFunction>
+							<args>
+								<arg>Well, hello there!</arg>
+							</args>
+						</Effect>
+					</EffectsIfTrue>
+					<EffectsIfFalse />
+				</Action>
+			</Actions>
+		</Scene>
+		<Scene>
+			<Name>circus</Name>
+			<Description>Lalalalalallalalala.</Description>
+			<Actions />
+		</Scene>
+	</Scenes>
+</Game>

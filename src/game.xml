@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Game>
+	<GameName>Project 1</GameName>
+	<Author>Alexandros Gouvatsos</Author>
+	<StartingScene>0</StartingScene>
+	<GlobalResources>
+		<Resource>
+			<Name>HP</Name>
+			<Type>Number</Type>
+			<Value>7</Value>
+		</Resource>
+		<Resource>
+			<Name>Mana</Name>
+			<Type>Number</Type>
+			<Value>5</Value>
+		</Resource>
+	</GlobalResources>
+	<GlobalActions>
+		<Action>
+			<Name>Action 2</Name>
+			<IsVisible>True</IsVisible>
+			<Conditions>
+				<Condition>
+					<ConditionFunction>less than</ConditionFunction>
+					<LeftHandSide Type="Resource">HP</LeftHandSide>
+					<RightHandSide Type="Number">8</RightHandSide>
+				</Condition>
+			</Conditions>
+			<EffectsIfTrue>
+				<Effect>
+					<EffectFunction>Tell player</EffectFunction>
+					<args>
+						<arg Type="Text">True effect!</arg>
+					</args>
+				</Effect>
+			</EffectsIfTrue>
+			<EffectsIfFalse>
+				<Effect>
+					<EffectFunction>Tell player</EffectFunction>
+					<args>
+						<arg Type="Text">False effect!</arg>
+					</args>
+				</Effect>
+			</EffectsIfFalse>
+		</Action>
+	</GlobalActions>
+	<Scenes>
+		<Scene>
+			<Name>beach</Name>
+			<Description>A sandy beach.</Description>
+			<Actions>
+				<Action>
+					<Name>Action 1</Name>
+					<IsVisible>True</IsVisible>
+					<Conditions>
+						<Condition>
+							<ConditionFunction>equals</ConditionFunction>
+							<LeftHandSide Type="Boolean">True</LeftHandSide>
+							<RightHandSide Type="Boolean">True</RightHandSide>
+						</Condition>
+						<Condition>
+							<ConditionFunction>less than</ConditionFunction>
+							<LeftHandSide Type="Resource">HP</LeftHandSide>
+							<RightHandSide Type="Number">10</RightHandSide>
+						</Condition>
+					</Conditions>
+					<EffectsIfTrue>
+						<Effect>
+							<EffectFunction>Tell player</EffectFunction>
+							<args>
+								<arg Type="Text">True effect!</arg>
+							</args>
+						</Effect>
+					</EffectsIfTrue>
+					<EffectsIfFalse>
+						<Effect>
+							<EffectFunction>Tell player</EffectFunction>
+							<args>
+								<arg Type="Text">False effect!</arg>
+							</args>
+						</Effect>
+					</EffectsIfFalse>
+				</Action>
+			</Actions>
+		</Scene>
+		<Scene>
+			<Name>cave</Name>
+			<Description>A glorious cave.</Description>
+			<Actions>
+				<Action>
+					<Name>Action 1</Name>
+					<IsVisible>True</IsVisible>
+					<Conditions>
+						<Condition>
+							<ConditionFunction>equals</ConditionFunction>
+							<LeftHandSide Type="Boolean">True</LeftHandSide>
+							<RightHandSide Type="Boolean">True</RightHandSide>
+						</Condition>
+						<Condition>
+							<ConditionFunction>less than</ConditionFunction>
+							<LeftHandSide Type="Resource">Mana</LeftHandSide>
+							<RightHandSide Type="Number">6</RightHandSide>
+						</Condition>
+					</Conditions>
+					<EffectsIfTrue>
+						<Effect>
+							<EffectFunction>Tell player</EffectFunction>
+							<args>
+								<arg Type="Text">True effect!</arg>
+							</args>
+						</Effect>
+					</EffectsIfTrue>
+					<EffectsIfFalse>
+						<Effect>
+							<EffectFunction>Tell player</EffectFunction>
+							<args>
+								<arg Type="Text">False effect!</arg>
+							</args>
+						</Effect>
+					</EffectsIfFalse>
+				</Action>
+			</Actions>
+		</Scene>
+	</Scenes>
+</Game>

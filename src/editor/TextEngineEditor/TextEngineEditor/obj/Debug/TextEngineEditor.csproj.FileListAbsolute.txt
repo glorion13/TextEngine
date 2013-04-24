@@ -16,7 +16,6 @@ C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\
 C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\obj\Debug\MainWindow.baml
 C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\obj\Debug\MainWindow.g.cs
 C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\obj\Debug\App.g.cs
-C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\obj\Debug\TextEngineEditor_Content.g.cs
 C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\obj\Debug\TextEngineEditor_MarkupCompile.cache
 C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\obj\Debug\TextEngineEditor_MarkupCompile.lref
@@ -26,11 +25,6 @@ C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\
 C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\obj\Debug\TextEngineEditor.csproj.GenerateResource.Cache
 C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\obj\Debug\TextEngineEditor.exe
 C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\obj\Debug\TextEngineEditor.pdb
-C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\Lib\Python\core\components\__init__.py
-C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\Lib\Python\core\__init__.py
-C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\Lib\Python\customisable\conditions.py
-C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\Lib\Python\customisable\effects.py
-C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\Lib\Python\customisable\__init__.py
 D:\Alexandros\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\TextEngineEditor.exe.config
 D:\Alexandros\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\obj\Debug\TextEngineEditor.exe
 D:\Alexandros\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\obj\Debug\TextEngineEditor.pdb
@@ -64,3 +58,11 @@ D:\Alexandros\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngine
 D:\Alexandros\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\obj\Debug\TextEngineEditor.g.resources
 D:\Alexandros\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\obj\Debug\TextEngineEditor.Properties.Resources.resources
 D:\Alexandros\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\obj\Debug\TextEngineEditor.csproj.GenerateResource.Cache
+C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\obj\Debug\TextEngineEditor_Content.g.cs
+C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\Lib\Python\core\components\__init__.py
+C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\Lib\Python\core\__init__.py
+C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\Lib\Python\customisable\conditions.py
+C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\Lib\Python\customisable\effects.py
+C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\Lib\Python\customisable\__init__.py
+C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\Lib\Python\dataParser\__init__.py
+C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\Lib\Python\searching\__init__.py

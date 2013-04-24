@@ -1,62 +1,32 @@
 import core
 import customisable
+import dataParser
 
-# Load data
+# Load Data
+game = dataParser.loadXMLGameData("game.xml")
+# Load game
 
-# Initialise game
-game = core.components.Game()
+# Print game information
+print "------------------------"
+print "Game: "  + game.name
+print "Author: "+ game.author
+print "------------------------"
+print ""
+print ""
 
-# Global resources
-hp = core.components.Resource('HP', 10)
-# Structure global resources
-game.globalResources.append(hp)
+# Start game
+game.currentScene = game.startingScene
+customisable.effects.dictionary['Tell player'](game.currentScene.description)
 
-# Global actions
-showVisibleScenesAction = core.components.Action(\
-	name="Show visible actions",
-	effectsIfTrue=[core.components.Effect(lambda: customisable.effects.outputVisibleSceneActions(game.currentScene))],
-	effectsIfFalse=[],
-	conditions=[],
-	visible=False)
-# Structure global actions
-game.globalActions.append(showVisibleScenesAction)
+for res in game.globalResources:
+	if res.name == "HP":
+		res.value = 49
 
-# Initialise scene data
-scene1 = core.components.Scene(\
-	description="You are in a cave. You can hear a stream running nearby, to the south.",
-	name='A cave')
-scene2 = core.components.Scene(\
-	description="You're dead.",
-	name='Death')
-scene3 = core.components.Scene(\
-	description="You see a slumbering troll, right in front of you.",
-	name='Death')
-action1 = core.components.Action(\
-	name='Go south',
-	effectsIfTrue=[core.components.Effect(customisable.effects.goToScene, game, scene3)],
-	effectsIfFalse=[core.components.Effect(customisable.effects.cmdOutputText, "You suck!")],
-	conditions=[core.components.Condition(conditionType=customisable.conditions.dictionary.get('equals'), leftHandSide=game.globalResources[0].value, rightHandSide=10)])
-action2 = core.components.Action(\
-	name='Go north',
-	effectsIfTrue=[core.components.Effect(customisable.effects.goToScene, game, scene2)],
-	effectsIfFalse=[core.components.Effect(customisable.effects.cmdOutputText, "You suck!")],
-	conditions=[core.components.Condition(conditionType=customisable.conditions.dictionary.get('equals'), leftHandSide=game.globalResources[0].value, rightHandSide=10)])
-# Structure scene data
-scene1.actions.append(action1)
-scene1.actions.append(action2)
-game.startingScene = scene1
-
-# Start up scene
-if game.currentScene == None:
-	customisable.effects.goToScene(game, game.startingScene)
-else:
-	customisable.effects.goToScene(game, game.currentScene)
-
-# core game loop
+# Core game loop
 while (True):
 	# Evaluate global actions
-	for action in game.globalActions:
-		action.perform()
+	#for action in game.globalActions:
+	#	action.perform()
 	# Wait for user action
 	try:
 		userInput = raw_input('\n>')
@@ -67,5 +37,8 @@ while (True):
 	if not (userInput in [action.name for action in game.currentScene.actions]) and not (userInput in  [action.name for action in game.globalActions]):
 		print "Command not recognised."
 	for action in game.currentScene.actions:
+		if action.name == userInput:
+			action.perform()
+	for action in game.globalActions:
 		if action.name == userInput:
 			action.perform()

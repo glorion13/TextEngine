@@ -27,6 +27,8 @@ class Game:
 	"""
 	def __init__(self):
 		"""Initialise a :class:`Game` object."""
+		self.name = None
+		self.author = None
 		self.startingScene = None
 		self.currentScene = None
 		self.scenes = []
@@ -47,6 +49,16 @@ class Resource:
 		"""Initialise a :class:`Resource` object."""
 		self.name = name
 		self.value = value
+	def __eq__(self, other):
+		return self.value == other
+	def __lt__(self, other):
+		return self.value < other
+	def __gt__(self, other):
+		return self.value > other
+	def __le__(self, other):
+		return self.value <= other
+	def __ge__(self, other):
+		return self.value >= other
 
 class Scene:
 	"""
@@ -54,7 +66,7 @@ class Scene:
 	adventure), by toggling the . In fact, even within the same game there might be cases when actions
 	are visible and cases when actions are invisible.
 	"""
-	def __init__(self, description, name='default room'):
+	def __init__(self, description='default description', name='default room'):
 		"""Initialise a :class:`Scene` object."""
 		self.name = name
 		self.description = description
@@ -91,19 +103,18 @@ class Condition:
 	"""
 	A :class:`Condition`.
 	"""
-	def __init__(self, conditionType, leftHandSide, rightHandSide):
+	def __init__(self, conditionFunction=None, *args):
 		"""Initialise a :class:`Condition` object."""
-		self.conditionType = conditionType
-		self.leftHandSide = leftHandSide
-		self.rightHandSide = rightHandSide
+		self.conditionFunction = conditionFunction
+		self.args = args
 	def evaluate(self):
-		return self.conditionType(self.leftHandSide, self.rightHandSide)
+		return self.conditionFunction(*self.args)
 
 class Effect:
 	"""
 	An :class:`Effect`.
 	"""
-	def __init__(self, effectFunction, *args):
+	def __init__(self, effectFunction=None, *args):
 		""" Initialise an :class:`Effect` object."""
 		self.effectFunction = effectFunction
 		self.args = args
