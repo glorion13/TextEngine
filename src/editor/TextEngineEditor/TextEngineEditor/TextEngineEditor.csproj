@@ -107,11 +107,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Lib\Python\core\components\customisable\conditions.pyc" />
+    <None Include="Lib\Python\core\components\customisable\effects.pyc" />
+    <None Include="Lib\Python\core\components\customisable\__init__.pyc" />
     <None Include="Lib\Python\core\components\__init__.pyc" />
     <None Include="Lib\Python\core\__init__.pyc" />
-    <None Include="Lib\Python\customisable\conditions.pyc" />
-    <None Include="Lib\Python\customisable\effects.pyc" />
-    <None Include="Lib\Python\customisable\__init__.pyc" />
     <None Include="Lib\Python\dataParser\__init__.pyc" />
     <None Include="Lib\Python\searching\__init__.pyc" />
     <None Include="packages.config" />
@@ -127,21 +127,20 @@
   <ItemGroup>
     <Resource Include="MVVMLight.Nuget.Readme.txt" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Content Include="Lib\Python\core\components\customisable\conditions.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Lib\Python\core\components\customisable\effects.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Lib\Python\core\components\customisable\__init__.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Lib\Python\core\components\__init__.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Lib\Python\core\__init__.py">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Lib\Python\customisable\conditions.py">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Lib\Python\customisable\effects.py">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Lib\Python\customisable\__init__.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Lib\Python\dataParser\__init__.py">

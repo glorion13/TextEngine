@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
@@ -21,22 +22,12 @@ namespace TextEngineEditor
             }
         }
 
-        private int argumentCount;
-        public int ArgumentCount
-        {
-            get
-            {
-                return argumentCount;
-            }
-            set
-            {
-                Set(() => ArgumentCount, ref argumentCount, value);
-            }
-        }
+        public ObservableCollection<KeyValuePair<string, string>> arguments { get; set; }
 
         public EffectNode()
         {
             EffectFunction = "";
+            arguments = new ObservableCollection<KeyValuePair<string, string>>();
         }
     }
 }

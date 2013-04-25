@@ -22,6 +22,18 @@ namespace TextEngineEditor
                 Set(() => Name, ref name, value);
             }
         }
+        private int id;
+        public int ID
+        {
+            get
+            {
+                return id;
+            }
+            set
+            {
+                Set(() => ID, ref id, value);
+            }
+        }
         private string description;
         public string Description
         {

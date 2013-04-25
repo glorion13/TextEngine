@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Game>
+	<GameName>Project 1</GameName>
+	<Author>Alex</Author>
+	<StartingScene>0</StartingScene>
+	<GlobalResources />
+	<GlobalActions />
+	<Scenes>
+		<Scene>
+			<ID>0</ID>
+			<Name>cave</Name>
+			<Description>A big cave.</Description>
+			<Actions>
+				<Action>
+					<Name>New Action</Name>
+					<IsVisible>True</IsVisible>
+					<Conditions />
+					<EffectsIfTrue />
+					<EffectsIfFalse />
+				</Action>
+			</Actions>
+		</Scene>
+		<Scene>
+			<ID>1</ID>
+			<Name>beach</Name>
+			<Description>A sandy beach.</Description>
+			<Actions>
+				<Action>
+					<Name>Action 1</Name>
+					<IsVisible>True</IsVisible>
+					<Conditions>
+						<Condition>
+							<ConditionFunction>equals</ConditionFunction>
+							<LeftHandSide Type="Boolean">True</LeftHandSide>
+							<RightHandSide Type="Text">Fasolada</RightHandSide>
+						</Condition>
+						<Condition>
+							<ConditionFunction>equals</ConditionFunction>
+							<LeftHandSide Type="Resource">HP</LeftHandSide>
+							<RightHandSide Type="Resource">Mana</RightHandSide>
+						</Condition>
+					</Conditions>
+					<EffectsIfTrue>
+					</EffectsIfTrue>
+					<EffectsIfFalse />
+				</Action>
+			</Actions>
+		</Scene>
+		<Scene>
+			<ID>2</ID>
+			<Name>New Scene</Name>
+			<Description>This is a new scene.</Description>
+			<Actions />
+		</Scene>
+	</Scenes>
+</Game>

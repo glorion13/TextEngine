@@ -22,6 +22,19 @@ namespace TextEngineEditor
             }
         }
 
+        private string type;
+        public string Type
+        {
+            get
+            {
+                return type;
+            }
+            set
+            {
+                Set(() => Type, ref type, value);
+            }
+        }
+
         private string resourceValue;
         public string Value
         {

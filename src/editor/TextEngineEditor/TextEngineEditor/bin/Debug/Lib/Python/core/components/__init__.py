@@ -1,3 +1,5 @@
+import customisable
+
 """
 The :mod:`core.components` module contains the following classes:
 
@@ -10,7 +12,7 @@ The :mod:`core.components` module contains the following classes:
 
 """
 
-class Game:
+class Game(customisable.effects.EffectFunctions):
 	"""
 	The :class:`Game` class basically represents the structure of the game (interactive novel or
 	text adventure). Therefore it contains the various :class:`Scene`, global :class:`Resource` and
@@ -66,9 +68,10 @@ class Scene:
 	adventure), by toggling the . In fact, even within the same game there might be cases when actions
 	are visible and cases when actions are invisible.
 	"""
-	def __init__(self, description='default description', name='default room'):
+	def __init__(self, description='default description', name='default room', idV=0):
 		"""Initialise a :class:`Scene` object."""
 		self.name = name
+		self.id = idV
 		self.description = description
 		self.actions = []
 
@@ -107,8 +110,11 @@ class Condition:
 		"""Initialise a :class:`Condition` object."""
 		self.conditionFunction = conditionFunction
 		self.args = args
+		self.raw = []
+		self.evalArgs = []
 	def evaluate(self):
-		return self.conditionFunction(*self.args)
+		self.evalArgs = [arg(n) for arg,n in zip(self.args, self.raw)]
+		return self.conditionFunction(*self.evalArgs)
 
 class Effect:
 	"""
@@ -118,5 +124,8 @@ class Effect:
 		""" Initialise an :class:`Effect` object."""
 		self.effectFunction = effectFunction
 		self.args = args
+		self.raw = []
+		self.evalArgs = []
 	def resolve(self):
-		self.effectFunction(*self.args)
+		self.evalArgs += [arg(n) for arg,n in zip(self.args, self.raw)]
+		self.effectFunction(*self.evalArgs)

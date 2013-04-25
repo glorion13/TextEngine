@@ -1,14 +1,16 @@
-﻿<Window x:Class="TextEngineEditor.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:MvvmLightCommand="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF45"
         
-        DataContext="{Binding Main, Source={StaticResource Locator}}"
-        Title="TAINT Editor" Height="Auto" Width="Auto">
-    
-    <Grid x:Name="mainGrid">
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="TextEngineEditor.MainWindow"
         
+        DataContext="{Binding Main, Source={StaticResource Locator}}"
+        Title="TAINT Editor" Height="Auto" Width="Auto" d:DesignWidth="1000" d:DesignHeight="800">
+
+    <Grid x:Name="mainGrid">
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
@@ -28,7 +30,7 @@
             </Grid.RowDefinitions>
 
             <GridSplitter ResizeDirection="Columns" Grid.Column="1" Grid.ColumnSpan="1" Width="8" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-            
+
             <!-- Master view -->
             <ListBox Grid.Column="0" ItemsSource="{Binding SceneNodes}" SelectedItem="{Binding SelectedSceneNode, Mode=TwoWay}">
                 <ListBox.ItemTemplate>
@@ -62,13 +64,15 @@
                         <ListBox ItemsSource="{Binding SelectedSceneNode.Actions}" SelectedItem="{Binding SelectedActionNode, Mode=TwoWay}" Height="100">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Name}" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Content="X" Command="{Binding Main.RemoveActionCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" />
+                                        <TextBlock Text="{Binding Name}" />
+                                    </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
                         <StackPanel Orientation="Horizontal">
                             <Button Content="Add action" Command="{Binding AddActionCommand}" />
-                            <Button Content="Remove action" Command="{Binding RemoveActionCommand}" />
                         </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
@@ -83,30 +87,31 @@
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
+                                        <Button Content="X" Command="{Binding Main.RemoveConditionCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" />
                                         <ComboBox ItemsSource="{Binding Main.PythonConditionTypes, Source={StaticResource Locator}}" SelectedItem="{Binding LeftHandSideType, Mode=TwoWay}">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="SelectionChanged">
-                                                    <MvvmLightCommand:EventToCommand CommandParameter="{Binding}" Command="{Binding Main.UpdateConditionLeftHandSideAutofillCommand, Source={StaticResource Locator}}" />
+                                                    <MvvmLightCommand:EventToCommand CommandParameter="{Binding}" Command="{Binding Main.UpdateConditionLeftHandSideAutofillCommand, Source={StaticResource Locator}}"/>
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </ComboBox>
-                                        <ComboBox ItemsSource="{Binding LeftHandSideAutofill}" SelectedItem="{Binding LeftHandSideValue, Mode=TwoWay}" IsEditable="True" />
+                                        <TextBox Text="{Binding LeftHandSideValue, Mode=TwoWay}" />
                                         <ComboBox ItemsSource="{Binding Main.PythonConditions, Source={StaticResource Locator}}" SelectedItem="{Binding ConditionType, Mode=TwoWay}" />
                                         <ComboBox ItemsSource="{Binding Main.PythonConditionTypes, Source={StaticResource Locator}}" SelectedItem="{Binding RightHandSideType, Mode=TwoWay}" />
-                                        <ComboBox ItemsSource="{Binding RightHandSideAutofill}" SelectedItem="{Binding RightHandSideValue, Mode=TwoWay}" IsEditable="True" />
+                                        <ComboBox ItemsSource="{Binding RightHandSideAutofill}" SelectedValue="{Binding RightHandSideValue, Mode=TwoWay}" IsEditable="True" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
                         <StackPanel Orientation="Horizontal">
                             <Button Content="Add condition" Command="{Binding AddConditionCommand}" />
-                            <Button Content="Remove condition" Command="{Binding RemoveConditionCommand}" />
                         </StackPanel>
                         <TextBlock Text="Action effects:" />
                         <ListBox ItemsSource="{Binding SelectedActionNode.EffectsIfTrue}" Height="100">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
+                                        <Button Content="X" Command="{Binding Main.RemoveEffectCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" />
                                         <ComboBox ItemsSource="{Binding Main.PythonEffects, Source={StaticResource Locator}}" SelectedItem="{Binding EffectFunction, Mode=TwoWay}" />
                                         <ComboBox ItemsSource="{Binding Main.PythonEffects, Source={StaticResource Locator}}" SelectedItem="{Binding EffectFunction, Mode=TwoWay}" IsEditable="True" />
                                     </StackPanel>
@@ -114,8 +119,7 @@
                             </ListBox.ItemTemplate>
                         </ListBox>
                         <StackPanel Orientation="Horizontal">
-                            <Button Content="Add effect" Command="{Binding AddConditionCommand}" />
-                            <Button Content="Remove effect" Command="{Binding RemoveConditionCommand}" />
+                            <Button Content="Add effect" Command="{Binding AddEffectCommand}" />
                         </StackPanel>
                         <CheckBox Content="Visible action" IsChecked="{Binding SelectedActionNode.IsVisible, Mode=TwoWay}" />
                     </StackPanel>
@@ -127,16 +131,16 @@
         </Grid>
 
         <Grid x:Name="toolbar" Grid.Row="1" HorizontalAlignment="Left">
-            
+
             <StackPanel Orientation="Horizontal">
                 <Button Width="100" Command="{Binding AddSceneCommand}" Content="Add New Scene" />
                 <Button Width="100" Command="{Binding RemoveSceneCommand}" Content="Remove Scene" />
                 <Button Width="100" Command="{Binding ExportXMLCommand}" Content="Export" />
                 <Button Width="100" Command="{Binding ReloadPythonCommand}" Content="Reload Py" />
             </StackPanel>
-            
+
         </Grid>
-        
+
     </Grid>
-    
+
 </Window>

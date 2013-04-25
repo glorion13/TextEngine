@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace TextEngineEditor.ViewModel
 {
@@ -46,7 +47,11 @@ namespace TextEngineEditor.ViewModel
                 AddSceneCommand = new RelayCommand(AddScene);
                 RemoveSceneCommand = new RelayCommand(RemoveScene);
                 AddActionCommand = new RelayCommand(AddAction);
-                RemoveActionCommand = new RelayCommand(RemoveAction);
+                RemoveActionCommand = new RelayCommand<ActionNode>(RemoveAction);
+                AddConditionCommand = new RelayCommand(AddCondition);
+                RemoveConditionCommand = new RelayCommand<ConditionNode>(RemoveCondition);
+                AddEffectCommand = new RelayCommand(AddEffect);
+                RemoveEffectCommand = new RelayCommand<EffectNode>(RemoveEffect);
                 ExportXMLCommand = new RelayCommand(ExportAsXML);
                 ImportXMLCommand = new RelayCommand(ImportFromXML);
                 ReloadPythonCommand = new RelayCommand(ReloadPython);
@@ -208,9 +213,33 @@ namespace TextEngineEditor.ViewModel
         }
 
         public ICommand RemoveActionCommand { get; set; }
-        private void RemoveAction()
+        private void RemoveAction(ActionNode action)
         {
-            SelectedSceneNode.Actions.Remove(SelectedActionNode);
+            SelectedSceneNode.Actions.Remove(action);
+        }
+
+        public ICommand AddConditionCommand { get; set; }
+        private void AddCondition()
+        {
+            SelectedActionNode.Conditions.Add(new ConditionNode());
+        }
+
+        public ICommand RemoveConditionCommand { get; set; }
+        private void RemoveCondition(ConditionNode condition)
+        {
+            SelectedActionNode.Conditions.Remove(condition);
+        }
+
+        public ICommand AddEffectCommand { get; set; }
+        private void AddEffect()
+        {
+            SelectedActionNode.EffectsIfTrue.Add(new EffectNode());
+        }
+
+        public ICommand RemoveEffectCommand { get; set; }
+        private void RemoveEffect(EffectNode effect)
+        {
+            SelectedActionNode.EffectsIfTrue.Remove(effect);
         }
 
         public ICommand ExportXMLCommand { get; set; }
@@ -223,7 +252,8 @@ namespace TextEngineEditor.ViewModel
                 writer.WriteStartElement("Game");
 
                 writer.WriteElementString("GameName", GameName);
-                writer.WriteElementString("StartingScene", StartingScene.ToString());
+                writer.WriteElementString("Author", Author);
+                writer.WriteElementString("StartingScene", StartingScene.ID.ToString());
 
                 #region <GlobalResources>
                 writer.WriteStartElement("GlobalResources");
@@ -231,6 +261,7 @@ namespace TextEngineEditor.ViewModel
                 {
                     writer.WriteStartElement("Resource");
                     writer.WriteElementString("Name", resource.Name);
+                    writer.WriteElementString("Type", resource.Type);
                     writer.WriteElementString("Value", resource.Value);
                     writer.WriteEndElement();
                 }
@@ -253,7 +284,7 @@ namespace TextEngineEditor.ViewModel
                         #region <Condition>
                         writer.WriteStartElement("Condition");
 
-                        writer.WriteElementString("ConditionType", condition.ConditionType.ToString());
+                        writer.WriteElementString("ConditionFunction", condition.ConditionType.ToString());
 
                         writer.WriteStartElement("LeftHandSide");
                         writer.WriteAttributeString("Type", condition.LeftHandSideType);
@@ -277,7 +308,13 @@ namespace TextEngineEditor.ViewModel
                     {
                         writer.WriteStartElement("Effect");
                         writer.WriteElementString("EffectFunction", effect.EffectFunction);
-                        // TODO: Add arguments
+                        foreach (KeyValuePair<string, string> arg in effect.arguments)
+                        {
+                            writer.WriteStartElement("arg");
+                            writer.WriteAttributeString("Type", arg.Key);
+                            writer.WriteString(arg.Value);
+                            writer.WriteEndElement();
+                        }
                         writer.WriteEndElement();
                     }
                     writer.WriteEndElement();
@@ -287,7 +324,13 @@ namespace TextEngineEditor.ViewModel
                     {
                         writer.WriteStartElement("Effect");
                         writer.WriteElementString("EffectFunction", effect.EffectFunction);
-                        // TODO: Add arguments
+                        foreach (KeyValuePair<string, string> arg in effect.arguments)
+                        {
+                            writer.WriteStartElement("arg");
+                            writer.WriteAttributeString("Type", arg.Key);
+                            writer.WriteString(arg.Value);
+                            writer.WriteEndElement();
+                        }
                         writer.WriteEndElement();
                     }
                     writer.WriteEndElement();
@@ -305,6 +348,7 @@ namespace TextEngineEditor.ViewModel
                 {
                     #region <Scene>
                     writer.WriteStartElement("Scene");
+                    writer.WriteElementString("ID", scene.ID.ToString());
                     writer.WriteElementString("Name", scene.Name);
                     writer.WriteElementString("Description", scene.Description);
                     #region <Actions>
@@ -323,7 +367,7 @@ namespace TextEngineEditor.ViewModel
                             #region <Condition>
                             writer.WriteStartElement("Condition");
 
-                            writer.WriteElementString("ConditionType", condition.ConditionType.ToString());
+                            writer.WriteElementString("ConditionFunction", condition.ConditionType.ToString());
 
                             writer.WriteStartElement("LeftHandSide");
                             writer.WriteAttributeString("Type", condition.LeftHandSideType);
@@ -347,7 +391,13 @@ namespace TextEngineEditor.ViewModel
                         {
                             writer.WriteStartElement("Effect");
                             writer.WriteElementString("EffectFunction", effect.EffectFunction);
-                            // TODO: Add arguments
+                            foreach (KeyValuePair<string, string> arg in effect.arguments)
+                            {
+                                writer.WriteStartElement("arg");
+                                writer.WriteAttributeString("Type", arg.Key);
+                                writer.WriteString(arg.Value);
+                                writer.WriteEndElement();
+                            }
                             writer.WriteEndElement();
                         }
                         writer.WriteEndElement();
@@ -357,7 +407,13 @@ namespace TextEngineEditor.ViewModel
                         {
                             writer.WriteStartElement("Effect");
                             writer.WriteElementString("EffectFunction", effect.EffectFunction);
-                            // TODO: Add arguments
+                            foreach (KeyValuePair<string, string> arg in effect.arguments)
+                            {
+                                writer.WriteStartElement("arg");
+                                writer.WriteAttributeString("Type", arg.Key);
+                                writer.WriteString(arg.Value);
+                                writer.WriteEndElement();
+                            }
                             writer.WriteEndElement();
                         }
                         writer.WriteEndElement();
@@ -408,24 +464,24 @@ namespace TextEngineEditor.ViewModel
         private void ReloadPython()
         {
             pythonCore = Python.CreateRuntime().ImportModule("Python/core");
-            pythonCustom = Python.CreateRuntime().ImportModule("Python/customisable");
+            pythonCustom = pythonCore.components.customisable;
 
-            PythonEffects.Clear();
-            PythonConditions.Clear();
+            //PythonEffects.Clear();
+            //PythonConditions.Clear();
 
-            int effectCount = pythonCustom.getEffectsKeysLength();
-            dynamic effectKeys = pythonCustom.getEffectsKeys();
-            for (int i = 0; i < effectCount; i++)
-            {
-                PythonEffects.Add(effectKeys[i]);
-            }
+            //int effectCount = pythonCustom.getEffectsKeysLength();
+            //dynamic effectKeys = pythonCustom.getEffectsKeys();
+            //for (int i = 0; i < effectCount; i++)
+            //{
+            //    PythonEffects.Add(effectKeys[i]);
+            //}
 
-            int conditionCount = pythonCustom.getConditionsKeysLength();
-            dynamic conditionKeys = pythonCustom.getConditionsKeys();
-            for (int i = 0; i < conditionCount; i++)
-            {
-                PythonConditions.Add(conditionKeys[i]);
-            }
+            //int conditionCount = pythonCustom.getConditionsKeysLength();
+            //dynamic conditionKeys = pythonCustom.getConditionsKeys();
+            //for (int i = 0; i < conditionCount; i++)
+            //{
+            //    PythonConditions.Add(conditionKeys[i]);
+            //}
 
             // TODO:
             // Ensure that the pre-existing scenes don't lose their effects and conditions
