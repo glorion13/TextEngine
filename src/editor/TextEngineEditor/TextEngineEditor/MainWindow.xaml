@@ -88,17 +88,11 @@
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
                                         <Button Content="X" Command="{Binding Main.RemoveConditionCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" />
-                                        <ComboBox ItemsSource="{Binding Main.PythonConditionTypes, Source={StaticResource Locator}}" SelectedItem="{Binding LeftHandSideType, Mode=TwoWay}">
-                                            <i:Interaction.Triggers>
-                                                <i:EventTrigger EventName="SelectionChanged">
-                                                    <MvvmLightCommand:EventToCommand CommandParameter="{Binding}" Command="{Binding Main.UpdateConditionLeftHandSideAutofillCommand, Source={StaticResource Locator}}"/>
-                                                </i:EventTrigger>
-                                            </i:Interaction.Triggers>
-                                        </ComboBox>
-                                        <TextBox Text="{Binding LeftHandSideValue, Mode=TwoWay}" />
+                                        <ComboBox ItemsSource="{Binding Main.PythonConditionTypes, Source={StaticResource Locator}}" SelectedValue="{Binding LeftHandSideType, Mode=TwoWay}" />
+                                        <ComboBox ItemsSource="{Binding LeftHandSideAutofill}" Text="{Binding LeftHandSideValue, Mode=TwoWay}" IsEditable="True" />
                                         <ComboBox ItemsSource="{Binding Main.PythonConditions, Source={StaticResource Locator}}" SelectedItem="{Binding ConditionType, Mode=TwoWay}" />
                                         <ComboBox ItemsSource="{Binding Main.PythonConditionTypes, Source={StaticResource Locator}}" SelectedItem="{Binding RightHandSideType, Mode=TwoWay}" />
-                                        <ComboBox ItemsSource="{Binding RightHandSideAutofill}" SelectedValue="{Binding RightHandSideValue, Mode=TwoWay}" IsEditable="True" />
+                                        <ComboBox ItemsSource="{Binding RightHandSideAutofill}" Text="{Binding RightHandSideValue, Mode=TwoWay}" IsEditable="True" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
@@ -113,7 +107,7 @@
                                     <StackPanel Orientation="Horizontal">
                                         <Button Content="X" Command="{Binding Main.RemoveEffectCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" />
                                         <ComboBox ItemsSource="{Binding Main.PythonEffects, Source={StaticResource Locator}}" SelectedItem="{Binding EffectFunction, Mode=TwoWay}" />
-                                        <ComboBox ItemsSource="{Binding Main.PythonEffects, Source={StaticResource Locator}}" SelectedItem="{Binding EffectFunction, Mode=TwoWay}" IsEditable="True" />
+                                        <ComboBox ItemsSource="{Binding Main.PythonEffects, Source={StaticResource Locator}}" Text="{Binding EffectFunction, Mode=TwoWay}" IsEditable="True" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>

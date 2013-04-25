@@ -1,7 +1,6 @@
 from xml.etree import ElementTree
 
 import core
-import searching
 
 def loadXMLGameData(gameDataFile):
 	# Load data
@@ -20,16 +19,7 @@ def loadXMLGameData(gameDataFile):
 	# Global resources
 	globalResourcesNode = root.find("GlobalResources")
 	for resource in globalResourcesNode:
-		resourceName = resource.find("Name").text
-		resourceType = resource.find("Type").text
-		resourceValue = ""
-		if resourceType == "Boolean":
-			resourceValue = bool(resource.find("Value").text)
-		elif resourceType == "Number":
-			resourceValue = float(resource.find("Value").text)
-		elif resourceType == "Text":
-			resourceValue = str(resource.find("Value").text)
-		resourceObject = core.components.Resource(resourceName, resourceValue)
+		resourceObject = createResourceObject(resource)
 		game.globalResources.append(resourceObject)
 	# Global actions
 	globalActionsNode = root.find("GlobalActions")
@@ -43,13 +33,20 @@ def loadXMLGameData(gameDataFile):
 		sceneObject.id = int(scene.find("ID").text)
 		sceneObject.name = scene.find("Name").text
 		sceneObject.description = scene.find("Description").text
-		# TODO: Local resources
+		sceneObject.actions = []
+		sceneObject.resources = []
+		# Scene resources (local)
+		#resourcesNode = scene.find("Resources")
+		#for resource in resourcesNode:
+		#	resourceObject = createResourceObject(resource)
+		#	scene.resources.append(resourceObject)
+		# Scene actions (local)
 		actionsNode = scene.find("Actions")
 		for action in actionsNode:
 			actionObject = createActionObject(action, game)
 			sceneObject.actions.append(actionObject)
 		game.scenes.append(sceneObject)
-	game.startingScene = searching.getSceneByID(game, int(startingScene))
+	game.startingScene = game.getSceneByID(int(startingScene))
 	return game
 
 # Auxiliary parsing functions
@@ -60,17 +57,14 @@ def createActionObject(action, game):
 	actionObject.conditions = []
 	actionObject.effectsIfTrue = []
 	actionObject.effectsIfFalse = []		
-
 	conditionsNode = action.find("Conditions")
 	for condition in conditionsNode:
 		conditionObject = createConditionObject(condition, game)
 		actionObject.conditions.append(conditionObject)
-
 	effectsTrueNode = action.find("EffectsIfTrue")
 	for effect in effectsTrueNode:
 		effectObject = createEffectObject(effect, game)
 		actionObject.effectsIfTrue.append(effectObject)
-
 	effectsFalseNode = action.find("EffectsIfFalse")
 	for effect in effectsFalseNode:
 		effectObject = createEffectObject(effect, game)
@@ -90,16 +84,15 @@ def createEffectObject(effect, game):
 		elif argType == "Text":
 			args.append(lambda(n): str(n))
 		elif argType == "Resource":
-			args.append(lambda(n): searching.getResourceByName(game, str(n)))
+			args.append(lambda(n): game.getResourceByName(str(n)))
 		elif argType == "Scene":
-			args.append(lambda(n): searching.getSceneByID(game, int(n)))
+			args.append(lambda(n): game.getSceneByID(int(n)))
 		raw.append(arg.text)
-	effectFunction = game.dictionary[effect.find("EffectFunction").text]
 	effectObject = core.components.Effect()
 	effectObject.args = args
-	effectObject.raw = raw
-	effectObject.evalArgs.append(game)
-	effectObject.effectFunction = effectFunction
+	effectObject.rawArgs = raw
+	effectObject.parent = game
+	effectObject.effectFunction = game.dictionary[effect.find("EffectFunction").text]
 	return effectObject
 
 def createConditionObject(condition, game):
@@ -114,7 +107,7 @@ def createConditionObject(condition, game):
 	elif lhsType == "Text":
 		leftHandSide = lambda(n): str(n)
 	elif lhsType == "Resource":
-		leftHandSide = lambda(n): searching.getResourceByName(game, str(n))
+		leftHandSide = lambda(n): game.getResourceByName(str(n))
 	rightHandSideNode = condition.find("RightHandSide")
 	rhsType = rightHandSideNode.attrib.get('Type')
 	if rhsType == "Boolean":
@@ -124,10 +117,22 @@ def createConditionObject(condition, game):
 	elif rhsType == "Text":
 		rightHandSide = lambda(n): str(n)
 	elif rhsType == "Resource":
-		rightHandSide = lambda(n): searching.getResourceByName(game, str(n))
-	conditionFunction = core.components.customisable.conditions.dictionary[condition.find("ConditionFunction").text]
+		rightHandSide = lambda(n): game.getResourceByName(str(n))
 	conditionObject = core.components.Condition()
 	conditionObject.args = [leftHandSide, rightHandSide]
-	conditionObject.raw = [leftHandSideNode.text, rightHandSideNode.text]
-	conditionObject.conditionFunction = conditionFunction
+	conditionObject.rawArgs = [leftHandSideNode.text, rightHandSideNode.text]
+	conditionObject.conditionFunction = core.components.customisable.conditions.dictionary[condition.find("ConditionFunction").text]
 	return conditionObject
+
+def createResourceObject(resource):
+	resourceName = resource.find("Name").text
+	resourceType = resource.find("Type").text
+	resourceValue = ""
+	if resourceType == "Boolean":
+		resourceValue = bool(resource.find("Value").text)
+	elif resourceType == "Number":
+		resourceValue = float(resource.find("Value").text)
+	elif resourceType == "Text":
+		resourceValue = str(resource.find("Value").text)
+	resourceObject = core.components.Resource(resourceName, resourceValue)
+	return resourceObject

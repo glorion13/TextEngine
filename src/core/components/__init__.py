@@ -36,6 +36,30 @@ class Game(customisable.effects.EffectFunctions):
 		self.scenes = []
 		self.globalResources = []
 		self.globalActions = []
+	def getSceneByID(self, idV):
+		firstScene = [scene for scene in self.scenes if scene.id == idV]
+		if len(firstScene) == 0:
+			return "No scene found"
+		else:
+			return firstScene[0]
+	def getSceneByName(self, name):
+		firstScene = [scene for scene in self.scenes if scene.name == name]
+		if len(firstScene) == 0:
+			return "No scene found"
+		else:
+			return firstScene[0]
+	def getResourceByID(self, idV):
+		firstResource = [resource for resource in self.globalResources if resource.id == idV]
+		if len(firstResource) == 0:
+			return "No resource found"
+		else:
+			return firstResource[0]
+	def getResourceByName(self, name):
+		firstResource = [resource for resource in self.globalResources if resource.name == name]
+		if len(firstResource) == 0:
+			return "No resource found"
+		else:
+			return firstResource[0]
 
 class Resource:
 	"""
@@ -73,6 +97,7 @@ class Scene:
 		self.name = name
 		self.id = idV
 		self.description = description
+		self.resources = []
 		self.actions = []
 
 class Action:
@@ -110,10 +135,10 @@ class Condition:
 		"""Initialise a :class:`Condition` object."""
 		self.conditionFunction = conditionFunction
 		self.args = args
-		self.raw = []
+		self.rawArgs = []
 		self.evalArgs = []
 	def evaluate(self):
-		self.evalArgs = [arg(n) for arg,n in zip(self.args, self.raw)]
+		self.evalArgs = [arg(n) for arg,n in zip(self.args, self.rawArgs)]
 		return self.conditionFunction(*self.evalArgs)
 
 class Effect:
@@ -124,8 +149,9 @@ class Effect:
 		""" Initialise an :class:`Effect` object."""
 		self.effectFunction = effectFunction
 		self.args = args
-		self.raw = []
+		self.rawArgs = []
 		self.evalArgs = []
+		self.parent = None
 	def resolve(self):
-		self.evalArgs += [arg(n) for arg,n in zip(self.args, self.raw)]
+		self.evalArgs = [self.parent] + [arg(n) for arg,n in zip(self.args, self.rawArgs)]
 		self.effectFunction(*self.evalArgs)

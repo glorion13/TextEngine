@@ -7,7 +7,7 @@
 		<Resource>
 			<Name>HP</Name>
 			<Type>Number</Type>
-			<Value>9</Value>
+			<Value>5</Value>
 		</Resource>
 		<Resource>
 			<Name>Mana</Name>
@@ -22,7 +22,7 @@
 			<Conditions>
 				<Condition>
 					<ConditionFunction>less than</ConditionFunction>
-					<LeftHandSide Type="Resource">Hax</LeftHandSide>
+					<LeftHandSide Type="Resource">HP</LeftHandSide>
 					<RightHandSide Type="Number">8</RightHandSide>
 				</Condition>
 			</Conditions>
