@@ -29,14 +29,10 @@ class GameParser:
 		self.game.author = gameAuthor
 		# Global resources
 		globalResourcesNode = root.find("GlobalResources")
-		for resource in globalResourcesNode:
-			resourceObject = self.createResourceObject(resource)
-			self.game.globalResources.append(resourceObject)
+		self.game.globalResources = [self.createResourceObject(resource) for resource in globalResourcesNode]
 		# Global actions
 		globalActionsNode = root.find("GlobalActions")
-		for action in globalActionsNode:
-			actionObject = self.createActionObject(action, self.game)
-			self.game.globalActions.append(actionObject)
+		self.game.globalActions = [self.createActionObject(action, self.game) for action in globalActionsNode]
 		# Scenes
 		scenesNode = root.find("Scenes")
 		for scene in scenesNode:
@@ -44,69 +40,47 @@ class GameParser:
 			sceneObject.id = int(scene.find("ID").text)
 			sceneObject.name = scene.find("Name").text
 			sceneObject.description = scene.find("Description").text
-			sceneObject.actions = []
-			sceneObject.resources = []
 			# Scene resources (local)
 			#resourcesNode = scene.find("Resources")
-			#for resource in resourcesNode:
-			#	resourceObject = self.createResourceObject(resource)
-			#	scene.resources.append(resourceObject)
+			#scene.resources = [self.createResourceObject(resource) for resource in resourcesNode]
 			# Scene actions (local)
 			actionsNode = scene.find("Actions")
-			for action in actionsNode:
-				actionObject = self.createActionObject(action, self.game)
-				sceneObject.actions.append(actionObject)
+			sceneObject.actions = [self.createActionObject(action, self.game) for action in actionsNode]
 			self.game.scenes.append(sceneObject)
 		self.game.startingScene = self.game.getSceneByID(int(startingScene))
 		return self.game
 
 	# Auxiliary parsing functions
 	def createActionObject(self, action, game):
-		actionObject = core.components.Action()
-		actionObject.name = action.find("Name").text
-		actionObject.visible = bool(action.find("IsVisible").text)
-		actionObject.conditions = []
-		actionObject.effectsIfTrue = []
-		actionObject.effectsIfFalse = []
+		actionObject = core.components.Action(action.find("Name").text, bool(action.find("IsVisible").text))
 		# Conditions
 		conditionsNode = action.find("Conditions")
-		for condition in conditionsNode:
-			conditionObject = self.createConditionObject(condition, game)
-			actionObject.conditions.append(conditionObject)
+		actionObject.conditions = [self.createConditionObject(condition, game) for condition in conditionsNode]
 		# Effects if True
 		effectsTrueNode = action.find("EffectsIfTrue")
-		for effect in effectsTrueNode:
-			effectObject = self.createEffectObject(effect, game)
-			actionObject.effectsIfTrue.append(effectObject)
+		actionObject.effectsIfTrue = [self.createEffectObject(effect, game) for effect in effectsTrueNode]
 		# Effects if False
 		effectsFalseNode = action.find("EffectsIfFalse")
-		for effect in effectsFalseNode:
-			effectObject = self.createEffectObject(effect, game)
-			actionObject.effectsIfFalse.append(effectObject)
+		actionObject.effectsIfFalse = [self.createEffectObject(effect, game) for effect in effectsFalseNode]
 		return actionObject
 
 	def createEffectObject(self, effect, game):
 		argsNode = effect.find("args")
-		args = []
-		raw = []
-		for arg in argsNode:
-			argType = arg.attrib.get('Type')
-			args.append(self.typeConverter[argType])
-			raw.append(arg.text)
 		effectObject = core.components.Effect()
-		effectObject.args = args
-		effectObject.rawArgs = raw
+		effectObject.args = [self.typeConverter[arg.attrib.get('Type')] for arg in argsNode]
+		effectObject.rawArgs = [arg.text for arg in argsNode]
 		effectObject.parent = game
 		effectObject.effectFunction = game.dictionary[effect.find("EffectFunction").text]
 		return effectObject
 
 	def createConditionObject(self, condition, game):
-		leftHandSide = ""
-		rightHandSide = ""
+		# Left hand side element
 		leftHandSideNode = condition.find("LeftHandSide")
 		leftHandSide = self.typeConverter[leftHandSideNode.attrib.get('Type')]
+		# Right hand side element
 		rightHandSideNode = condition.find("RightHandSide")
 		rightHandSide = self.typeConverter[rightHandSideNode.attrib.get('Type')]
+		# Create condition object
 		conditionObject = core.components.Condition()
 		conditionObject.args = [leftHandSide, rightHandSide]
 		conditionObject.rawArgs = [leftHandSideNode.text, rightHandSideNode.text]
@@ -114,7 +88,6 @@ class GameParser:
 		return conditionObject
 
 	def createResourceObject(self, resource):
-		resourceName = resource.find("Name").text
 		resourceType = resource.find("Type").text
 		resourceValue = ""
 		if resourceType == "Boolean":
@@ -123,5 +96,5 @@ class GameParser:
 			resourceValue = float(resource.find("Value").text)
 		elif resourceType == "Text":
 			resourceValue = str(resource.find("Value").text)
-		resourceObject = core.components.Resource(resourceName, resourceValue)
+		resourceObject = core.components.Resource(resource.find("Name").text, resourceValue)
 		return resourceObject

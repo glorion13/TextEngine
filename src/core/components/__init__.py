@@ -104,7 +104,7 @@ class Action:
 	"""
 	:class:`Action` object.
 	"""
-	def __init__(self, name='default action', effectsIfTrue=[], effectsIfFalse=[], conditions=[], visible=True):
+	def __init__(self, name='default action', visible=True, effectsIfTrue=[], effectsIfFalse=[], conditions=[]):
 		"""Initialise an :class:`Action` object."""
 		self.name = name
 		self.conditions = conditions
