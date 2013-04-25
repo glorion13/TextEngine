@@ -2,7 +2,8 @@ import core
 import dataParser
 
 # Load Data
-game = dataParser.loadXMLGameData("game.xml")
+parser = dataParser.GameParser()
+game = parser.loadXMLGameData("game.xml")
 # Load game
 
 # Print game information
