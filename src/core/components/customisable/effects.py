@@ -1,8 +1,6 @@
 class EffectFunctions:
     def cmdOutputText(self, text):
         print text
-    def editResource(self, resource, value):
-        resource.value = value
     def goToScene(self, scene):
     	self.currentScene = scene
     	self.cmdOutputText(scene.description)
@@ -10,12 +8,14 @@ class EffectFunctions:
     	possibleActions = [ action.name for action in scene.actions if action.visible ]
     	if not possibleActions == []:
     		self.cmdOutputText(str(possibleActions))
-    def addResource(self):
-        return 0
-    def editResource(self):
-        return 0
-    def deleteResource(self):
-        return 0
+    def addGlobalResource(self, text, primitive):
+        self.addResource(text, primitive)
+    def editGlobalResource(self, resource, primitive):
+        res = self.getResourceByName(resource)
+        res.value = primitive
+    def deleteGlobalResource(self, resource):
+        res = self.getResourceByName(resource)
+        self.removeResource(res)
     def enableAction(self):
         return 0
     def disableAction(self):
@@ -27,11 +27,11 @@ class EffectFunctions:
     def outputAllActions(self):
         return 0
 
-    dictionary = {
+    effectDict = {
         'Tell player'                   : cmdOutputText,
-        'Add resource'                  : addResource,
-        'Edit resource'                 : editResource,
-        'Delete resource'               : deleteResource,
+        'Add global resource'           : addGlobalResource,
+        'Edit global resource'          : editGlobalResource,
+        'Delete global resource'        : deleteGlobalResource,
         'Enable action'                 : enableAction,
         'Disable action'                : disableAction,
         'Make action visible'           : makeActionVisible,

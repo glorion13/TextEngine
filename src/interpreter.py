@@ -3,7 +3,7 @@ import dataParser
 
 # Load Data
 parser = dataParser.GameParser()
-game = parser.loadXMLGameData("game.xml")
+game = parser.loadXMLGameData("game2.xml")
 # Load game
 
 # Print game information
@@ -16,7 +16,7 @@ print ""
 
 # Start game
 game.currentScene = game.startingScene
-game.dictionary['Tell player'](game, game.currentScene.description)
+game.effectDict['Tell player'](game, game.currentScene.description)
 
 #for res in game.globalResources:
 #	if res.name == "HP":

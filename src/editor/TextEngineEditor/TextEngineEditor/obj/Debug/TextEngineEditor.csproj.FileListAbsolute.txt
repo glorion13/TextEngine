@@ -37,7 +37,6 @@ C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\
 C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\Lib\Python\core\components\__init__.py
 C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\Lib\Python\core\__init__.py
 C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\Lib\Python\dataParser\__init__.py
-C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\Lib\Python\searching\__init__.py
 C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\TextEngineEditor.exe.config
 C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\TextEngineEditor.exe
 C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\TextEngineEditor.pdb

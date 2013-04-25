@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Game>
-	<GameName>Project 1</GameName>
+	<GameName>ProjectX</GameName>
 	<Author>Alex</Author>
 	<StartingScene>0</StartingScene>
 	<GlobalResources />
@@ -8,39 +8,55 @@
 	<Scenes>
 		<Scene>
 			<ID>0</ID>
-			<Name>cave</Name>
-			<Description>A big cave.</Description>
+			<Name>Cave</Name>
+			<Description>Glistener cave, glistener rocks etc. etc.</Description>
 			<Actions>
 				<Action>
-					<Name>New Action</Name>
+					<Name>go south</Name>
 					<IsVisible>True</IsVisible>
 					<Conditions />
-					<EffectsIfTrue />
+					<EffectsIfTrue>
+						<Effect>
+							<EffectFunction>Go to scene</EffectFunction>
+							<args>
+								<arg Type="Scene">1</arg>
+							</args>
+						</Effect>
+					</EffectsIfTrue>
+					<EffectsIfFalse />
+				</Action>
+				<Action>
+					<Name>look at rocks</Name>
+					<IsVisible>True</IsVisible>
+					<Conditions />
+					<EffectsIfTrue>
+						<Effect>
+							<EffectFunction>Tell player</EffectFunction>
+							<args>
+								<arg Type="Text">You pick up some rocks.</arg>
+							</args>
+						</Effect>
+					</EffectsIfTrue>
 					<EffectsIfFalse />
 				</Action>
 			</Actions>
 		</Scene>
 		<Scene>
 			<ID>1</ID>
-			<Name>beach</Name>
-			<Description>A sandy beach.</Description>
+			<Name>Beach</Name>
+			<Description>You come out of the cave and you find yourself in a beach. The sun is glistening.</Description>
 			<Actions>
 				<Action>
-					<Name>Action 1</Name>
+					<Name>kill myself</Name>
 					<IsVisible>True</IsVisible>
-					<Conditions>
-						<Condition>
-							<ConditionFunction>equals</ConditionFunction>
-							<LeftHandSide Type="Boolean">True</LeftHandSide>
-							<RightHandSide Type="Text">Fasolada</RightHandSide>
-						</Condition>
-						<Condition>
-							<ConditionFunction>equals</ConditionFunction>
-							<LeftHandSide Type="Resource">HP</LeftHandSide>
-							<RightHandSide Type="Resource">Mana</RightHandSide>
-						</Condition>
-					</Conditions>
+					<Conditions />
 					<EffectsIfTrue>
+						<Effect>
+							<EffectFunction>Go to scene</EffectFunction>
+							<args>
+								<arg Type="Scene">2</arg>
+							</args>
+						</Effect>
 					</EffectsIfTrue>
 					<EffectsIfFalse />
 				</Action>
@@ -48,8 +64,8 @@
 		</Scene>
 		<Scene>
 			<ID>2</ID>
-			<Name>New Scene</Name>
-			<Description>This is a new scene.</Description>
+			<Name>Death</Name>
+			<Description>You are dead!</Description>
 			<Actions />
 		</Scene>
 	</Scenes>

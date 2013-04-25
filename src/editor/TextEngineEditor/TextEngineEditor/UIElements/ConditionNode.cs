@@ -22,31 +22,6 @@ namespace TextEngineEditor
             }
         }
 
-        private string leftHandSideValue;
-        public string LeftHandSideValue
-        {
-            get
-            {
-                return leftHandSideValue;
-            }
-            set
-            {
-                Set(() => LeftHandSideValue, ref leftHandSideValue, value);
-            }
-        }
-        private string rightHandSideValue;
-        public string RightHandSideValue
-        {
-            get
-            {
-                return rightHandSideValue;
-            }
-            set
-            {
-                Set(() => RightHandSideValue, ref rightHandSideValue, value);
-            }
-        }
-
         private string leftHandSideType;
         public string LeftHandSideType
         {
@@ -72,14 +47,34 @@ namespace TextEngineEditor
             }
         }
 
-        public ObservableCollection<string> LeftHandSideAutofill { get; set; }
-        public ObservableCollection<string> RightHandSideAutofill { get; set; }
+        private string leftHandSideValue;
+        public string LeftHandSideValue
+        {
+            get
+            {
+                return leftHandSideValue;
+            }
+            set
+            {
+                Set(() => LeftHandSideValue, ref leftHandSideValue, value);
+            }
+        }
+        private string rightHandSideValue;
+        public string RightHandSideValue
+        {
+            get
+            {
+                return rightHandSideValue;
+            }
+            set
+            {
+                Set(() => RightHandSideValue, ref rightHandSideValue, value);
+            }
+        }
 
         public ConditionNode()
         {
             ConditionType = "";
-            LeftHandSideAutofill = new ObservableCollection<string>();
-            RightHandSideAutofill = new ObservableCollection<string>();
         }
     }
 }

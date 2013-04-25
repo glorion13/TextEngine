@@ -113,7 +113,6 @@
     <None Include="Lib\Python\core\components\__init__.pyc" />
     <None Include="Lib\Python\core\__init__.pyc" />
     <None Include="Lib\Python\dataParser\__init__.pyc" />
-    <None Include="Lib\Python\searching\__init__.pyc" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -123,9 +122,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="MVVMLight.Nuget.Readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Lib\Python\core\components\customisable\conditions.py">
@@ -144,9 +140,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Lib\Python\dataParser\__init__.py">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Lib\Python\searching\__init__.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

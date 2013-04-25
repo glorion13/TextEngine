@@ -12,7 +12,7 @@ The :mod:`core.components` module contains the following classes:
 
 """
 
-class Game(customisable.effects.EffectFunctions):
+class Game(customisable.effects.EffectFunctions, customisable.conditions.ConditionFunctions):
 	"""
 	The :class:`Game` class basically represents the structure of the game (interactive novel or
 	text adventure). Therefore it contains the various :class:`Scene`, global :class:`Resource` and
@@ -36,6 +36,34 @@ class Game(customisable.effects.EffectFunctions):
 		self.scenes = []
 		self.globalResources = []
 		self.globalActions = []
+	def addResource(self, name, value):
+		self.globalResources.append(Resource(name, value))
+	def removeResource(self, resource):
+		self.globalResources.remove(resource)
+	def getSceneByID(self, idV):
+		firstScene = [scene for scene in self.scenes if scene.id == idV]
+		if len(firstScene) == 0:
+			return "No scene found"
+		else:
+			return firstScene[0]
+	def getSceneByName(self, name):
+		firstScene = [scene for scene in self.scenes if scene.name == name]
+		if len(firstScene) == 0:
+			return "No scene found"
+		else:
+			return firstScene[0]
+	def getResourceByID(self, idV):
+		firstResource = [resource for resource in self.globalResources if resource.id == idV]
+		if len(firstResource) == 0:
+			return "No resource found"
+		else:
+			return firstResource[0]
+	def getResourceByName(self, name):
+		firstResource = [resource for resource in self.globalResources if resource.name == name]
+		if len(firstResource) == 0:
+			return "No resource found"
+		else:
+			return firstResource[0]
 
 class Resource:
 	"""
@@ -73,13 +101,15 @@ class Scene:
 		self.name = name
 		self.id = idV
 		self.description = description
+		self.resources = []
 		self.actions = []
 
 class Action:
 	"""
 	:class:`Action` object.
+	*TODO*: Handle Visibility, Enability and Passivity of an action
 	"""
-	def __init__(self, name='default action', effectsIfTrue=[], effectsIfFalse=[], conditions=[], visible=True):
+	def __init__(self, name='default action', visible=True, effectsIfTrue=[], effectsIfFalse=[], conditions=[]):
 		"""Initialise an :class:`Action` object."""
 		self.name = name
 		self.conditions = conditions
@@ -110,10 +140,10 @@ class Condition:
 		"""Initialise a :class:`Condition` object."""
 		self.conditionFunction = conditionFunction
 		self.args = args
-		self.raw = []
+		self.rawArgs = []
 		self.evalArgs = []
 	def evaluate(self):
-		self.evalArgs = [arg(n) for arg,n in zip(self.args, self.raw)]
+		self.evalArgs = [arg(n) for arg,n in zip(self.args, self.rawArgs)]
 		return self.conditionFunction(*self.evalArgs)
 
 class Effect:
@@ -124,8 +154,9 @@ class Effect:
 		""" Initialise an :class:`Effect` object."""
 		self.effectFunction = effectFunction
 		self.args = args
-		self.raw = []
+		self.rawArgs = []
 		self.evalArgs = []
+		self.parent = None
 	def resolve(self):
-		self.evalArgs += [arg(n) for arg,n in zip(self.args, self.raw)]
+		self.evalArgs = [self.parent] + [arg(n) for arg,n in zip(self.args, self.rawArgs)]
 		self.effectFunction(*self.evalArgs)

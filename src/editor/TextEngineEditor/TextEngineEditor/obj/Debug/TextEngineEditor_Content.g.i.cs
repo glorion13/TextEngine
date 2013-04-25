@@ -14,6 +14,5 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("lib/python/core/components/__init__.py")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("lib/python/core/__init__.py")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("lib/python/dataparser/__init__.py")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("lib/python/searching/__init__.py")]
 
 

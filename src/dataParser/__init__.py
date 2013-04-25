@@ -70,7 +70,7 @@ class GameParser:
 		effectObject.args = [self.typeConverter[arg.attrib.get('Type')] for arg in argsNode]
 		effectObject.rawArgs = [arg.text for arg in argsNode]
 		effectObject.parent = game
-		effectObject.effectFunction = game.dictionary[effect.find("EffectFunction").text]
+		effectObject.effectFunction = game.effectDict[effect.find("EffectFunction").text]
 		return effectObject
 
 	def createConditionObject(self, condition, game):
@@ -84,7 +84,7 @@ class GameParser:
 		conditionObject = core.components.Condition()
 		conditionObject.args = [leftHandSide, rightHandSide]
 		conditionObject.rawArgs = [leftHandSideNode.text, rightHandSideNode.text]
-		conditionObject.conditionFunction = core.components.customisable.conditions.dictionary[condition.find("ConditionFunction").text]
+		conditionObject.conditionFunction = game.conditionDict[condition.find("ConditionFunction").text]
 		return conditionObject
 
 	def createResourceObject(self, resource):

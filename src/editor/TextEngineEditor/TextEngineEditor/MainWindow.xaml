@@ -32,16 +32,45 @@
             <GridSplitter ResizeDirection="Columns" Grid.Column="1" Grid.ColumnSpan="1" Width="8" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
 
             <!-- Master view -->
-            <ListBox Grid.Column="0" ItemsSource="{Binding SceneNodes}" SelectedItem="{Binding SelectedSceneNode, Mode=TwoWay}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Name}" />
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+            <Grid Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
+                    <TextBlock Text="Starting scene:" />
+                    <ComboBox Width="100" ItemsSource="{Binding SceneNodes}" SelectedItem="{Binding StartingScene}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal">
+                    <TextBlock Text="Game name:" />
+                    <TextBox Width="100" Text="{Binding GameName}" />
+                </StackPanel>
+                <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal">
+                    <TextBlock Text="Author:" />
+                    <TextBox Width="100" Text="{Binding Author}" />
+                </StackPanel>
+                <ListBox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" ItemsSource="{Binding SceneNodes}" SelectedItem="{Binding SelectedSceneNode, Mode=TwoWay}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
 
             <!-- Details view -->
-            <Grid Grid.Column="2">
+            <Grid Grid.Column="2" Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
@@ -107,7 +136,7 @@
                                     <StackPanel Orientation="Horizontal">
                                         <Button Content="X" Command="{Binding Main.RemoveEffectCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" />
                                         <ComboBox ItemsSource="{Binding Main.PythonEffects, Source={StaticResource Locator}}" SelectedItem="{Binding EffectFunction, Mode=TwoWay}" />
-                                        <ComboBox ItemsSource="{Binding Main.PythonEffects, Source={StaticResource Locator}}" Text="{Binding EffectFunction, Mode=TwoWay}" IsEditable="True" />
+                                        <ComboBox Text="" IsEditable="True" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>

@@ -55,7 +55,6 @@ namespace TextEngineEditor.ViewModel
                 ExportXMLCommand = new RelayCommand(ExportAsXML);
                 ImportXMLCommand = new RelayCommand(ImportFromXML);
                 ReloadPythonCommand = new RelayCommand(ReloadPython);
-                UpdateConditionLeftHandSideAutofillCommand = new RelayCommand<ConditionNode>(UpdateConditionLeftHandSideAutofill);
 
                 // Initialise UI objects
                 SceneNodes = new ObservableCollection<SceneNode>();
@@ -97,7 +96,8 @@ namespace TextEngineEditor.ViewModel
         }
 
         dynamic pythonCore { get; set; }
-        dynamic pythonCustom { get; set; }
+        dynamic effectDict { get; set; }
+        dynamic conditionDict { get; set; }
 
         private string gameName;
         public string GameName
@@ -172,8 +172,6 @@ namespace TextEngineEditor.ViewModel
         public BindingList<string> PythonConditions { get; set; }
         public BindingList<string> PythonEffects { get; set; }
         public BindingList<string> PythonConditionTypes { get; set; }
-        public BindingList<string> PythonConditionLeftHandSideAutofill { get; set; }
-        public BindingList<string> PythonConditionRightHandSideAutofill { get; set; }
 
         public ICommand AddSceneCommand { get; set; }
         private void AddScene()
@@ -441,47 +439,29 @@ namespace TextEngineEditor.ViewModel
         {
         }
 
-        public ICommand UpdateConditionLeftHandSideAutofillCommand { get; set; }
-        private void UpdateConditionLeftHandSideAutofill(ConditionNode condition)
-        {
-            if (condition.LeftHandSideType == "Boolean")
-            {
-                System.Windows.MessageBox.Show(condition.LeftHandSideType);
-                condition.LeftHandSideAutofill = new ObservableCollection<string>()
-                {
-                    "True",
-                    "False"
-                };
-            }
-            else
-            {
-                condition.LeftHandSideAutofill = new ObservableCollection<string>();
-            }
-            System.Windows.MessageBox.Show(condition.LeftHandSideAutofill.Count.ToString());
-        }
-
         public ICommand ReloadPythonCommand { get; set; }
         private void ReloadPython()
         {
             pythonCore = Python.CreateRuntime().ImportModule("Python/core");
-            pythonCustom = pythonCore.components.customisable;
 
-            //PythonEffects.Clear();
-            //PythonConditions.Clear();
+            PythonEffects.Clear();
+            PythonConditions.Clear();
 
-            //int effectCount = pythonCustom.getEffectsKeysLength();
-            //dynamic effectKeys = pythonCustom.getEffectsKeys();
-            //for (int i = 0; i < effectCount; i++)
-            //{
-            //    PythonEffects.Add(effectKeys[i]);
-            //}
+            int effectCount = pythonCore.components.customisable.getEffectCount();
+            dynamic effectKeys = pythonCore.components.customisable.getEffectKeys();
+            for (int i = 0; i < effectCount; i++)
+            {
+                PythonEffects.Add(effectKeys[i]);
+            }
+            int conditionCount = pythonCore.components.customisable.getConditionCount();
+            dynamic conditionKeys = pythonCore.components.customisable.getConditionKeys();
+            for (int i = 0; i < conditionCount; i++)
+            {
+                PythonConditions.Add(conditionKeys[i]);
+            }
 
-            //int conditionCount = pythonCustom.getConditionsKeysLength();
-            //dynamic conditionKeys = pythonCustom.getConditionsKeys();
-            //for (int i = 0; i < conditionCount; i++)
-            //{
-            //    PythonConditions.Add(conditionKeys[i]);
-            //}
+            effectDict = pythonCore.components.customisable.effects.EffectFunctions().effectDict;
+            conditionDict = pythonCore.components.customisable.conditions.ConditionFunctions().conditionDict;
 
             // TODO:
             // Ensure that the pre-existing scenes don't lose their effects and conditions

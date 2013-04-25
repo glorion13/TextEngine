@@ -12,7 +12,7 @@ The :mod:`core.components` module contains the following classes:
 
 """
 
-class Game(customisable.effects.EffectFunctions):
+class Game(customisable.effects.EffectFunctions, customisable.conditions.ConditionFunctions):
 	"""
 	The :class:`Game` class basically represents the structure of the game (interactive novel or
 	text adventure). Therefore it contains the various :class:`Scene`, global :class:`Resource` and
@@ -36,6 +36,10 @@ class Game(customisable.effects.EffectFunctions):
 		self.scenes = []
 		self.globalResources = []
 		self.globalActions = []
+	def addResource(self, name, value):
+		self.globalResources.append(Resource(name, value))
+	def removeResource(self, resource):
+		self.globalResources.remove(resource)
 	def getSceneByID(self, idV):
 		firstScene = [scene for scene in self.scenes if scene.id == idV]
 		if len(firstScene) == 0:
@@ -103,6 +107,7 @@ class Scene:
 class Action:
 	"""
 	:class:`Action` object.
+	*TODO*: Handle Visibility, Enability and Passivity of an action
 	"""
 	def __init__(self, name='default action', visible=True, effectsIfTrue=[], effectsIfFalse=[], conditions=[]):
 		"""Initialise an :class:`Action` object."""
