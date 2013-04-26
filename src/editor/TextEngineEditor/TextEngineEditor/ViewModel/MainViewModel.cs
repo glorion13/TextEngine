@@ -41,13 +41,16 @@ namespace TextEngineEditor.ViewModel
                 PythonEffects = new BindingList<string>();
                 PythonConditions = new BindingList<string>();
                 ReloadPython();
-                //var kek = pythonCore.getEffects().get("outputVisibleSceneActions").__name__;
 
                 // Initialise commands
                 AddSceneCommand = new RelayCommand(AddScene);
                 RemoveSceneCommand = new RelayCommand(RemoveScene);
-                AddActionCommand = new RelayCommand(AddAction);
-                RemoveActionCommand = new RelayCommand<ActionNode>(RemoveAction);
+                AddGActionCommand = new RelayCommand(AddGAction);
+                RemoveGActionCommand = new RelayCommand<ActionNode>(RemoveGAction);
+                AddGResourceCommand = new RelayCommand(AddGResource);
+                RemoveGResourceCommand = new RelayCommand<ResourceNode>(RemoveGResource);
+                AddLActionCommand = new RelayCommand(AddLAction);
+                RemoveLActionCommand = new RelayCommand<ActionNode>(RemoveLAction);
                 AddConditionCommand = new RelayCommand(AddCondition);
                 RemoveConditionCommand = new RelayCommand<ConditionNode>(RemoveCondition);
                 AddEffectCommand = new RelayCommand(AddEffect);
@@ -80,9 +83,9 @@ namespace TextEngineEditor.ViewModel
                 scene2.Description = "A sandy beach.";
                 ActionNode action1 = new ActionNode();
                 action1.Name = "Action 1";
-                ConditionNode condition1 = new ConditionNode();
-                ConditionNode condition2 = new ConditionNode();
-                EffectNode effect1 = new EffectNode();
+                ConditionNode condition1 = new ConditionNode(pythonCore);
+                ConditionNode condition2 = new ConditionNode(pythonCore);
+                EffectNode effect1 = new EffectNode(pythonCore);
                 action1.EffectsIfTrue.Add(effect1);
                 action1.Conditions.Add(condition1);
                 action1.Conditions.Add(condition2);
@@ -96,8 +99,6 @@ namespace TextEngineEditor.ViewModel
         }
 
         dynamic pythonCore { get; set; }
-        dynamic effectDict { get; set; }
-        dynamic conditionDict { get; set; }
 
         private string gameName;
         public string GameName
@@ -147,6 +148,7 @@ namespace TextEngineEditor.ViewModel
             set
             {
                 Set(() => SelectedSceneNode, ref selectedSceneNode, value);
+                SelectedActionNode = null;
             }
         }
 
@@ -160,6 +162,47 @@ namespace TextEngineEditor.ViewModel
             set
             {
                 Set(() => SelectedActionNode, ref selectedActionNode, value);
+            }
+        }
+
+        private ResourceNode selectedResourceNode;
+        public ResourceNode SelectedResourceNode
+        {
+            get
+            {
+                return selectedResourceNode;
+            }
+            set
+            {
+                Set(() => SelectedResourceNode, ref selectedResourceNode, value);
+            }
+        }
+
+        private ActionNode selectedGActionNode;
+        public ActionNode SelectedGActionNode
+        {
+            get
+            {
+                return selectedGActionNode;
+            }
+            set
+            {
+                Set(() => SelectedGActionNode, ref selectedGActionNode, value);
+                SelectedActionNode = SelectedGActionNode;
+            }
+        }
+
+        private ResourceNode selectedGResourceNode;
+        public ResourceNode SelectedGResourceNode
+        {
+            get
+            {
+                return selectedGResourceNode;
+            }
+            set
+            {
+                Set(() => SelectedGResourceNode, ref selectedGResourceNode, value);
+                SelectedResourceNode = SelectedGResourceNode;
             }
         }
 
@@ -197,8 +240,46 @@ namespace TextEngineEditor.ViewModel
             SceneNodes.Remove(SelectedSceneNode);
         }
 
-        public ICommand AddActionCommand { get; set; }
-        private void AddAction()
+        public ICommand AddGActionCommand { get; set; }
+        private void AddGAction()
+        {
+            ActionNode tmpActionNode = new ActionNode();
+            int tmpCount = 1;
+            while (GlobalActionNodes.Any(a => a.Name == tmpActionNode.Name))
+            {
+                tmpActionNode.Name = "New Action (" + tmpCount.ToString() + ")";
+                tmpCount++;
+            }
+            GlobalActionNodes.Add(tmpActionNode);
+        }
+
+        public ICommand RemoveGActionCommand { get; set; }
+        private void RemoveGAction(ActionNode action)
+        {
+            GlobalActionNodes.Remove(action);
+        }
+
+        public ICommand AddGResourceCommand { get; set; }
+        private void AddGResource()
+        {
+            ResourceNode tmpResourceNode = new ResourceNode();
+            int tmpCount = 1;
+            while (GlobalResourceNodes.Any(a => a.Name == tmpResourceNode.Name))
+            {
+                tmpResourceNode.Name = "New Resource (" + tmpCount.ToString() + ")";
+                tmpCount++;
+            }
+            GlobalResourceNodes.Add(tmpResourceNode);
+        }
+
+        public ICommand RemoveGResourceCommand { get; set; }
+        private void RemoveGResource(ResourceNode resource)
+        {
+            GlobalResourceNodes.Remove(resource);
+        }
+
+        public ICommand AddLActionCommand { get; set; }
+        private void AddLAction()
         {
             ActionNode tmpActionNode = new ActionNode();
             int tmpCount = 1;
@@ -210,8 +291,8 @@ namespace TextEngineEditor.ViewModel
             SelectedSceneNode.Actions.Add(tmpActionNode);
         }
 
-        public ICommand RemoveActionCommand { get; set; }
-        private void RemoveAction(ActionNode action)
+        public ICommand RemoveLActionCommand { get; set; }
+        private void RemoveLAction(ActionNode action)
         {
             SelectedSceneNode.Actions.Remove(action);
         }
@@ -219,7 +300,7 @@ namespace TextEngineEditor.ViewModel
         public ICommand AddConditionCommand { get; set; }
         private void AddCondition()
         {
-            SelectedActionNode.Conditions.Add(new ConditionNode());
+            SelectedActionNode.Conditions.Add(new ConditionNode(pythonCore));
         }
 
         public ICommand RemoveConditionCommand { get; set; }
@@ -231,7 +312,7 @@ namespace TextEngineEditor.ViewModel
         public ICommand AddEffectCommand { get; set; }
         private void AddEffect()
         {
-            SelectedActionNode.EffectsIfTrue.Add(new EffectNode());
+            SelectedActionNode.EffectsIfTrue.Add(new EffectNode(pythonCore));
         }
 
         public ICommand RemoveEffectCommand { get; set; }
@@ -306,7 +387,7 @@ namespace TextEngineEditor.ViewModel
                     {
                         writer.WriteStartElement("Effect");
                         writer.WriteElementString("EffectFunction", effect.EffectFunction);
-                        foreach (KeyValuePair<string, string> arg in effect.arguments)
+                        foreach (KeyValuePair<string, string> arg in effect.Arguments)
                         {
                             writer.WriteStartElement("arg");
                             writer.WriteAttributeString("Type", arg.Key);
@@ -322,7 +403,7 @@ namespace TextEngineEditor.ViewModel
                     {
                         writer.WriteStartElement("Effect");
                         writer.WriteElementString("EffectFunction", effect.EffectFunction);
-                        foreach (KeyValuePair<string, string> arg in effect.arguments)
+                        foreach (KeyValuePair<string, string> arg in effect.Arguments)
                         {
                             writer.WriteStartElement("arg");
                             writer.WriteAttributeString("Type", arg.Key);
@@ -389,7 +470,7 @@ namespace TextEngineEditor.ViewModel
                         {
                             writer.WriteStartElement("Effect");
                             writer.WriteElementString("EffectFunction", effect.EffectFunction);
-                            foreach (KeyValuePair<string, string> arg in effect.arguments)
+                            foreach (KeyValuePair<string, string> arg in effect.Arguments)
                             {
                                 writer.WriteStartElement("arg");
                                 writer.WriteAttributeString("Type", arg.Key);
@@ -405,7 +486,7 @@ namespace TextEngineEditor.ViewModel
                         {
                             writer.WriteStartElement("Effect");
                             writer.WriteElementString("EffectFunction", effect.EffectFunction);
-                            foreach (KeyValuePair<string, string> arg in effect.arguments)
+                            foreach (KeyValuePair<string, string> arg in effect.Arguments)
                             {
                                 writer.WriteStartElement("arg");
                                 writer.WriteAttributeString("Type", arg.Key);
@@ -459,10 +540,40 @@ namespace TextEngineEditor.ViewModel
             {
                 PythonConditions.Add(conditionKeys[i]);
             }
-
-            effectDict = pythonCore.components.customisable.effects.EffectFunctions().effectDict;
-            conditionDict = pythonCore.components.customisable.conditions.ConditionFunctions().conditionDict;
-
+            /*
+            foreach (SceneNode scene in SceneNodes)
+            {
+                foreach (ActionNode action in scene.Actions)
+                {
+                    foreach (ConditionNode condition in action.Conditions)
+                    {
+                        condition.PythonCore = pythonCore;
+                    }
+                    foreach (EffectNode effect in action.EffectsIfTrue)
+                    {
+                        effect.PythonCore = pythonCore;
+                    }
+                    foreach (EffectNode effect in action.EffectsIfFalse)
+                    {
+                        effect.PythonCore = pythonCore;
+                    }
+                }
+            }
+            foreach (ActionNode action in GlobalActionNodes)
+            {
+                foreach (ConditionNode condition in action.Conditions)
+                {
+                    condition.PythonCore = pythonCore;
+                }
+                foreach (EffectNode effect in action.EffectsIfTrue)
+                {
+                    effect.PythonCore = pythonCore;
+                }
+                foreach (EffectNode effect in action.EffectsIfFalse)
+                {
+                    effect.PythonCore = pythonCore;
+                }
+            }*/
             // TODO:
             // Ensure that the pre-existing scenes don't lose their effects and conditions
             // Print out log of warnings in case there some were deleted

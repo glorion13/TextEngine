@@ -47,11 +47,17 @@ namespace TextEngineEditor
                 Set(() => Value, ref resourceValue, value);
             }
         }
-
-        public ResourceNode(string name, string value)
+        public ResourceNode()
+        {
+            Name = "New Resource";
+            Value = "";
+            Type = "Text";
+        }
+        public ResourceNode(string name, string value, string type)
         {
             Name = name;
             Value = value;
+            Type = type;
         }
         public override string ToString()
         {

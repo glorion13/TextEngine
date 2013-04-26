@@ -72,9 +72,12 @@ namespace TextEngineEditor
             }
         }
 
-        public ConditionNode()
+        public dynamic PythonCore { get; set; }
+
+        public ConditionNode(dynamic pythonCore)
         {
             ConditionType = "";
+            PythonCore = pythonCore;
         }
     }
 }

@@ -19,15 +19,26 @@ namespace TextEngineEditor
             set
             {
                 Set(() => EffectFunction, ref effectFunction, value);
+                Arguments.Clear();
+                dynamic function = PythonCore.components.customisable.effects.EffectFunctions().effectDict[EffectFunction];
+                for (int i = 0; i < function.func_code.co_argcount; i++)
+                {
+                    if (function.func_code.co_varnames[i] != "self")
+                    {
+                        Arguments.Add(new KeyValuePair<string, string>());
+                    }
+                }
             }
         }
 
-        public ObservableCollection<KeyValuePair<string, string>> arguments { get; set; }
+        public dynamic PythonCore { get; set; }
+        public ObservableCollection<KeyValuePair<string, string>> Arguments { get; set; }
 
-        public EffectNode()
+        public EffectNode(dynamic pythonCore)
         {
-            EffectFunction = "";
-            arguments = new ObservableCollection<KeyValuePair<string, string>>();
+            Arguments = new ObservableCollection<KeyValuePair<string, string>>();
+            PythonCore = pythonCore;
+            EffectFunction = "Tell player";
         }
     }
 }

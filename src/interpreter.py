@@ -15,13 +15,7 @@ print ""
 print ""
 
 # Start game
-game.currentScene = game.startingScene
-game.effectDict['Tell player'](game, game.currentScene.description)
-
-#for res in game.globalResources:
-#	if res.name == "HP":
-#		res.value = 49
-game.globalResources.append(core.components.Resource("Hax", 5))
+game.effectDict['Go to scene'](game, game.startingScene)
 
 # Core game loop
 while (True):

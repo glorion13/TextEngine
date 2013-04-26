@@ -35,16 +35,27 @@
             <Grid Grid.Column="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="8" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="8" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="25" />
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="8" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="25" />
                 </Grid.RowDefinitions>
+
+                <GridSplitter ResizeDirection="Rows" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="5" Width="Auto" Height="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                <GridSplitter ResizeDirection="Columns" Grid.Column="1" Grid.Row="3" Grid.RowSpan="3" Width="8" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                <GridSplitter ResizeDirection="Columns" Grid.Column="3" Grid.Row="3" Grid.RowSpan="3" Width="8" Height="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+
+                <!-- Top row with game properties -->
                 <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
                     <TextBlock Text="Starting scene:" />
-                    <ComboBox Width="100" ItemsSource="{Binding SceneNodes}" SelectedItem="{Binding StartingScene}">
+                    <ComboBox Width="Auto" ItemsSource="{Binding SceneNodes}" SelectedItem="{Binding StartingScene}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Name}" />
@@ -52,21 +63,58 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                 </StackPanel>
-                <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal">
-                    <TextBlock Text="Game name:" />
-                    <TextBox Width="100" Text="{Binding GameName}" />
-                </StackPanel>
                 <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal">
-                    <TextBlock Text="Author:" />
-                    <TextBox Width="100" Text="{Binding Author}" />
+                    <TextBlock Text="Game name:" />
+                    <TextBox Width="Auto" Text="{Binding GameName}" />
                 </StackPanel>
-                <ListBox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" ItemsSource="{Binding SceneNodes}" SelectedItem="{Binding SelectedSceneNode, Mode=TwoWay}">
+                <StackPanel Grid.Column="4" Grid.Row="0" Orientation="Horizontal">
+                    <TextBlock Text="Author:" />
+                    <TextBox Width="Auto" Text="{Binding Author}" />
+                </StackPanel>
+
+                <!-- Mind map -->
+                <ListBox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="5">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Name}" />
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
+
+                <!-- Scene, Global resource and Global action lists -->
+                <ListBox Grid.Column="0" Grid.Row="3" ItemsSource="{Binding SceneNodes}" SelectedItem="{Binding SelectedSceneNode, Mode=TwoWay}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="X" Command="{Binding Main.RemoveSceneCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" />
+                                <TextBlock Text="{Binding Name}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Button Visibility="{Binding KekBur}" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="4" Width="120" Command="{Binding AddSceneCommand}" Content="Add scene" />
+                <ListBox Grid.Column="2" Grid.Row="3" ItemsSource="{Binding GlobalActionNodes}" SelectedItem="{Binding SelectedActionNode, Mode=TwoWay}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="X" Command="{Binding Main.RemoveGActionCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" />
+                                <TextBlock Text="{Binding Name}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Button HorizontalAlignment="Left" Grid.Column="2" Grid.Row="4" Width="120" Command="{Binding AddGActionCommand}" Content="Add global action" />
+                <ListBox Grid.Column="4" Grid.Row="3" ItemsSource="{Binding GlobalResourceNodes}" SelectedItem="{Binding SelectedResourceNode, Mode=TwoWay}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="X" Command="{Binding Main.RemoveGResourceCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" />
+                                <TextBlock Text="{Binding Name}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Button HorizontalAlignment="Left" Grid.Column="4" Grid.Row="4" Width="120" Command="{Binding AddGResourceCommand}" Content="Add global resource" />
             </Grid>
 
             <!-- Details view -->
@@ -80,8 +128,6 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <GridSplitter ResizeDirection="Rows" Grid.Row="1" Grid.ColumnSpan="1" Width="Auto" Height="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-
                 <!-- Scene details -->
                 <ScrollViewer Grid.Row="0">
                     <StackPanel ScrollViewer.CanContentScroll="True">
@@ -94,14 +140,14 @@
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button Content="X" Command="{Binding Main.RemoveActionCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" />
+                                        <Button Content="X" Command="{Binding Main.RemoveLActionCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" />
                                         <TextBlock Text="{Binding Name}" />
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
                         <StackPanel Orientation="Horizontal">
-                            <Button Content="Add action" Command="{Binding AddActionCommand}" />
+                            <Button Content="Add action" Command="{Binding AddLActionCommand}" />
                         </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
@@ -136,7 +182,18 @@
                                     <StackPanel Orientation="Horizontal">
                                         <Button Content="X" Command="{Binding Main.RemoveEffectCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" />
                                         <ComboBox ItemsSource="{Binding Main.PythonEffects, Source={StaticResource Locator}}" SelectedItem="{Binding EffectFunction, Mode=TwoWay}" />
-                                        <ComboBox Text="" IsEditable="True" />
+                                        <ListBox ItemsSource="{Binding Arguments}">
+                                            <ListBox.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel IsItemsHost="True" />
+                                                </ItemsPanelTemplate>
+                                            </ListBox.ItemsPanel>
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="argument" />
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
                                     </StackPanel>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
@@ -147,21 +204,14 @@
                         <CheckBox Content="Visible action" IsChecked="{Binding SelectedActionNode.IsVisible, Mode=TwoWay}" />
                     </StackPanel>
                 </ScrollViewer>
-
             </Grid>
-
-
         </Grid>
 
-        <Grid x:Name="toolbar" Grid.Row="1" HorizontalAlignment="Left">
-
+        <Grid x:Name="toolbar" Grid.Row="1">
             <StackPanel Orientation="Horizontal">
-                <Button Width="100" Command="{Binding AddSceneCommand}" Content="Add New Scene" />
-                <Button Width="100" Command="{Binding RemoveSceneCommand}" Content="Remove Scene" />
                 <Button Width="100" Command="{Binding ExportXMLCommand}" Content="Export" />
                 <Button Width="100" Command="{Binding ReloadPythonCommand}" Content="Reload Py" />
             </StackPanel>
-
         </Grid>
 
     </Grid>
