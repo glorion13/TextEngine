@@ -83,9 +83,9 @@ namespace TextEngineEditor.ViewModel
                 scene2.Description = "A sandy beach.";
                 ActionNode action1 = new ActionNode();
                 action1.Name = "Action 1";
-                ConditionNode condition1 = new ConditionNode(pythonCore);
-                ConditionNode condition2 = new ConditionNode(pythonCore);
-                EffectNode effect1 = new EffectNode(pythonCore);
+                ConditionNode condition1 = new ConditionNode(PythonCore);
+                ConditionNode condition2 = new ConditionNode(PythonCore);
+                EffectNode effect1 = new EffectNode(this);
                 action1.EffectsIfTrue.Add(effect1);
                 action1.Conditions.Add(condition1);
                 action1.Conditions.Add(condition2);
@@ -98,7 +98,7 @@ namespace TextEngineEditor.ViewModel
             }
         }
 
-        dynamic pythonCore { get; set; }
+        public dynamic PythonCore { get; set; }
 
         private string gameName;
         public string GameName
@@ -300,7 +300,7 @@ namespace TextEngineEditor.ViewModel
         public ICommand AddConditionCommand { get; set; }
         private void AddCondition()
         {
-            SelectedActionNode.Conditions.Add(new ConditionNode(pythonCore));
+            SelectedActionNode.Conditions.Add(new ConditionNode(PythonCore));
         }
 
         public ICommand RemoveConditionCommand { get; set; }
@@ -312,7 +312,7 @@ namespace TextEngineEditor.ViewModel
         public ICommand AddEffectCommand { get; set; }
         private void AddEffect()
         {
-            SelectedActionNode.EffectsIfTrue.Add(new EffectNode(pythonCore));
+            SelectedActionNode.EffectsIfTrue.Add(new EffectNode(this));
         }
 
         public ICommand RemoveEffectCommand { get; set; }
@@ -523,19 +523,19 @@ namespace TextEngineEditor.ViewModel
         public ICommand ReloadPythonCommand { get; set; }
         private void ReloadPython()
         {
-            pythonCore = Python.CreateRuntime().ImportModule("Python/core");
+            PythonCore = Python.CreateRuntime().ImportModule("Python/core");
 
             PythonEffects.Clear();
             PythonConditions.Clear();
 
-            int effectCount = pythonCore.components.customisable.getEffectCount();
-            dynamic effectKeys = pythonCore.components.customisable.getEffectKeys();
+            int effectCount = PythonCore.components.customisable.getEffectCount();
+            dynamic effectKeys = PythonCore.components.customisable.getEffectKeys();
             for (int i = 0; i < effectCount; i++)
             {
                 PythonEffects.Add(effectKeys[i]);
             }
-            int conditionCount = pythonCore.components.customisable.getConditionCount();
-            dynamic conditionKeys = pythonCore.components.customisable.getConditionKeys();
+            int conditionCount = PythonCore.components.customisable.getConditionCount();
+            dynamic conditionKeys = PythonCore.components.customisable.getConditionKeys();
             for (int i = 0; i < conditionCount; i++)
             {
                 PythonConditions.Add(conditionKeys[i]);

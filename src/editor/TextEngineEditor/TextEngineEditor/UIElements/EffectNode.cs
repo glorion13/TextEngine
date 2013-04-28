@@ -20,24 +20,27 @@ namespace TextEngineEditor
             {
                 Set(() => EffectFunction, ref effectFunction, value);
                 Arguments.Clear();
-                dynamic function = PythonCore.components.customisable.effects.EffectFunctions().effectDict[EffectFunction];
+                dynamic function = Mvm.PythonCore.components.customisable.effects.EffectFunctions().effectDict[EffectFunction];
                 for (int i = 0; i < function.func_code.co_argcount; i++)
                 {
                     if (function.func_code.co_varnames[i] != "self")
                     {
-                        Arguments.Add(new KeyValuePair<string, string>());
+                        if (function.func_code.co_varnames[i] == "scene")
+                        {
+                            Arguments.Add(new KeyValuePair<string, string>("Scene", ""));
+                        }
                     }
                 }
             }
         }
 
-        public dynamic PythonCore { get; set; }
+        public TextEngineEditor.ViewModel.MainViewModel Mvm { get; set; }
         public ObservableCollection<KeyValuePair<string, string>> Arguments { get; set; }
 
-        public EffectNode(dynamic pythonCore)
+        public EffectNode(TextEngineEditor.ViewModel.MainViewModel mvm)
         {
             Arguments = new ObservableCollection<KeyValuePair<string, string>>();
-            PythonCore = pythonCore;
+            Mvm = mvm;
             EffectFunction = "Tell player";
         }
     }
