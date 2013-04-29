@@ -1,5 +1,4 @@
-﻿using GalaSoft.MvvmLight;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TextEngineEditor
 {
-    public class ResourceNode : ViewModelBase
+    public class ResourceNode : INode
     {
         private string name;
         public string Name
@@ -61,7 +60,7 @@ namespace TextEngineEditor
         }
         public override string ToString()
         {
-            return "";
+            return Name;
         }
     }
 }

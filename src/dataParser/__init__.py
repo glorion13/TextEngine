@@ -10,7 +10,7 @@ class GameParser:
 		"Number" 	: lambda(n): float(n),
 		"Text" 		: lambda(n): str(n),
 		"Resource" 	: lambda(n): self.game.getResourceByName(str(n)),
-		"Scene" 	: lambda(n): self.game.getSceneByID(int(n))
+		"Scene" 	: lambda(n): self.game.getSceneByName(str(n))
 		}
 
 	def loadXMLGameData(self, gameDataFile):
@@ -41,13 +41,13 @@ class GameParser:
 			sceneObject.name = scene.find("Name").text
 			sceneObject.description = scene.find("Description").text
 			# Scene resources (local)
-			#resourcesNode = scene.find("Resources")
-			#scene.resources = [self.createResourceObject(resource) for resource in resourcesNode]
+			resourcesNode = scene.find("Resources")
+			scene.resources = [self.createResourceObject(resource) for resource in resourcesNode]
 			# Scene actions (local)
 			actionsNode = scene.find("Actions")
 			sceneObject.actions = [self.createActionObject(action, self.game) for action in actionsNode]
 			self.game.scenes.append(sceneObject)
-		self.game.startingScene = self.game.getSceneByID(int(startingScene))
+		self.game.startingScene = self.game.getSceneByName(str(startingScene))
 		return self.game
 
 	# Auxiliary parsing functions

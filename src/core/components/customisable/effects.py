@@ -10,10 +10,10 @@ class EffectFunctions:
     		self.cmdOutputText(str(possibleActions))
     def addGlobalResource(self, text, primitive):
         self.addResource(text, primitive)
-    def editGlobalResource(self, resource, primitive):
+    def editGlobalResource(self, gresource, primitive):
         res = self.getResourceByName(resource)
         res.value = primitive
-    def deleteGlobalResource(self, resource):
+    def deleteGlobalResource(self, gresource):
         res = self.getResourceByName(resource)
         self.removeResource(res)
     def enableAction(self):

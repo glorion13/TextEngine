@@ -55,7 +55,7 @@
                 <!-- Top row with game properties -->
                 <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
                     <TextBlock Text="Starting scene:" />
-                    <ComboBox Width="Auto" ItemsSource="{Binding SceneNodes}" SelectedItem="{Binding StartingScene}">
+                    <ComboBox Width="Auto" ItemsSource="{Binding SceneNodes}" Text="{Binding StartingScene., Mode=TwoWay}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Name}" />
@@ -92,7 +92,7 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                <Button Visibility="{Binding KekBur}" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="4" Width="120" Command="{Binding AddSceneCommand}" Content="Add scene" />
+                <Button HorizontalAlignment="Left" Grid.Column="0" Grid.Row="4" Width="120" Command="{Binding AddSceneCommand}" Content="Add scene" />
                 <ListBox Grid.Column="2" Grid.Row="3" ItemsSource="{Binding GlobalActionNodes}" SelectedItem="{Binding SelectedActionNode, Mode=TwoWay}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -190,7 +190,16 @@
                                             </ListBox.ItemsPanel>
                                             <ListBox.ItemTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="argument" />
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <ComboBox ItemsSource="{Binding Types}" Text="{Binding Type, Mode=TwoWay}" />
+                                                        <ComboBox ItemsSource="{Binding DropdownList}" Text="{Binding Selection, Mode=TwoWay}" IsEditable="True">
+                                                            <ComboBox.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <TextBlock Text="{Binding Name}" />
+                                                                </DataTemplate>
+                                                            </ComboBox.ItemTemplate>
+                                                        </ComboBox>
+                                                    </StackPanel>
                                                 </DataTemplate>
                                             </ListBox.ItemTemplate>
                                         </ListBox>

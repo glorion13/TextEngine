@@ -1,5 +1,4 @@
-﻿using GalaSoft.MvvmLight;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -7,7 +6,7 @@ using System.Text;
 
 namespace TextEngineEditor
 {
-    public class ActionNode : ViewModelBase
+    public class ActionNode : INode
     {
         private string name;
         public string Name
@@ -60,6 +59,11 @@ namespace TextEngineEditor
             Conditions = new ObservableCollection<ConditionNode>();
             EffectsIfTrue = new ObservableCollection<EffectNode>();
             EffectsIfFalse = new ObservableCollection<EffectNode>();
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

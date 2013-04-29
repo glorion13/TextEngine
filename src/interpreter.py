@@ -3,7 +3,7 @@ import dataParser
 
 # Load Data
 parser = dataParser.GameParser()
-game = parser.loadXMLGameData("game2.xml")
+game = parser.loadXMLGameData("game.xml")
 # Load game
 
 # Print game information

@@ -44,11 +44,13 @@ namespace TextEngineEditor.ViewModel
 
                 // Initialise commands
                 AddSceneCommand = new RelayCommand(AddScene);
-                RemoveSceneCommand = new RelayCommand(RemoveScene);
+                RemoveSceneCommand = new RelayCommand<SceneNode>(RemoveScene);
                 AddGActionCommand = new RelayCommand(AddGAction);
                 RemoveGActionCommand = new RelayCommand<ActionNode>(RemoveGAction);
                 AddGResourceCommand = new RelayCommand(AddGResource);
                 RemoveGResourceCommand = new RelayCommand<ResourceNode>(RemoveGResource);
+                AddLResourceCommand = new RelayCommand(AddLResource);
+                RemoveLResourceCommand = new RelayCommand<ResourceNode>(RemoveLResource);
                 AddLActionCommand = new RelayCommand(AddLAction);
                 RemoveLActionCommand = new RelayCommand<ActionNode>(RemoveLAction);
                 AddConditionCommand = new RelayCommand(AddCondition);
@@ -60,10 +62,10 @@ namespace TextEngineEditor.ViewModel
                 ReloadPythonCommand = new RelayCommand(ReloadPython);
 
                 // Initialise UI objects
-                SceneNodes = new ObservableCollection<SceneNode>();
-                GlobalResourceNodes = new ObservableCollection<ResourceNode>();
-                GlobalActionNodes = new ObservableCollection<ActionNode>();
-                ActionStash = new ObservableCollection<ActionNode>();
+                SceneNodes = new ObservableCollection<INode>();
+                GlobalResourceNodes = new ObservableCollection<INode>();
+                GlobalActionNodes = new ObservableCollection<INode>();
+                ActionStash = new ObservableCollection<INode>();
                 PythonConditionTypes = new BindingList<string>()
                 {
                     "Text",
@@ -206,11 +208,11 @@ namespace TextEngineEditor.ViewModel
             }
         }
 
-        public ObservableCollection<SceneNode> SceneNodes { get; private set; }
-        public ObservableCollection<ResourceNode> GlobalResourceNodes { get; private set; }
-        public ObservableCollection<ActionNode> GlobalActionNodes { get; private set; }
+        public ObservableCollection<INode> SceneNodes { get; private set; }
+        public ObservableCollection<INode> GlobalResourceNodes { get; private set; }
+        public ObservableCollection<INode> GlobalActionNodes { get; private set; }
 
-        public ObservableCollection<ActionNode> ActionStash { get; set; }
+        public ObservableCollection<INode> ActionStash { get; set; }
 
         public BindingList<string> PythonConditions { get; set; }
         public BindingList<string> PythonEffects { get; set; }
@@ -221,7 +223,7 @@ namespace TextEngineEditor.ViewModel
         {
             SceneNode tmpSceneNode = new SceneNode();
             int tmpCount = 1;
-            while (SceneNodes.Any(s => s.Name == tmpSceneNode.Name))
+            while (SceneNodes.Any(s => s.ToString() == tmpSceneNode.Name))
             {
                 tmpSceneNode.Name = "New Scene (" + tmpCount.ToString() + ")";
                 tmpCount++;
@@ -235,9 +237,9 @@ namespace TextEngineEditor.ViewModel
         }
 
         public ICommand RemoveSceneCommand { get; set; }
-        private void RemoveScene()
+        private void RemoveScene(SceneNode scene)
         {
-            SceneNodes.Remove(SelectedSceneNode);
+            SceneNodes.Remove(scene);
         }
 
         public ICommand AddGActionCommand { get; set; }
@@ -245,7 +247,7 @@ namespace TextEngineEditor.ViewModel
         {
             ActionNode tmpActionNode = new ActionNode();
             int tmpCount = 1;
-            while (GlobalActionNodes.Any(a => a.Name == tmpActionNode.Name))
+            while (GlobalActionNodes.Any(a => a.ToString() == tmpActionNode.Name))
             {
                 tmpActionNode.Name = "New Action (" + tmpCount.ToString() + ")";
                 tmpCount++;
@@ -264,7 +266,7 @@ namespace TextEngineEditor.ViewModel
         {
             ResourceNode tmpResourceNode = new ResourceNode();
             int tmpCount = 1;
-            while (GlobalResourceNodes.Any(a => a.Name == tmpResourceNode.Name))
+            while (GlobalResourceNodes.Any(a => a.ToString() == tmpResourceNode.Name))
             {
                 tmpResourceNode.Name = "New Resource (" + tmpCount.ToString() + ")";
                 tmpCount++;
@@ -283,7 +285,7 @@ namespace TextEngineEditor.ViewModel
         {
             ActionNode tmpActionNode = new ActionNode();
             int tmpCount = 1;
-            while (SelectedSceneNode.Actions.Any(a => a.Name == tmpActionNode.Name))
+            while (SelectedSceneNode.Actions.Any(a => a.ToString() == tmpActionNode.Name))
             {
                 tmpActionNode.Name = "New Action (" + tmpCount.ToString() + ")";
                 tmpCount++;
@@ -295,6 +297,25 @@ namespace TextEngineEditor.ViewModel
         private void RemoveLAction(ActionNode action)
         {
             SelectedSceneNode.Actions.Remove(action);
+        }
+
+        public ICommand AddLResourceCommand { get; set; }
+        private void AddLResource()
+        {
+            ResourceNode tmpResourceNode = new ResourceNode();
+            int tmpCount = 1;
+            while (SelectedSceneNode.Resources.Any(a => a.ToString() == tmpResourceNode.Name))
+            {
+                tmpResourceNode.Name = "New Resource (" + tmpCount.ToString() + ")";
+                tmpCount++;
+            }
+            SelectedSceneNode.Resources.Add(tmpResourceNode);
+        }
+
+        public ICommand RemoveLResourceCommand { get; set; }
+        private void RemoveLResource(ResourceNode resource)
+        {
+            SelectedSceneNode.Resources.Remove(resource);
         }
 
         public ICommand AddConditionCommand { get; set; }
@@ -332,7 +353,7 @@ namespace TextEngineEditor.ViewModel
 
                 writer.WriteElementString("GameName", GameName);
                 writer.WriteElementString("Author", Author);
-                writer.WriteElementString("StartingScene", StartingScene.ID.ToString());
+                writer.WriteElementString("StartingScene", StartingScene.ToString());
 
                 #region <GlobalResources>
                 writer.WriteStartElement("GlobalResources");
@@ -371,8 +392,8 @@ namespace TextEngineEditor.ViewModel
                         writer.WriteEndElement();
 
                         writer.WriteStartElement("RightHandSide");
-                        writer.WriteString(condition.RightHandSideValue);
                         writer.WriteAttributeString("Type", condition.RightHandSideType);
+                        writer.WriteString(condition.RightHandSideValue);
                         writer.WriteEndElement();
 
                         writer.WriteEndElement();
@@ -387,13 +408,15 @@ namespace TextEngineEditor.ViewModel
                     {
                         writer.WriteStartElement("Effect");
                         writer.WriteElementString("EffectFunction", effect.EffectFunction);
-                        foreach (KeyValuePair<string, string> arg in effect.Arguments)
+                        writer.WriteStartElement("args");
+                        foreach (ArgumentNode arg in effect.Arguments)
                         {
                             writer.WriteStartElement("arg");
-                            writer.WriteAttributeString("Type", arg.Key);
-                            writer.WriteString(arg.Value);
+                            writer.WriteAttributeString("Type", arg.Type);
+                            writer.WriteString(arg.Selection.ToString());
                             writer.WriteEndElement();
                         }
+                        writer.WriteEndElement();
                         writer.WriteEndElement();
                     }
                     writer.WriteEndElement();
@@ -403,13 +426,15 @@ namespace TextEngineEditor.ViewModel
                     {
                         writer.WriteStartElement("Effect");
                         writer.WriteElementString("EffectFunction", effect.EffectFunction);
-                        foreach (KeyValuePair<string, string> arg in effect.Arguments)
+                        writer.WriteStartElement("args");
+                        foreach (ArgumentNode arg in effect.Arguments)
                         {
                             writer.WriteStartElement("arg");
-                            writer.WriteAttributeString("Type", arg.Key);
-                            writer.WriteString(arg.Value);
+                            writer.WriteAttributeString("Type", arg.Type);
+                            writer.WriteString(arg.Selection.ToString());
                             writer.WriteEndElement();
                         }
+                        writer.WriteEndElement();
                         writer.WriteEndElement();
                     }
                     writer.WriteEndElement();
@@ -430,6 +455,18 @@ namespace TextEngineEditor.ViewModel
                     writer.WriteElementString("ID", scene.ID.ToString());
                     writer.WriteElementString("Name", scene.Name);
                     writer.WriteElementString("Description", scene.Description);
+                    #region <Resources>
+                    writer.WriteStartElement("Resources");
+                    foreach (ResourceNode resource in scene.Resources)
+                    {
+                        writer.WriteStartElement("Resource");
+                        writer.WriteElementString("Name", resource.Name);
+                        writer.WriteElementString("Type", resource.Type);
+                        writer.WriteElementString("Value", resource.Value);
+                        writer.WriteEndElement();
+                    }
+                    writer.WriteEndElement();
+                    #endregion <Resources>
                     #region <Actions>
                     writer.WriteStartElement("Actions");
                     foreach (ActionNode action in scene.Actions)
@@ -454,8 +491,8 @@ namespace TextEngineEditor.ViewModel
                             writer.WriteEndElement();
 
                             writer.WriteStartElement("RightHandSide");
-                            writer.WriteString(condition.RightHandSideValue);
                             writer.WriteAttributeString("Type", condition.RightHandSideType);
+                            writer.WriteString(condition.RightHandSideValue);
                             writer.WriteEndElement();
 
                             writer.WriteEndElement();
@@ -470,13 +507,15 @@ namespace TextEngineEditor.ViewModel
                         {
                             writer.WriteStartElement("Effect");
                             writer.WriteElementString("EffectFunction", effect.EffectFunction);
-                            foreach (KeyValuePair<string, string> arg in effect.Arguments)
+                            writer.WriteStartElement("args");
+                            foreach (ArgumentNode arg in effect.Arguments)
                             {
                                 writer.WriteStartElement("arg");
-                                writer.WriteAttributeString("Type", arg.Key);
-                                writer.WriteString(arg.Value);
+                                writer.WriteAttributeString("Type", arg.Type);
+                                writer.WriteString(arg.Selection.ToString());
                                 writer.WriteEndElement();
                             }
+                            writer.WriteEndElement();
                             writer.WriteEndElement();
                         }
                         writer.WriteEndElement();
@@ -486,13 +525,15 @@ namespace TextEngineEditor.ViewModel
                         {
                             writer.WriteStartElement("Effect");
                             writer.WriteElementString("EffectFunction", effect.EffectFunction);
-                            foreach (KeyValuePair<string, string> arg in effect.Arguments)
+                            writer.WriteStartElement("args");
+                            foreach (ArgumentNode arg in effect.Arguments)
                             {
                                 writer.WriteStartElement("arg");
-                                writer.WriteAttributeString("Type", arg.Key);
-                                writer.WriteString(arg.Value);
+                                writer.WriteAttributeString("Type", arg.Type);
+                                writer.WriteString(arg.Selection.ToString());
                                 writer.WriteEndElement();
                             }
+                            writer.WriteEndElement();
                             writer.WriteEndElement();
                         }
                         writer.WriteEndElement();

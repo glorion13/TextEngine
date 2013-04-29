@@ -1,5 +1,4 @@
-﻿using GalaSoft.MvvmLight;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -7,7 +6,7 @@ using System.Text;
 
 namespace TextEngineEditor
 {
-    public class ConditionNode : ViewModelBase
+    public class ConditionNode : INode
     {
         private string conditionType;
         public string ConditionType
@@ -32,6 +31,7 @@ namespace TextEngineEditor
             set
             {
                 Set(() => LeftHandSideType, ref leftHandSideType, value);
+                UpdateLeftAutofill();
             }
         }
         private string rightHandSideType;
@@ -44,8 +44,27 @@ namespace TextEngineEditor
             set
             {
                 Set(() => RightHandSideType, ref rightHandSideType, value);
+                UpdateRightAutofill();
             }
         }
+
+        private void UpdateLeftAutofill()
+        {
+            if (LeftHandSideType == "Boolean")
+            {
+                LeftHandSideAutofill = new ObservableCollection<string>() { "True", "False" };
+            }
+        }
+        private void UpdateRightAutofill()
+        {
+            if (RightHandSideType == "Boolean")
+            {
+                RightHandSideAutofill = new ObservableCollection<string>() { "True", "False" };
+            }
+        }
+
+        public ObservableCollection<string> LeftHandSideAutofill { get; set; }
+        public ObservableCollection<string> RightHandSideAutofill { get; set; }
 
         private string leftHandSideValue;
         public string LeftHandSideValue
