@@ -1,7 +1,3 @@
-import sys
-sys.path.append("C:\\Program Files (x86)\\IronPython 2.7\\Lib")
-sys.path.append("Lib\\Python");
-
 from xml.etree import ElementTree
 
 import core
@@ -17,13 +13,14 @@ class GameParser:
 		"Scene" 	: lambda(n): self.game.getSceneByName(str(n))
 		}
 
-	def test(self, file):
-		return file
-
 	def loadXMLGameData(self, gameDataFile):
 		# Load data
-		xmlTree = ElementTree.parse(gameDataFile)
-		root = xmlTree.getroot()
+		try:
+			xmlTree = ElementTree.parse(gameDataFile)
+			root = xmlTree.getroot()
+		except:
+			print("Error loading game file.")
+			return "Error 0"
 		# Main game data
 		self.game = core.components.Game()
 		gameName = root.find("GameName").text

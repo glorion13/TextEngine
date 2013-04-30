@@ -49,6 +49,7 @@ class Game(customisable.effects.EffectFunctions, customisable.conditions.Conditi
 	def getSceneByName(self, name):
 		firstScene = [scene for scene in self.scenes if scene.name == name]
 		if len(firstScene) == 0:
+			print("ERROR: Scene '" + name + "' not found!")
 			return "No scene found"
 		else:
 			return firstScene[0]

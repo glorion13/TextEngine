@@ -36,6 +36,7 @@ class Game(customisable.effects.EffectFunctions, customisable.conditions.Conditi
 		self.scenes = []
 		self.globalResources = []
 		self.globalActions = []
+		self.narrative = []
 	def addResource(self, name, value):
 		self.globalResources.append(Resource(name, value))
 	def removeResource(self, resource):
@@ -49,6 +50,7 @@ class Game(customisable.effects.EffectFunctions, customisable.conditions.Conditi
 	def getSceneByName(self, name):
 		firstScene = [scene for scene in self.scenes if scene.name == name]
 		if len(firstScene) == 0:
+			print("ERROR: Scene '" + name + "' not found!")
 			return "No scene found"
 		else:
 			return firstScene[0]

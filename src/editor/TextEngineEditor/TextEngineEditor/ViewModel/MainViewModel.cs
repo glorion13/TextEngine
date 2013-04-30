@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Windows.Input;
 using System.Linq;
 using System.Collections.Generic;
+using Microsoft.Scripting.Hosting;
 
 namespace TextEngineEditor.ViewModel
 {
@@ -585,11 +586,7 @@ namespace TextEngineEditor.ViewModel
         public ICommand ImportXMLCommand { get; set; }
         private void ImportFromXML()
         {
-            string inputURL = "game.xml";
-            dynamic pythonParser = Python.CreateRuntime().ImportModule("Python/dataParser");
-            dynamic gameParser = pythonParser.GameParser();
-            dynamic game = gameParser.loadXMLGameData(inputURL);
-            System.Windows.MessageBox.Show(game.name.ToString());
+            PythonCore = Python.CreateRuntime().ImportModule("Python/dataParser");
         }
 
         public ICommand ReloadPythonCommand { get; set; }
@@ -614,8 +611,9 @@ namespace TextEngineEditor.ViewModel
             }
             // TODO:
             // Ensure that the pre-existing scenes don't lose their effects and conditions (if reloading python during runtime)
-            // Print out log of warnings in case there some were deleted
+            // Print out log of warnings in case there are some that were deleted
             // If Python does not work don't load it - somehow evaluate python scripts for errors
+            // General debugging and error handling
         }
     }
 }

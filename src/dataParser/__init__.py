@@ -6,7 +6,7 @@ class GameParser:
 	def __init__(self):
 		self.game = None
 		self.typeConverter = {
-		"Boolean" 	: lambda(n): bool(n),
+		"Boolean" 	: lambda(n): n,
 		"Number" 	: lambda(n): float(n),
 		"Text" 		: lambda(n): str(n),
 		"Resource" 	: lambda(n): self.game.getResourceByName(str(n)),
@@ -17,14 +17,10 @@ class GameParser:
 		# Load data
 		try:
 			xmlTree = ElementTree.parse(gameDataFile)
-		except:
-			print "Error loading game file. Make sure the file exists."
-			return "Error 0"
-		try:
 			root = xmlTree.getroot()
 		except:
-			print "Error reading game file. Make sure the XML is correct"
-			return "Error 1"
+			print("Error loading game file.")
+			return "Error 0"
 		# Main game data
 		self.game = core.components.Game()
 		gameName = root.find("GameName").text

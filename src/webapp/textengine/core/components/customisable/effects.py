@@ -1,6 +1,6 @@
 class EffectFunctions:
     def cmdOutputText(self, text):
-        print text
+        self.narrative += [text]
     def goToScene(self, scene):
     	self.currentScene = scene
     	self.cmdOutputText(scene.description)
@@ -10,12 +10,10 @@ class EffectFunctions:
     		self.cmdOutputText(str(possibleActions))
     def addGlobalResource(self, text, primitive):
         self.addResource(text, primitive)
-    def editGlobalResource(self, resource, primitive):
-        res = self.getResourceByName(resource)
-        res.value = primitive
-    def deleteGlobalResource(self, resource):
-        res = self.getResourceByName(resource)
-        self.removeResource(res)
+    def editGlobalResource(self, gresource, primitive):
+        gresource.value = primitive
+    def deleteGlobalResource(self, gresource):
+        self.removeResource(gresource)
     def enableAction(self):
         return 0
     def disableAction(self):

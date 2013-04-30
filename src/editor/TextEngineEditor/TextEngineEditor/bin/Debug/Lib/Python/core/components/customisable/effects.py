@@ -1,6 +1,6 @@
 class EffectFunctions:
     def cmdOutputText(self, text):
-        print text
+        print(text)
     def goToScene(self, scene):
     	self.currentScene = scene
     	self.cmdOutputText(scene.description)

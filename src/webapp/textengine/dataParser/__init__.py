@@ -6,20 +6,21 @@ class GameParser:
 	def __init__(self):
 		self.game = None
 		self.typeConverter = {
-		"Boolean" 	: lambda(n): bool(n),
+		"Boolean" 	: lambda(n): n,
 		"Number" 	: lambda(n): float(n),
 		"Text" 		: lambda(n): str(n),
 		"Resource" 	: lambda(n): self.game.getResourceByName(str(n)),
-		"Scene" 	: lambda(n): self.game.getSceneByID(int(n))
+		"Scene" 	: lambda(n): self.game.getSceneByName(str(n))
 		}
 
 	def loadXMLGameData(self, gameDataFile):
 		# Load data
 		try:
 			xmlTree = ElementTree.parse(gameDataFile)
+			root = xmlTree.getroot()
 		except:
-			"Error loading game file. Make sure the XML data is correct."
-		root = xmlTree.getroot()
+			print("Error loading game file.")
+			return "Error 0"
 		# Main game data
 		self.game = core.components.Game()
 		gameName = root.find("GameName").text
@@ -41,13 +42,13 @@ class GameParser:
 			sceneObject.name = scene.find("Name").text
 			sceneObject.description = scene.find("Description").text
 			# Scene resources (local)
-			#resourcesNode = scene.find("Resources")
-			#scene.resources = [self.createResourceObject(resource) for resource in resourcesNode]
+			resourcesNode = scene.find("Resources")
+			scene.resources = [self.createResourceObject(resource) for resource in resourcesNode]
 			# Scene actions (local)
 			actionsNode = scene.find("Actions")
 			sceneObject.actions = [self.createActionObject(action, self.game) for action in actionsNode]
 			self.game.scenes.append(sceneObject)
-		self.game.startingScene = self.game.getSceneByID(int(startingScene))
+		self.game.startingScene = self.game.getSceneByName(str(startingScene))
 		return self.game
 
 	# Auxiliary parsing functions
@@ -70,21 +71,33 @@ class GameParser:
 		effectObject.args = [self.typeConverter[arg.attrib.get('Type')] for arg in argsNode]
 		effectObject.rawArgs = [arg.text for arg in argsNode]
 		effectObject.parent = game
-		effectObject.effectFunction = game.effectDict[effect.find("EffectFunction").text]
+		if effect.find("EffectFunction").text == None:
+			effectObject.effectFunction = ""
+		else:
+			effectObject.effectFunction = game.effectDict[effect.find("EffectFunction").text]
 		return effectObject
 
 	def createConditionObject(self, condition, game):
 		# Left hand side element
 		leftHandSideNode = condition.find("LeftHandSide")
-		leftHandSide = self.typeConverter[leftHandSideNode.attrib.get('Type')]
+		if leftHandSideNode.attrib.get('Type') == None or leftHandSideNode.attrib.get('Type') == '':
+			leftHandSide = ""
+		else:
+			leftHandSide = self.typeConverter[leftHandSideNode.attrib.get('Type')]
 		# Right hand side element
 		rightHandSideNode = condition.find("RightHandSide")
-		rightHandSide = self.typeConverter[rightHandSideNode.attrib.get('Type')]
+		if rightHandSideNode.attrib.get('Type') == None  or rightHandSideNode.attrib.get('Type') == '':
+			rightHandSide = ""
+		else:
+			rightHandSide = self.typeConverter[rightHandSideNode.attrib.get('Type')]
 		# Create condition object
 		conditionObject = core.components.Condition()
 		conditionObject.args = [leftHandSide, rightHandSide]
 		conditionObject.rawArgs = [leftHandSideNode.text, rightHandSideNode.text]
-		conditionObject.conditionFunction = game.conditionDict[condition.find("ConditionFunction").text]
+		if condition.find("ConditionFunction").text == None:
+			conditionObject.conditionFunction = ""
+		else:
+			conditionObject.conditionFunction = game.conditionDict[condition.find("ConditionFunction").text]
 		return conditionObject
 
 	def createResourceObject(self, resource):
