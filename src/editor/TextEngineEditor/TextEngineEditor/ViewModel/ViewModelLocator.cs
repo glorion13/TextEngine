@@ -43,6 +43,7 @@ namespace TextEngineEditor.ViewModel
             ////}
 
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<IntroViewModel>();
         }
 
         public MainViewModel Main
@@ -50,6 +51,14 @@ namespace TextEngineEditor.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
+            }
+        }
+
+        public IntroViewModel Intro
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<IntroViewModel>();
             }
         }
         

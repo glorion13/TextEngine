@@ -19,59 +19,62 @@ namespace TextEngineEditor
             {
                 Set(() => EffectFunction, ref effectFunction, value);
                 Arguments.Clear();
-                dynamic function = Mvm.PythonCore.components.customisable.effects.EffectFunctions().effectDict[EffectFunction];
-                for (int i = 0; i < function.func_code.co_argcount; i++)
+                if (!(EffectFunction == "") && !(EffectFunction == null))
                 {
-                    if (function.func_code.co_varnames[i] != "self")
+                    dynamic function = Mvm.PythonCore.components.customisable.effects.EffectFunctions().effectDict[EffectFunction];
+                    for (int i = 0; i < function.func_code.co_argcount; i++)
                     {
-                        ArgumentNode tmpArg = new ArgumentNode();
-                        if (function.func_code.co_varnames[i] == "scene")
+                        if (function.func_code.co_varnames[i] != "self")
                         {
-                            tmpArg.Types = new ObservableCollection<string>(){ "Scene" };
-                            tmpArg.Type = "Scene";
-                            tmpArg.DropdownList = Mvm.SceneNodes;
-                            Arguments.Add(tmpArg);
-                        }
-                        else if (function.func_code.co_varnames[i] == "gresource")
-                        {
-                            tmpArg.Types = new ObservableCollection<string>() { "Resource" };
-                            tmpArg.Type = "Resource";
-                            tmpArg.DropdownList = Mvm.GlobalResourceNodes;
-                            Arguments.Add(tmpArg);
-                        }
-                        else if (function.func_code.co_varnames[i] == "lresource")
-                        {
-                            tmpArg.Types = new ObservableCollection<string>() { "Resource" };
-                            tmpArg.Type = "Resource";
-                            tmpArg.DropdownList = Mvm.SelectedSceneNode.Resources;
-                            Arguments.Add(tmpArg);
-                        }
-                        else if (function.func_code.co_varnames[i] == "primitive")
-                        {
-                            tmpArg.Types = new ObservableCollection<string>() { "Text", "Number", "Boolean" };
-                            tmpArg.DropdownList = new ObservableCollection<INode>();
-                            Arguments.Add(tmpArg);
-                        }
-                        else if (function.func_code.co_varnames[i] == "text")
-                        {
-                            tmpArg.Types = new ObservableCollection<string>() { "Text" };
-                            tmpArg.Type = "Text";
-                            tmpArg.DropdownList = new ObservableCollection<INode>();
-                            Arguments.Add(tmpArg);
-                        }
-                        else if (function.func_code.co_varnames[i] == "number")
-                        {
-                            tmpArg.Types = new ObservableCollection<string>() { "Number" };
-                            tmpArg.Type = "Number";
-                            tmpArg.DropdownList = new ObservableCollection<INode>();
-                            Arguments.Add(tmpArg);
-                        }
-                        else if (function.func_code.co_varnames[i] == "boolean")
-                        {
-                            tmpArg.Types = new ObservableCollection<string>() { "Boolean" };
-                            tmpArg.Type = "Boolean";
-                            tmpArg.DropdownList = new ObservableCollection<INode>() { new SceneNode("True"), new SceneNode("False") };
-                            Arguments.Add(tmpArg);
+                            ArgumentNode tmpArg = new ArgumentNode();
+                            if (function.func_code.co_varnames[i] == "scene")
+                            {
+                                tmpArg.Types = new ObservableCollection<string>() { "Scene" };
+                                tmpArg.Type = "Scene";
+                                tmpArg.DropdownList = Mvm.SceneNodes;
+                                Arguments.Add(tmpArg);
+                            }
+                            else if (function.func_code.co_varnames[i] == "gresource")
+                            {
+                                tmpArg.Types = new ObservableCollection<string>() { "Resource" };
+                                tmpArg.Type = "Resource";
+                                tmpArg.DropdownList = Mvm.GlobalResourceNodes;
+                                Arguments.Add(tmpArg);
+                            }
+                            else if (function.func_code.co_varnames[i] == "lresource")
+                            {
+                                tmpArg.Types = new ObservableCollection<string>() { "Resource" };
+                                tmpArg.Type = "Resource";
+                                tmpArg.DropdownList = Mvm.SelectedSceneNode.Resources;
+                                Arguments.Add(tmpArg);
+                            }
+                            else if (function.func_code.co_varnames[i] == "primitive")
+                            {
+                                tmpArg.Types = new ObservableCollection<string>() { "Text", "Number", "Boolean" };
+                                tmpArg.DropdownList = new ObservableCollection<INode>();
+                                Arguments.Add(tmpArg);
+                            }
+                            else if (function.func_code.co_varnames[i] == "text")
+                            {
+                                tmpArg.Types = new ObservableCollection<string>() { "Text" };
+                                tmpArg.Type = "Text";
+                                tmpArg.DropdownList = new ObservableCollection<INode>();
+                                Arguments.Add(tmpArg);
+                            }
+                            else if (function.func_code.co_varnames[i] == "number")
+                            {
+                                tmpArg.Types = new ObservableCollection<string>() { "Number" };
+                                tmpArg.Type = "Number";
+                                tmpArg.DropdownList = new ObservableCollection<INode>();
+                                Arguments.Add(tmpArg);
+                            }
+                            else if (function.func_code.co_varnames[i] == "boolean")
+                            {
+                                tmpArg.Types = new ObservableCollection<string>() { "Boolean" };
+                                tmpArg.Type = "Boolean";
+                                tmpArg.DropdownList = new ObservableCollection<INode>() { new SceneNode("True"), new SceneNode("False") };
+                                Arguments.Add(tmpArg);
+                            }
                         }
                     }
                 }
@@ -85,7 +88,7 @@ namespace TextEngineEditor
         {
             Arguments = new ObservableCollection<ArgumentNode>();
             Mvm = mvm;
-            EffectFunction = "Tell player";
+            EffectFunction = "";
         }
     }
 }

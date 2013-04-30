@@ -18,8 +18,13 @@ class GameParser:
 		try:
 			xmlTree = ElementTree.parse(gameDataFile)
 		except:
-			"Error loading game file. Make sure the XML data is correct."
-		root = xmlTree.getroot()
+			print "Error loading game file. Make sure the file exists."
+			return "Error 0"
+		try:
+			root = xmlTree.getroot()
+		except:
+			print "Error reading game file. Make sure the XML is correct"
+			return "Error 1"
 		# Main game data
 		self.game = core.components.Game()
 		gameName = root.find("GameName").text
@@ -70,21 +75,33 @@ class GameParser:
 		effectObject.args = [self.typeConverter[arg.attrib.get('Type')] for arg in argsNode]
 		effectObject.rawArgs = [arg.text for arg in argsNode]
 		effectObject.parent = game
-		effectObject.effectFunction = game.effectDict[effect.find("EffectFunction").text]
+		if effect.find("EffectFunction").text == None:
+			effectObject.effectFunction = ""
+		else:
+			effectObject.effectFunction = game.effectDict[effect.find("EffectFunction").text]
 		return effectObject
 
 	def createConditionObject(self, condition, game):
 		# Left hand side element
 		leftHandSideNode = condition.find("LeftHandSide")
-		leftHandSide = self.typeConverter[leftHandSideNode.attrib.get('Type')]
+		if leftHandSideNode.attrib.get('Type') == None or leftHandSideNode.attrib.get('Type') == '':
+			leftHandSide = ""
+		else:
+			leftHandSide = self.typeConverter[leftHandSideNode.attrib.get('Type')]
 		# Right hand side element
 		rightHandSideNode = condition.find("RightHandSide")
-		rightHandSide = self.typeConverter[rightHandSideNode.attrib.get('Type')]
+		if rightHandSideNode.attrib.get('Type') == None  or rightHandSideNode.attrib.get('Type') == '':
+			rightHandSide = ""
+		else:
+			rightHandSide = self.typeConverter[rightHandSideNode.attrib.get('Type')]
 		# Create condition object
 		conditionObject = core.components.Condition()
 		conditionObject.args = [leftHandSide, rightHandSide]
 		conditionObject.rawArgs = [leftHandSideNode.text, rightHandSideNode.text]
-		conditionObject.conditionFunction = game.conditionDict[condition.find("ConditionFunction").text]
+		if condition.find("ConditionFunction").text == None:
+			conditionObject.conditionFunction = ""
+		else:
+			conditionObject.conditionFunction = game.conditionDict[condition.find("ConditionFunction").text]
 		return conditionObject
 
 	def createResourceObject(self, resource):

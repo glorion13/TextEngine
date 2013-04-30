@@ -60,12 +60,19 @@ namespace TextEngineEditor.ViewModel
                 ExportXMLCommand = new RelayCommand(ExportAsXML);
                 ImportXMLCommand = new RelayCommand(ImportFromXML);
                 ReloadPythonCommand = new RelayCommand(ReloadPython);
+                RunInterpreterCommand = new RelayCommand(RunInterpreter);
 
                 // Initialise UI objects
                 SceneNodes = new ObservableCollection<INode>();
                 GlobalResourceNodes = new ObservableCollection<INode>();
                 GlobalActionNodes = new ObservableCollection<INode>();
                 ActionStash = new ObservableCollection<INode>();
+                PythonResourceTypes = new BindingList<string>()
+                {
+                    "Text",
+                    "Boolean",
+                    "Number"
+                };
                 PythonConditionTypes = new BindingList<string>()
                 {
                     "Text",
@@ -217,6 +224,19 @@ namespace TextEngineEditor.ViewModel
         public BindingList<string> PythonConditions { get; set; }
         public BindingList<string> PythonEffects { get; set; }
         public BindingList<string> PythonConditionTypes { get; set; }
+        public BindingList<string> PythonResourceTypes { get; set; }
+
+        public ICommand RunInterpreterCommand { get; set; }
+        private void RunInterpreter()
+        {
+            System.Diagnostics.ProcessStartInfo start = new System.Diagnostics.ProcessStartInfo();
+            string pythonPath = "C:\\Python27\\python.exe";
+            start.FileName = pythonPath;
+            start.Arguments = new System.Uri("Lib/Python/interpreter.py", System.UriKind.RelativeOrAbsolute).ToString();
+            start.UseShellExecute = true;
+            start.RedirectStandardOutput = false;
+            System.Diagnostics.Process.Start(start);
+        }
 
         public ICommand AddSceneCommand { get; set; }
         private void AddScene()
@@ -353,7 +373,7 @@ namespace TextEngineEditor.ViewModel
 
                 writer.WriteElementString("GameName", GameName);
                 writer.WriteElementString("Author", Author);
-                writer.WriteElementString("StartingScene", StartingScene.ToString());
+                writer.WriteElementString("StartingScene", StartingScene.Name);
 
                 #region <GlobalResources>
                 writer.WriteStartElement("GlobalResources");
@@ -387,12 +407,14 @@ namespace TextEngineEditor.ViewModel
                         writer.WriteElementString("ConditionFunction", condition.ConditionType.ToString());
 
                         writer.WriteStartElement("LeftHandSide");
-                        writer.WriteAttributeString("Type", condition.LeftHandSideType);
+                        if (condition.LeftHandSideType != "")
+                            writer.WriteAttributeString("Type", condition.LeftHandSideType);
                         writer.WriteString(condition.LeftHandSideValue);
                         writer.WriteEndElement();
 
                         writer.WriteStartElement("RightHandSide");
-                        writer.WriteAttributeString("Type", condition.RightHandSideType);
+                        if (condition.RightHandSideType != "")
+                            writer.WriteAttributeString("Type", condition.RightHandSideType);
                         writer.WriteString(condition.RightHandSideValue);
                         writer.WriteEndElement();
 
@@ -412,7 +434,8 @@ namespace TextEngineEditor.ViewModel
                         foreach (ArgumentNode arg in effect.Arguments)
                         {
                             writer.WriteStartElement("arg");
-                            writer.WriteAttributeString("Type", arg.Type);
+                            if (arg.Type != "")
+                                writer.WriteAttributeString("Type", arg.Type);
                             writer.WriteString(arg.Selection.ToString());
                             writer.WriteEndElement();
                         }
@@ -430,7 +453,8 @@ namespace TextEngineEditor.ViewModel
                         foreach (ArgumentNode arg in effect.Arguments)
                         {
                             writer.WriteStartElement("arg");
-                            writer.WriteAttributeString("Type", arg.Type);
+                            if (arg.Type != "")
+                                writer.WriteAttributeString("Type", arg.Type);
                             writer.WriteString(arg.Selection.ToString());
                             writer.WriteEndElement();
                         }
@@ -486,12 +510,14 @@ namespace TextEngineEditor.ViewModel
                             writer.WriteElementString("ConditionFunction", condition.ConditionType.ToString());
 
                             writer.WriteStartElement("LeftHandSide");
-                            writer.WriteAttributeString("Type", condition.LeftHandSideType);
+                            if (condition.LeftHandSideType != "")
+                                writer.WriteAttributeString("Type", condition.LeftHandSideType);
                             writer.WriteString(condition.LeftHandSideValue);
                             writer.WriteEndElement();
 
                             writer.WriteStartElement("RightHandSide");
-                            writer.WriteAttributeString("Type", condition.RightHandSideType);
+                            if (condition.RightHandSideType != "")
+                                writer.WriteAttributeString("Type", condition.RightHandSideType);
                             writer.WriteString(condition.RightHandSideValue);
                             writer.WriteEndElement();
 
@@ -559,6 +585,11 @@ namespace TextEngineEditor.ViewModel
         public ICommand ImportXMLCommand { get; set; }
         private void ImportFromXML()
         {
+            string inputURL = "game.xml";
+            dynamic pythonParser = Python.CreateRuntime().ImportModule("Python/dataParser");
+            dynamic gameParser = pythonParser.GameParser();
+            dynamic game = gameParser.loadXMLGameData(inputURL);
+            System.Windows.MessageBox.Show(game.name.ToString());
         }
 
         public ICommand ReloadPythonCommand { get; set; }
@@ -581,42 +612,8 @@ namespace TextEngineEditor.ViewModel
             {
                 PythonConditions.Add(conditionKeys[i]);
             }
-            /*
-            foreach (SceneNode scene in SceneNodes)
-            {
-                foreach (ActionNode action in scene.Actions)
-                {
-                    foreach (ConditionNode condition in action.Conditions)
-                    {
-                        condition.PythonCore = pythonCore;
-                    }
-                    foreach (EffectNode effect in action.EffectsIfTrue)
-                    {
-                        effect.PythonCore = pythonCore;
-                    }
-                    foreach (EffectNode effect in action.EffectsIfFalse)
-                    {
-                        effect.PythonCore = pythonCore;
-                    }
-                }
-            }
-            foreach (ActionNode action in GlobalActionNodes)
-            {
-                foreach (ConditionNode condition in action.Conditions)
-                {
-                    condition.PythonCore = pythonCore;
-                }
-                foreach (EffectNode effect in action.EffectsIfTrue)
-                {
-                    effect.PythonCore = pythonCore;
-                }
-                foreach (EffectNode effect in action.EffectsIfFalse)
-                {
-                    effect.PythonCore = pythonCore;
-                }
-            }*/
             // TODO:
-            // Ensure that the pre-existing scenes don't lose their effects and conditions
+            // Ensure that the pre-existing scenes don't lose their effects and conditions (if reloading python during runtime)
             // Print out log of warnings in case there some were deleted
             // If Python does not work don't load it - somehow evaluate python scripts for errors
         }

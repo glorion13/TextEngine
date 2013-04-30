@@ -1,0 +1,10 @@
+﻿<Window x:Class="TextEngineEditor.IntroWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        DataContext="{Binding Intro, Source={StaticResource Locator}}"
+        Title="TAINT - Project creation" Height="300" Width="300">
+    <Grid>
+        <Button Content="New project" />
+        <TextBlock Text="Project file:" />
+    </Grid>
+</Window>
