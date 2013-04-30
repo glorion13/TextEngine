@@ -36,6 +36,7 @@ class Game(customisable.effects.EffectFunctions, customisable.conditions.Conditi
 		self.scenes = []
 		self.globalResources = []
 		self.globalActions = []
+		self.narrative = []
 	def addResource(self, name, value):
 		self.globalResources.append(Resource(name, value))
 	def removeResource(self, resource):
