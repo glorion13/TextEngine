@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:MvvmLightCommand="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF45"
-        
+    
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="TextEngineEditor.MainWindow"
         
         DataContext="{Binding Main, Source={StaticResource Locator}}"
@@ -73,13 +73,16 @@
                 </StackPanel>
 
                 <!-- Mind map -->
-                <ListBox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="5">
+                <Canvas>
+                    
+                </Canvas>
+                <!--<ListBox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="5">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Name}" />
                         </DataTemplate>
                     </ListBox.ItemTemplate>
-                </ListBox>
+                </ListBox>-->
 
                 <!-- Scene, Global resource and Global action lists -->
                 <ListBox Grid.Column="0" Grid.Row="3" ItemsSource="{Binding SceneNodes}" SelectedItem="{Binding SelectedSceneNode, Mode=TwoWay}">

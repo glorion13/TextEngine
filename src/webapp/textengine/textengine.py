@@ -80,7 +80,6 @@ class GamePage(webapp2.RequestHandler):
       game.effectDict['Go to scene'](game, game.startingScene)
       # Perform passive actions
       for action in [gAction for gAction in game.globalActions if gAction.active == False and gAction.enabled == True]:
-        print "NAI MWRE"
         action.perform()
       for action in [lAction for lAction in game.currentScene.actions if lAction.active == False and lAction.enabled == True]:
         action.perform()

@@ -102,3 +102,13 @@ C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\
 C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\Lib\Python\core\__init__.py
 C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\Lib\Python\dataParser\__init__.py
 C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\Lib\Python\interpreter.py
+C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\AdornedControl.dll
+C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\NetworkModel.dll
+C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\NetworkUI.dll
+C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\Utils.dll
+C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\ZoomAndPan.dll
+C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\AdornedControl.pdb
+C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\NetworkModel.pdb
+C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\NetworkUI.pdb
+C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\Utils.pdb
+C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\bin\Debug\ZoomAndPan.pdb
