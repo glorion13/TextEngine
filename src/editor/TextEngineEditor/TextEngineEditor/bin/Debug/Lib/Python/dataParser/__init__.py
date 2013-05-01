@@ -6,7 +6,7 @@ class GameParser:
 	def __init__(self):
 		self.game = None
 		self.typeConverter = {
-		"Boolean" 	: lambda(n): bool(n),
+		"Boolean" 	: lambda(n): n,
 		"Number" 	: lambda(n): float(n),
 		"Text" 		: lambda(n): str(n),
 		"Resource" 	: lambda(n): self.game.getResourceByName(str(n)),

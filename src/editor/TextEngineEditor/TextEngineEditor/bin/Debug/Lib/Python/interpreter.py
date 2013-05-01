@@ -19,6 +19,9 @@ game.effectDict['Go to scene'](game, game.startingScene)
 
 # Core game loop
 while (True):
+	for narr in game.narrative:
+		print narr
+	game.narrative = []
 	# Evaluate global actions
 	#for action in game.globalActions:
 	#	action.perform()
