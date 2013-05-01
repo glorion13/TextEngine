@@ -20,16 +20,40 @@ namespace TextEngineEditor
                 Set(() => Name, ref name, value);
             }
         }
-        private bool isVisible;
-        public bool IsVisible
+        private bool visible;
+        public bool Visible
         {
             get
             {
-                return isVisible;
+                return visible;
             }
             set
             {
-                Set(() => IsVisible, ref isVisible, value);
+                Set(() => Visible, ref visible, value);
+            }
+        }
+        private bool enabled;
+        public bool Enabled
+        {
+            get
+            {
+                return enabled;
+            }
+            set
+            {
+                Set(() => Enabled, ref enabled, value);
+            }
+        }
+        private bool active;
+        public bool Active
+        {
+            get
+            {
+                return active;
+            }
+            set
+            {
+                Set(() => Active, ref active, value);
             }
         }
         public ObservableCollection<ConditionNode> Conditions { get; private set; }
@@ -39,7 +63,9 @@ namespace TextEngineEditor
         public ActionNode()
         {
             Name = "New Action";
-            IsVisible = true;
+            Visible = true;
+            Enabled = true;
+            Active = true;
             Conditions = new ObservableCollection<ConditionNode>();
             EffectsIfTrue = new ObservableCollection<EffectNode>();
             EffectsIfFalse = new ObservableCollection<EffectNode>();
@@ -47,15 +73,9 @@ namespace TextEngineEditor
         public ActionNode(string name)
         {
             Name = name;
-            IsVisible = true;
-            Conditions = new ObservableCollection<ConditionNode>();
-            EffectsIfTrue = new ObservableCollection<EffectNode>();
-            EffectsIfFalse = new ObservableCollection<EffectNode>();
-        }
-        public ActionNode(string name, bool isVisible)
-        {
-            Name = name;
-            IsVisible = isVisible;
+            Visible = true;
+            Enabled = true;
+            Active = true;
             Conditions = new ObservableCollection<ConditionNode>();
             EffectsIfTrue = new ObservableCollection<EffectNode>();
             EffectsIfFalse = new ObservableCollection<EffectNode>();

@@ -13,6 +13,9 @@ class GameParser:
 		"Scene" 	: lambda(n): self.game.getSceneByName(str(n))
 		}
 
+	def stringToBoolean(self, s):
+		return s == "True"
+
 	def loadXMLGameData(self, gameDataFile):
 		# Load data
 		try:
@@ -38,7 +41,6 @@ class GameParser:
 		scenesNode = root.find("Scenes")
 		for scene in scenesNode:
 			sceneObject = core.components.Scene()
-			sceneObject.id = int(scene.find("ID").text)
 			sceneObject.name = scene.find("Name").text
 			sceneObject.description = scene.find("Description").text
 			# Scene resources (local)
@@ -52,8 +54,9 @@ class GameParser:
 		return self.game
 
 	# Auxiliary parsing functions
+
 	def createActionObject(self, action, game):
-		actionObject = core.components.Action(action.find("Name").text, bool(action.find("IsVisible").text))
+		actionObject = core.components.Action(action.find("Name").text, self.stringToBoolean(action.find("Visible").text), self.stringToBoolean(action.find("Enabled").text), self.stringToBoolean(action.find("Active").text))
 		# Conditions
 		conditionsNode = action.find("Conditions")
 		actionObject.conditions = [self.createConditionObject(condition, game) for condition in conditionsNode]

@@ -22,9 +22,14 @@ while (True):
 	for narr in game.narrative:
 		print narr
 	game.narrative = []
-	# Evaluate global actions
-	#for action in game.globalActions:
-	#	action.perform()
+	# Evaluate passive actions
+	for action in [gAction for gAction in game.globalActions if gAction.active == False and gAction.enabled == True]:
+		action.perform()
+	for action in [lAction for lAction in game.currentScene.actions if lAction.active == False and lAction.enabled == True]:
+		action.perform()
+	# Display visible actions
+	print [gAction.name for gAction in game.globalActions if gAction.active == True and gAction.enabled == True and gAction.visible == True]
+	print [lAction.name for lAction in game.currentScene.actions if lAction.active == True and lAction.enabled == True and lAction.visible == True]
 	# Wait for user action
 	try:
 		userInput = raw_input('\n>')
@@ -32,11 +37,10 @@ while (True):
 		print("Input error.")
 		break
 	# Evaluate user action
-	if not (userInput in [action.name for action in game.currentScene.actions]) and not (userInput in  [action.name for action in game.globalActions]):
-		print("Command not recognised.")
-	for action in game.currentScene.actions:
+	lActions = [action for action in game.currentScene.actions if action.enabled == True and action.active == True]
+	gActions = [action for action in game.globalActions if action.enabled == True and action.active == True]
+	allActions = lActions + gActions
+	for action in allActions:
 		if action.name == userInput:
 			action.perform()
-	for action in game.globalActions:
-		if action.name == userInput:
-			action.perform()
+			break

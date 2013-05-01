@@ -98,10 +98,9 @@ class Scene:
 	adventure), by toggling the . In fact, even within the same game there might be cases when actions
 	are visible and cases when actions are invisible.
 	"""
-	def __init__(self, description='default description', name='default room', idV=0):
+	def __init__(self, description='default description', name='default room'):
 		"""Initialise a :class:`Scene` object."""
 		self.name = name
-		self.id = idV
 		self.description = description
 		self.resources = []
 		self.actions = []
@@ -111,13 +110,15 @@ class Action:
 	:class:`Action` object.
 	*TODO*: Handle Visibility, Enability and Passivity of an action
 	"""
-	def __init__(self, name='default action', visible=True, effectsIfTrue=[], effectsIfFalse=[], conditions=[]):
+	def __init__(self, name='default action', visible=True, enabled=True, active=True, effectsIfTrue=[], effectsIfFalse=[], conditions=[]):
 		"""Initialise an :class:`Action` object."""
 		self.name = name
 		self.conditions = conditions
 		self.effectsIfTrue = effectsIfTrue
 		self.effectsIfFalse = effectsIfFalse
 		self.visible = visible
+		self.enabled = enabled
+		self.active = active
 	def conditionsAreTrue(self):
 		"""
 		Glorious function.

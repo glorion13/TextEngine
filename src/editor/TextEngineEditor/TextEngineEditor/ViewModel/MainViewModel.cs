@@ -56,12 +56,19 @@ namespace TextEngineEditor.ViewModel
                 RemoveLActionCommand = new RelayCommand<ActionNode>(RemoveLAction);
                 AddConditionCommand = new RelayCommand(AddCondition);
                 RemoveConditionCommand = new RelayCommand<ConditionNode>(RemoveCondition);
-                AddEffectCommand = new RelayCommand(AddEffect);
-                RemoveEffectCommand = new RelayCommand<EffectNode>(RemoveEffect);
+                AddTrueEffectCommand = new RelayCommand(AddTrueEffect);
+                RemoveTrueEffectCommand = new RelayCommand<EffectNode>(RemoveTrueEffect);
+                AddFalseEffectCommand = new RelayCommand(AddFalseEffect);
+                RemoveFalseEffectCommand = new RelayCommand<EffectNode>(RemoveFalseEffect);
                 ExportXMLCommand = new RelayCommand(ExportAsXML);
                 ImportXMLCommand = new RelayCommand(ImportFromXML);
                 ReloadPythonCommand = new RelayCommand(ReloadPython);
                 RunInterpreterCommand = new RelayCommand(RunInterpreter);
+                ChangeToSceneLayoutCommand = new RelayCommand(ChangeToSceneLayout);
+                ChangeToActionLayoutCommand = new RelayCommand(ChangeToActionLayout);
+                ChangeToResourceLayoutCommand = new RelayCommand(ChangeToResourceLayout);
+                ChangeToSceneLayoutWithActionsCommand = new RelayCommand(ChangeToSceneLayoutWithActions);
+                ChangeToSceneLayoutWithResourcesCommand = new RelayCommand(ChangeToSceneLayoutWithResources);
 
                 // Initialise UI objects
                 SceneNodes = new ObservableCollection<INode>();
@@ -83,28 +90,9 @@ namespace TextEngineEditor.ViewModel
                     "Scene"
                 };
 
-                // Initialise test objects
-                SceneNode scene1 = new SceneNode();
-                scene1.Name = "cave";
-                scene1.Description = "A big cave.";
-
-                SceneNode scene2 = new SceneNode();
-                scene2.Name = "beach";
-                scene2.Description = "A sandy beach.";
-                ActionNode action1 = new ActionNode();
-                action1.Name = "Action 1";
-                ConditionNode condition1 = new ConditionNode(PythonCore);
-                ConditionNode condition2 = new ConditionNode(PythonCore);
-                EffectNode effect1 = new EffectNode(this);
-                action1.EffectsIfTrue.Add(effect1);
-                action1.Conditions.Add(condition1);
-                action1.Conditions.Add(condition2);
-                scene2.Actions.Add(action1);
-
-                // Populate UI objects
-                StartingScene = scene2;
-                SceneNodes.Add(scene1);
-                SceneNodes.Add(scene2);
+                SceneLayoutVisibility = "Collapsed";
+                ActionLayoutVisibility = "Collapsed";
+                ResourceLayoutVisibility = "Collapsed";
             }
         }
 
@@ -132,6 +120,43 @@ namespace TextEngineEditor.ViewModel
             set
             {
                 Set(() => Author, ref author, value);
+            }
+        }
+
+        private string sceneLayoutVisibility;
+        public string SceneLayoutVisibility
+        {
+            get
+            {
+                return sceneLayoutVisibility;
+            }
+            set
+            {
+                Set(() => SceneLayoutVisibility, ref sceneLayoutVisibility, value);
+            }
+        }
+        private string actionLayoutVisibility;
+        public string ActionLayoutVisibility
+        {
+            get
+            {
+                return actionLayoutVisibility;
+            }
+            set
+            {
+                Set(() => ActionLayoutVisibility, ref actionLayoutVisibility, value);
+            }
+        }
+        private string resourceLayoutVisibility;
+        public string ResourceLayoutVisibility
+        {
+            get
+            {
+                return resourceLayoutVisibility;
+            }
+            set
+            {
+                Set(() => ResourceLayoutVisibility, ref resourceLayoutVisibility, value);
             }
         }
 
@@ -237,6 +262,46 @@ namespace TextEngineEditor.ViewModel
             start.UseShellExecute = true;
             start.RedirectStandardOutput = false;
             System.Diagnostics.Process.Start(start);
+        }
+
+        public ICommand ChangeToSceneLayoutCommand { get; set; }
+        private void ChangeToSceneLayout()
+        {
+            SceneLayoutVisibility = "Visible";
+            ActionLayoutVisibility = "Collapsed";
+            ResourceLayoutVisibility = "Collapsed";
+        }
+
+        public ICommand ChangeToSceneLayoutWithActionsCommand { get; set; }
+        private void ChangeToSceneLayoutWithActions()
+        {
+            SceneLayoutVisibility = "Visible";
+            ActionLayoutVisibility = "Visible";
+            ResourceLayoutVisibility = "Collapsed";
+        }
+
+        public ICommand ChangeToSceneLayoutWithResourcesCommand { get; set; }
+        private void ChangeToSceneLayoutWithResources()
+        {
+            SceneLayoutVisibility = "Visible";
+            ActionLayoutVisibility = "Collapsed";
+            ResourceLayoutVisibility = "Visible";
+        }
+
+        public ICommand ChangeToActionLayoutCommand { get; set; }
+        private void ChangeToActionLayout()
+        {
+            SceneLayoutVisibility = "Collapsed";
+            ActionLayoutVisibility = "Visible";
+            ResourceLayoutVisibility = "Collapsed";
+        }
+
+        public ICommand ChangeToResourceLayoutCommand { get; set; }
+        private void ChangeToResourceLayout()
+        {
+            SceneLayoutVisibility = "Collapsed";
+            ActionLayoutVisibility = "Collapsed";
+            ResourceLayoutVisibility = "Visible";
         }
 
         public ICommand AddSceneCommand { get; set; }
@@ -351,16 +416,28 @@ namespace TextEngineEditor.ViewModel
             SelectedActionNode.Conditions.Remove(condition);
         }
 
-        public ICommand AddEffectCommand { get; set; }
-        private void AddEffect()
+        public ICommand AddTrueEffectCommand { get; set; }
+        private void AddTrueEffect()
         {
             SelectedActionNode.EffectsIfTrue.Add(new EffectNode(this));
         }
 
-        public ICommand RemoveEffectCommand { get; set; }
-        private void RemoveEffect(EffectNode effect)
+        public ICommand RemoveTrueEffectCommand { get; set; }
+        private void RemoveTrueEffect(EffectNode effect)
         {
             SelectedActionNode.EffectsIfTrue.Remove(effect);
+        }
+
+        public ICommand AddFalseEffectCommand { get; set; }
+        private void AddFalseEffect()
+        {
+            SelectedActionNode.EffectsIfFalse.Add(new EffectNode(this));
+        }
+
+        public ICommand RemoveFalseEffectCommand { get; set; }
+        private void RemoveFalseEffect(EffectNode effect)
+        {
+            SelectedActionNode.EffectsIfFalse.Remove(effect);
         }
 
         public ICommand ExportXMLCommand { get; set; }
@@ -396,7 +473,9 @@ namespace TextEngineEditor.ViewModel
                     #region <Action>
                     writer.WriteStartElement("Action");
                     writer.WriteElementString("Name", action.Name);
-                    writer.WriteElementString("IsVisible", action.IsVisible.ToString());
+                    writer.WriteElementString("Visible", action.Visible.ToString().Substring(0, 1).ToUpper() + action.Visible.ToString().Substring(1));
+                    writer.WriteElementString("Enabled", action.Enabled.ToString().Substring(0, 1).ToUpper() + action.Enabled.ToString().Substring(1));
+                    writer.WriteElementString("Active", action.Active.ToString().Substring(0, 1).ToUpper() + action.Active.ToString().Substring(1));
 
                     #region <Conditions>
                     writer.WriteStartElement("Conditions");
@@ -477,7 +556,6 @@ namespace TextEngineEditor.ViewModel
                 {
                     #region <Scene>
                     writer.WriteStartElement("Scene");
-                    writer.WriteElementString("ID", scene.ID.ToString());
                     writer.WriteElementString("Name", scene.Name);
                     writer.WriteElementString("Description", scene.Description);
                     #region <Resources>
@@ -499,7 +577,9 @@ namespace TextEngineEditor.ViewModel
                         #region <Action>
                         writer.WriteStartElement("Action");
                         writer.WriteElementString("Name", action.Name);
-                        writer.WriteElementString("IsVisible", action.IsVisible.ToString());
+                        writer.WriteElementString("Visible", action.Visible.ToString().Substring(0, 1).ToUpper() + action.Visible.ToString().Substring(1));
+                        writer.WriteElementString("Enabled", action.Enabled.ToString().Substring(0, 1).ToUpper() + action.Enabled.ToString().Substring(1));
+                        writer.WriteElementString("Active", action.Active.ToString().Substring(0, 1).ToUpper() + action.Active.ToString().Substring(1));
 
                         #region <Conditions>
                         writer.WriteStartElement("Conditions");
