@@ -1,8 +1,8 @@
 import core
-import dataParser
+import DataParser
 
 # Load Data
-parser = dataParser.GameParser()
+parser = DataParser.GameParser()
 game = parser.loadXMLGameData("game.xml")
 # Load game
 

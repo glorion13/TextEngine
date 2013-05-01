@@ -11,10 +11,13 @@ import dataParser
 
 def createActionsHTML(game_id, game):
   actionsHTML = ""
-  for action in game.currentScene.actions:
+  # Display local visible actions
+  for action in [lAction for lAction in game.currentScene.actions if lAction.active == True and lAction.enabled == True and lAction.visible == True]:
     actionsHTML += """<form action="/game/"""+game_id+"""" method="post"><div><input name="action" type="submit" value=\""""+action.name+"""\"></div></form>"""
-  for action in game.globalActions:
+  # Display global visible actions
+  for action in [gAction for gAction in game.globalActions if gAction.active == True and gAction.enabled == True and gAction.visible == True]:
     actionsHTML += """<form action="/game/"""+game_id+"""" method="post"><div><input name="action" type="submit" value=\""""+action.name+"""\"></div></form>"""
+  # Display additional actions (new game, logout etc.)
   actionsHTML += """<form action="/game/"""+game_id+"""" method="post"><div><input name="action" type="submit" value="Start again"></div></form>"""
   actionsHTML += """<form action="/logout" method="post"><div><input name="action" type="submit" value="Logout"></div></form>"""
   return actionsHTML
@@ -36,13 +39,10 @@ def createCombinedHTML(narrativeHTML, actionsHTML):
         </html>"""
   return html
 
-def createMainPageHTML(game_id, game):
+def createHTML(game_id, game):
   narrativeHTML = createNarrativeHTML(game)
   actionsHTML = createActionsHTML(game_id, game)
   return createCombinedHTML(narrativeHTML, actionsHTML)
-
-class Action(db.Model):
-  command = db.StringProperty()
 
 class LogoutPage(webapp2.RequestHandler):
   def get(self):
@@ -63,39 +63,59 @@ class GamePage(webapp2.RequestHandler):
   global parser
   global gameDataUrl
   parser = dataParser.GameParser()
+
   def resetGame(self, game_id):
     global game
     game = parser.loadXMLGameData(game_id)
     game.effectDict['Go to scene'](game, game.startingScene)
+
   def get(self, game_id):
+    # Make sure user is logged in
     user = users.get_current_user()
     if user:
+      # Load game data
       global game
       game_id = game_id + ".xml"
       game = parser.loadXMLGameData(game_id)
       game.effectDict['Go to scene'](game, game.startingScene)
-      MAIN_PAGE_HTML = createMainPageHTML(game_id, game)
-      self.response.write(MAIN_PAGE_HTML)
+      # Perform passive actions
+      for action in [gAction for gAction in game.globalActions if gAction.active == False and gAction.enabled == True]:
+        print "NAI MWRE"
+        action.perform()
+      for action in [lAction for lAction in game.currentScene.actions if lAction.active == False and lAction.enabled == True]:
+        action.perform()
+      # Display narrative
+      HTML = createHTML(game_id, game)
+      self.response.write(HTML)
     else:
+      # If not logged in redirect to login page
       self.redirect(users.create_login_url(self.request.uri))
+
   def post(self, game_id):
+    # Make sure user is logged in
     user = users.get_current_user()
     if user:
+      # Evaluate user action
       playerInput = cgi.escape(self.request.get('action'))
+      # Side actions (e.g. logout, start new game etc.)
       if playerInput == "Start again":
         self.resetGame(game_id)
-        MAIN_PAGE_HTML = createMainPageHTML(game_id, game)
-        self.response.write(MAIN_PAGE_HTML)
+        HTML = createHTML(game_id, game)
+        self.response.write(HTML)
       else:
+        # Game actions
         for action in game.currentScene.actions:
           if action.name == playerInput:
-            act = Action()
-            act.command = action.name
-            act.put()
             action.perform()
-            MAIN_PAGE_HTML = createMainPageHTML(game_id, game)
-            self.response.write(MAIN_PAGE_HTML)
             break
+        # Perform passive actions
+        for action in [gAction for gAction in game.globalActions if gAction.active == False and gAction.enabled == True]:
+          action.perform()
+        for action in [lAction for lAction in game.currentScene.actions if lAction.active == False and lAction.enabled == True]:
+          action.perform()
+        # Display narrative
+        HTML = createHTML(game_id, game)
+        self.response.write(HTML)
     else:
       self.redirect(users.create_login_url(self.request.uri))
 
