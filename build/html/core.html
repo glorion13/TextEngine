@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,14 +6,14 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The core module &mdash; TAINT 1.0 documentation</title>
+    <title>core &mdash; TAINT 1.0 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
+        URL_ROOT:    './',
         VERSION:     '1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
@@ -26,6 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="TAINT 1.0 documentation" href="index.html" />
+    <link rel="next" title="dataParser" href="dataParser.html" />
     <link rel="prev" title="Welcome to TAINT’s documentation!" href="index.html" /> 
   </head>
   <body>
@@ -39,6 +38,9 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
+          <a href="dataParser.html" title="dataParser"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
           <a href="index.html" title="Welcome to TAINT’s documentation!"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">TAINT 1.0 documentation</a> &raquo;</li> 
@@ -50,63 +52,152 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="the-core-module">
-<h1>The core module<a class="headerlink" href="#the-core-module" title="Permalink to this headline">¶</a></h1>
-<blockquote>
-<div><p>The core of the system, which are used as the basis of both the <cite>Editor</cite> and the
-<cite>Interpreter</cite> of the system.</p>
+  <div class="section" id="core">
+<h1>core<a class="headerlink" href="#core" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
-<dt>This module contains the following sub-modules:</dt>
+<dt>The <a class="reference internal" href="#module-core" title="core"><tt class="xref py py-mod docutils literal"><span class="pre">core</span></tt></a> module contains the following submodules:</dt>
 <dd><ul class="first last simple">
 <li><a class="reference internal" href="#module-core.components" title="core.components"><tt class="xref py py-mod docutils literal"><span class="pre">core.components</span></tt></a></li>
 </ul>
 </dd>
 </dl>
-</div></blockquote>
-<div class="section" id="core-components">
+<span class="target" id="module-core"></span><div class="section" id="core-components">
 <h2>core.components<a class="headerlink" href="#core-components" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<div><span class="target" id="module-core.components"></span><p>The <a class="reference internal" href="#module-core.components" title="core.components"><tt class="xref py py-mod docutils literal"><span class="pre">core.components</span></tt></a> module contains the following classes:</p>
+<div><p>The <a class="reference internal" href="#module-core.components" title="core.components"><tt class="xref py py-mod docutils literal"><span class="pre">core.components</span></tt></a> module contains:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">The core classes which represent the main game model:</p>
 <blockquote>
 <div><ul class="simple">
-<li><a class="reference internal" href="#core.components.Game" title="core.components.Game"><tt class="xref py py-class docutils literal"><span class="pre">Game</span></tt></a>, which represents the structure of the game (interactive novel or text adventure).</li>
-<li><a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a>, which represents global information, such as the date or the weather in the fictional world, or values like the health state of the player.</li>
-<li><a class="reference internal" href="#core.components.Scene" title="core.components.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a>, which represents a location or a state in the fictional world.</li>
-<li><a class="reference internal" href="#core.components.Action" title="core.components.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a>, which represents an action that can be triggered by the player. An <a class="reference internal" href="#core.components.Action" title="core.components.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a> consists of a <a class="reference internal" href="#core.components.Condition" title="core.components.Condition"><tt class="xref py py-class docutils literal"><span class="pre">Condition</span></tt></a> and an <a class="reference internal" href="#core.components.Effect" title="core.components.Effect"><tt class="xref py py-class docutils literal"><span class="pre">Effect</span></tt></a>. The <a class="reference internal" href="#core.components.Effect" title="core.components.Effect"><tt class="xref py py-class docutils literal"><span class="pre">Effect</span></tt></a> is only resolved if the condition is <tt class="docutils literal"><span class="pre">True</span></tt>.</li>
-<li><a class="reference internal" href="#core.components.Condition" title="core.components.Condition"><tt class="xref py py-class docutils literal"><span class="pre">Condition</span></tt></a>, which represents a logical evaluation which can be part of an <a class="reference internal" href="#core.components.Action" title="core.components.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a>. When evaluated it returns a value of <tt class="docutils literal"><span class="pre">True</span></tt> or <tt class="docutils literal"><span class="pre">False</span></tt>.</li>
-<li><a class="reference internal" href="#core.components.Effect" title="core.components.Effect"><tt class="xref py py-class docutils literal"><span class="pre">Effect</span></tt></a>, which represents the outcome of a given Action that the player performs. An <a class="reference internal" href="#core.components.Effect" title="core.components.Effect"><tt class="xref py py-class docutils literal"><span class="pre">Effect</span></tt></a> can be anything from changing the scene, interacting with the world or even losing the game.</li>
+<li><a class="reference internal" href="#core.components.Game" title="core.components.Game"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Game</span></tt></a>, which represents the structure of the game (interactive novel or text adventure).</li>
+<li><a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Resource</span></tt></a>, which represents global information, such as the date or the weather in the fictional world, or values like the health state of the player.</li>
+<li><a class="reference internal" href="#core.components.Scene" title="core.components.Scene"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Scene</span></tt></a>, which represents a location or a state in the fictional world.</li>
+<li><a class="reference internal" href="#core.components.Action" title="core.components.Action"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Action</span></tt></a>, which represents an action that can be triggered by the player. A <a class="reference internal" href="#core.components.Action" title="core.components.Action"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Action</span></tt></a> consists of a <a class="reference internal" href="#core.components.Condition" title="core.components.Condition"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Condition</span></tt></a> and an <a class="reference internal" href="#core.components.Effect" title="core.components.Effect"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Effect</span></tt></a>. The <a class="reference internal" href="#core.components.Effect" title="core.components.Effect"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Effect</span></tt></a> is only resolved if the condition is <tt class="docutils literal"><span class="pre">True</span></tt>.</li>
+<li><a class="reference internal" href="#core.components.Condition" title="core.components.Condition"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Condition</span></tt></a>, which represents a logical evaluation which can be part of an <a class="reference internal" href="#core.components.Action" title="core.components.Action"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Action</span></tt></a>. When evaluated it returns a value of <tt class="docutils literal"><span class="pre">True</span></tt> or <tt class="docutils literal"><span class="pre">False</span></tt>.</li>
+<li><a class="reference internal" href="#core.components.Effect" title="core.components.Effect"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Effect</span></tt></a>, which represents the outcome of a given Action that the player performs. An <a class="reference internal" href="#core.components.Effect" title="core.components.Effect"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Effect</span></tt></a> can be anything from changing the scene, interacting with the world or even losing the game.</li>
 </ul>
 </div></blockquote>
-<dl class="class">
+</li>
+<li><p class="first">The <a class="reference internal" href="#module-core.components.customisable" title="core.components.customisable"><tt class="xref py py-mod docutils literal"><span class="pre">core.components.customisable</span></tt></a> module which contains the specific functions used in the <a class="reference internal" href="#core.components.Effect" title="core.components.Effect"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Effect</span></tt></a> and <a class="reference internal" href="#core.components.Condition" title="core.components.Condition"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Condition</span></tt></a> classes.</p>
+</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<span class="target" id="module-core.components"></span><dl class="class">
 <dt id="core.components.Action">
-<em class="property">class </em><tt class="descclassname">core.components.</tt><tt class="descname">Action</tt><big>(</big><em>name='default action'</em>, <em>effectsIfTrue=</em><span class="optional">[</span><span class="optional">]</span>, <em>effectsIfFalse=</em><span class="optional">[</span><span class="optional">]</span>, <em>conditions=</em><span class="optional">[</span><span class="optional">]</span>, <em>visible=True</em><big>)</big><a class="reference internal" href="_modules/core/components.html#Action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Action" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference internal" href="#core.components.Action" title="core.components.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a> object.</p>
-<dl class="method">
-<dt id="core.components.Action.conditionsAreTrue">
-<tt class="descname">conditionsAreTrue</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/core/components.html#Action.conditionsAreTrue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Action.conditionsAreTrue" title="Permalink to this definition">¶</a></dt>
-<dd><p>Glorious function.</p>
+<em class="property">class </em><tt class="descclassname">core.components.</tt><tt class="descname">Action</tt><big>(</big><em>name='default action'</em>, <em>visible=True</em>, <em>enabled=True</em>, <em>active=True</em>, <em>effectsIfTrue=</em><span class="optional">[</span><span class="optional">]</span>, <em>effectsIfFalse=</em><span class="optional">[</span><span class="optional">]</span>, <em>conditions=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="reference internal" href="_modules/core/components.html#Action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Action" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#core.components.Action" title="core.components.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a> class represents an action that either occurs by itself or can be triggered by the player.
+An action has three switches which can be toggled:
+- <cite>Visible</cite>: if an action is visible it means that the player can see it as an available action.
+- <cite>Enabled</cite>: if an action is enabled it means that it can be viewed and triggered.
+- <cite>Active</cite>: if an action is active it means that it needs to be triggered by the player, otherwise it is performed on every frame.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Params :</th><td class="field-body">self</td>
+<tr class="field-odd field"><th class="field-name">Attributes :</th><td class="field-body"></td>
 </tr>
 </tbody>
 </table>
+<ul class="simple">
+<li><cite>name</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">string</span></tt> containing the name of the action (e.g. &#8220;Go south&#8221;).</li>
+<li><cite>conditions</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> containing the <a class="reference internal" href="#core.components.Condition" title="core.components.Condition"><tt class="xref py py-class docutils literal"><span class="pre">Condition</span></tt></a> objects that need to be evaluated before the action is performed.</li>
+<li><cite>effectsIfTrue</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> containing the <a class="reference internal" href="#core.components.Effect" title="core.components.Effect"><tt class="xref py py-class docutils literal"><span class="pre">Effect</span></tt></a> objects that will be resolved if all of the <cite>conditions</cite> return <tt class="docutils literal"><span class="pre">True</span></tt>.</li>
+<li><cite>effectsIfFalse</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> containing the <a class="reference internal" href="#core.components.Effect" title="core.components.Effect"><tt class="xref py py-class docutils literal"><span class="pre">Effect</span></tt></a> objects that will be resolved if all of the <cite>conditions</cite> do NOT return <tt class="docutils literal"><span class="pre">True</span></tt>.</li>
+<li><cite>visible</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">bool</span></tt> representing whether the action is visible or not.</li>
+<li><cite>enabled</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">bool</span></tt> representing whether the action is enabled or not.</li>
+<li><cite>active</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">bool</span></tt> representing whether the action is active or not.</li>
+</ul>
+<dl class="method">
+<dt id="core.components.Action.conditionsAreTrue">
+<tt class="descname">conditionsAreTrue</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/core/components.html#Action.conditionsAreTrue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Action.conditionsAreTrue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks whether all of the <a class="reference internal" href="#core.components.Condition" title="core.components.Condition"><tt class="xref py py-class docutils literal"><span class="pre">Condition</span></tt></a> objects in <cite>condition</cite> are evaluated as <tt class="docutils literal"><span class="pre">True</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">True</span></tt> if all conditions are evaluated as <tt class="docutils literal"><span class="pre">True</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">False</span></tt> otherwise.</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.components.Action.perform">
+<tt class="descname">perform</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/core/components.html#Action.perform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Action.perform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resolves the <a class="reference internal" href="#core.components.Effect" title="core.components.Effect"><tt class="xref py py-class docutils literal"><span class="pre">Effect</span></tt></a> objects from <cite>effectsIfTrue</cite> if <a class="reference internal" href="#core.components.Action.conditionsAreTrue" title="core.components.Action.conditionsAreTrue"><tt class="xref py py-func docutils literal"><span class="pre">conditionsAreTrue()</span></tt></a> returns <tt class="docutils literal"><span class="pre">True</span></tt>.
+Resolves the <a class="reference internal" href="#core.components.Effect" title="core.components.Effect"><tt class="xref py py-class docutils literal"><span class="pre">Effect</span></tt></a> objects from <cite>effectsIfFalse</cite> if <a class="reference internal" href="#core.components.Action.conditionsAreTrue" title="core.components.Action.conditionsAreTrue"><tt class="xref py py-func docutils literal"><span class="pre">conditionsAreTrue()</span></tt></a> returns <a href="#id1"><span class="problematic" id="id2">``</span></a>False`.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="core.components.Condition">
-<em class="property">class </em><tt class="descclassname">core.components.</tt><tt class="descname">Condition</tt><big>(</big><em>conditionType</em>, <em>leftHandSide</em>, <em>rightHandSide</em><big>)</big><a class="reference internal" href="_modules/core/components.html#Condition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Condition" title="Permalink to this definition">¶</a></dt>
-<dd><p>A <a class="reference internal" href="#core.components.Condition" title="core.components.Condition"><tt class="xref py py-class docutils literal"><span class="pre">Condition</span></tt></a>.</p>
+<em class="property">class </em><tt class="descclassname">core.components.</tt><tt class="descname">Condition</tt><big>(</big><em>conditionFunction=None</em>, <em>*args</em><big>)</big><a class="reference internal" href="_modules/core/components.html#Condition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Condition" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#core.components.Condition" title="core.components.Condition"><tt class="xref py py-class docutils literal"><span class="pre">Condition</span></tt></a> class is used in an <a class="reference internal" href="#core.components.Action" title="core.components.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a> object to create conditional evaluation of actions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Attributes :</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>conditionFunction</cite>: A function which is used as an operator to compare <cite>args</cite>.</li>
+<li><cite>args</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> containing the arguments for the conditional (usually a left-hand side and a right-hand side element).</li>
+<li><cite>rawArgs</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> containing the names of the arguments from <cite>args</cite>.</li>
+<li><cite>evalArgs</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> which is populated with the actual values of <cite>args</cite>, which are evaluated during run-time.</li>
+</ul>
+<dl class="method">
+<dt id="core.components.Condition.evaluate">
+<tt class="descname">evaluate</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/core/components.html#Condition.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Condition.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the condition.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>A <tt class="xref py py-class docutils literal"><span class="pre">bool</span></tt>.</li>
+</ul>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
 <dt id="core.components.Effect">
-<em class="property">class </em><tt class="descclassname">core.components.</tt><tt class="descname">Effect</tt><big>(</big><em>effectFunction</em>, <em>*args</em><big>)</big><a class="reference internal" href="_modules/core/components.html#Effect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Effect" title="Permalink to this definition">¶</a></dt>
-<dd><p>An <a class="reference internal" href="#core.components.Effect" title="core.components.Effect"><tt class="xref py py-class docutils literal"><span class="pre">Effect</span></tt></a>.</p>
+<em class="property">class </em><tt class="descclassname">core.components.</tt><tt class="descname">Effect</tt><big>(</big><em>effectFunction=None</em>, <em>*args</em><big>)</big><a class="reference internal" href="_modules/core/components.html#Effect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Effect" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#core.components.Effect" title="core.components.Effect"><tt class="xref py py-class docutils literal"><span class="pre">Effect</span></tt></a> class is used in an <a class="reference internal" href="#core.components.Action" title="core.components.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a> object to create the output of actions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Attributes :</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>effectFunction</cite>: A function which performs the wanted behaviour of the effect.</li>
+<li><cite>args</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> containing the arguments which are passed to <cite>effectFunction</cite>.</li>
+<li><cite>rawArgs</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> containing the names of the arguments from <cite>args</cite>.</li>
+<li><cite>evalArgs</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> which is populated with the actual values of <cite>args</cite>, which are evaluated during run-time.</li>
+<li><cite>parent</cite>: A container of the <a class="reference internal" href="#core.components.Action" title="core.components.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a> object to which the current <a class="reference internal" href="#core.components.Effect" title="core.components.Effect"><tt class="xref py py-class docutils literal"><span class="pre">Effect</span></tt></a> objects belongs.</li>
+</ul>
+<dl class="method">
+<dt id="core.components.Effect.resolve">
+<tt class="descname">resolve</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/core/components.html#Effect.resolve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Effect.resolve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resolve the effect.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -121,16 +212,132 @@ current scene.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Attributes :</th><td class="field-body"><ul class="first last simple">
-<li><cite>startingScene</cite> A <a class="reference internal" href="#core.components.Scene" title="core.components.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> object which is the first scene that the game will load.</li>
-<li><cite>currentScene</cite> A <a class="reference internal" href="#core.components.Scene" title="core.components.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> object which is the scene the player is currently in.</li>
-<li><cite>scenes</cite> A <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#core.components.Scene" title="core.components.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> objects which holds all of the scenes of the game, along with their corresponding attributes.</li>
-<li><cite>globalResources</cite> A <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a> for storing global resources, such as player HP.</li>
-<li><cite>globalActions</cite> A <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#core.components.Action" title="core.components.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a> for storing global actions, such as actions which are      always available to the player (e.g. <cite>&#8216;help&#8217;</cite>) or actions such as checking if the player&#8217;s HP falls under a certain     threshold.</li>
+<li><cite>name</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">string</span></tt> with the name of the game.</li>
+<li><cite>author</cite>:  <tt class="xref py py-class docutils literal"><span class="pre">string</span></tt> with the author(s) of the game.</li>
+<li><cite>startingScene</cite>: A <a class="reference internal" href="#core.components.Scene" title="core.components.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> object which is the first scene that the game will load.</li>
+<li><cite>currentScene</cite>: A <a class="reference internal" href="#core.components.Scene" title="core.components.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> object which is the scene the player is currently in.</li>
+<li><cite>scenes</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#core.components.Scene" title="core.components.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> objects which holds all of the scenes of the game, along with their corresponding attributes.</li>
+<li><cite>globalResources</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a> for storing global resources, such as player HP.</li>
+<li><cite>globalActions</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#core.components.Action" title="core.components.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a> for storing global actions, such as actions which are     always available to the player (e.g. <cite>&#8216;help&#8217;</cite>) or actions such as checking if the player&#8217;s HP falls under a certain     threshold.</li>
+<li><cite>narrative</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> of narrative elements (e.g. a <tt class="xref py py-class docutils literal"><span class="pre">string</span></tt> equal to &#8220;You go south.&#8221;).</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="core.components.Game.addResource">
+<tt class="descname">addResource</tt><big>(</big><em>name</em>, <em>value</em><big>)</big><a class="reference internal" href="_modules/core/components.html#Game.addResource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Game.addResource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialise a <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a> object and add it to the game&#8217;s Global Resources <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> <cite>globalResources</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>name</cite>: The name of the new resource.</li>
+<li><cite>value</cite>: The value of the new resource.</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.components.Game.getResourceByName">
+<tt class="descname">getResourceByName</tt><big>(</big><em>name</em><big>)</big><a class="reference internal" href="_modules/core/components.html#Game.getResourceByName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Game.getResourceByName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds and returns a <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a> object given a <tt class="xref py py-class docutils literal"><span class="pre">string</span></tt> with the name of the resource.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>name</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">string</span></tt> containing the name of the resource.</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises :</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>&#8220;ERROR: Resource not found.&#8221; if no <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a> which matches <cite>name</cite> is found.</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>The first <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a> object in <cite>globalResources</cite> with a name that matches <cite>name</cite>.</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.components.Game.getSceneByName">
+<tt class="descname">getSceneByName</tt><big>(</big><em>name</em><big>)</big><a class="reference internal" href="_modules/core/components.html#Game.getSceneByName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Game.getSceneByName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds and returns a <a class="reference internal" href="#core.components.Scene" title="core.components.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> object given a <tt class="xref py py-class docutils literal"><span class="pre">string</span></tt> with the name of the scene.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>name</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">string</span></tt> containing the name of the scene.</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises :</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>&#8220;ERROR: Scene not found.&#8221; if no <a class="reference internal" href="#core.components.Scene" title="core.components.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> which matches <cite>name</cite> is found.</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>The first <a class="reference internal" href="#core.components.Scene" title="core.components.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> object in <cite>scenes</cite> with a name that matches <cite>name</cite>.</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.components.Game.removeResource">
+<tt class="descname">removeResource</tt><big>(</big><em>resource</em><big>)</big><a class="reference internal" href="_modules/core/components.html#Game.removeResource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Game.removeResource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a> object from the the game&#8217;s Global Resources <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> <cite>globalResources</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>resource</cite>: The <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a> object to be removed.</li>
+</ul>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
@@ -155,19 +362,66 @@ containing a <cite>name</cite> attribute and a <cite>value</cite> attribute.</p>
 
 <dl class="class">
 <dt id="core.components.Scene">
-<em class="property">class </em><tt class="descclassname">core.components.</tt><tt class="descname">Scene</tt><big>(</big><em>description</em>, <em>name='default room'</em><big>)</big><a class="reference internal" href="_modules/core/components.html#Scene"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Scene" title="Permalink to this definition">¶</a></dt>
-<dd><p>An action can be visible (in the case of an interactive novel) or invisible (in the case of a text
-adventure), by toggling the . In fact, even within the same game there might be cases when actions
-are visible and cases when actions are invisible.</p>
+<em class="property">class </em><tt class="descclassname">core.components.</tt><tt class="descname">Scene</tt><big>(</big><em>description='default description'</em>, <em>name='default room'</em><big>)</big><a class="reference internal" href="_modules/core/components.html#Scene"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#core.components.Scene" title="core.components.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> class represents a location or a state in the game. Just like a <a class="reference internal" href="#core.components.Game" title="core.components.Game"><tt class="xref py py-class docutils literal"><span class="pre">Game</span></tt></a> object
+contains lists of global resources and global actions, a <a class="reference internal" href="#core.components.Scene" title="core.components.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> object contains lists of local resources
+and local actions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Attributes :</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>name</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">string</span></tt> containing the name of the scene (e.g. &#8220;Cave 1&#8221;).</li>
+<li><cite>description</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">string</span></tt> containing the description of the scene, which is used in the narrative of the game (e.g. &#8220;There are two doors in front of you&#8221;.)</li>
+<li><cite>resources</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a> objects known as local resources of a scene.</li>
+<li><cite>actions</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#core.components.Action" title="core.components.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a> objects known as local actions of a scene.</li>
+</ul>
 </dd></dl>
 
-</div></blockquote>
-</div>
-</div>
-<div class="section" id="statemachine">
-<h1>StateMachine<a class="headerlink" href="#statemachine" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="core-components-customisable">
+<h3>core.components.customisable<a class="headerlink" href="#core-components-customisable" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<div></div></blockquote>
+<div><p>The <a class="reference internal" href="#module-core.components.customisable" title="core.components.customisable"><tt class="xref py py-mod docutils literal"><span class="pre">core.components.customisable</span></tt></a> module is the layer which can be modified
+by users during the development of games or the development of a game editor.</p>
+<dl class="docutils">
+<dt>It contains the following modules:</dt>
+<dd><ul class="first last simple">
+<li><a class="reference internal" href="#module-core.components.customisable.effects" title="core.components.customisable.effects"><tt class="xref py py-mod docutils literal"><span class="pre">core.components.customisable.effects</span></tt></a>, where the functions used in <a class="reference internal" href="#core.components.Effect" title="core.components.Effect"><tt class="xref py py-mod docutils literal"><span class="pre">core.components.Effect</span></tt></a> objects are stored.</li>
+<li><a class="reference internal" href="#module-core.components.customisable.conditions" title="core.components.customisable.conditions"><tt class="xref py py-mod docutils literal"><span class="pre">core.components.customisable.conditions</span></tt></a>, where the functions used in <a class="reference internal" href="#core.components.Condition" title="core.components.Condition"><tt class="xref py py-mod docutils literal"><span class="pre">core.components.Condition</span></tt></a> objects are stored.</li>
+</ul>
+</dd>
+</dl>
+<span class="target" id="module-core.components.customisable.effects"></span><dl class="class">
+<dt id="core.components.customisable.effects.EffectFunctions">
+<em class="property">class </em><tt class="descclassname">core.components.customisable.effects.</tt><tt class="descname">EffectFunctions</tt><a class="reference internal" href="_modules/core/components/customisable/effects.html#EffectFunctions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.customisable.effects.EffectFunctions" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class contains all the customisable functions which are used to represent the output of an action e.g. go to another scene or give information to the player.
+The <cite>effectDict</cite> container is a dictionary containing key-value pairs of a function (e.g. <tt class="xref py py-func docutils literal"><span class="pre">goToScene()</span></tt>) and its name in a human-readable form, for use in an editor or elsewhere (e.g. &#8216;Go to scene&#8217;)</p>
+</dd></dl>
+
+<span class="target" id="module-core.components.customisable.conditions"></span><dl class="class">
+<dt id="core.components.customisable.conditions.ConditionFunctions">
+<em class="property">class </em><tt class="descclassname">core.components.customisable.conditions.</tt><tt class="descname">ConditionFunctions</tt><a class="reference internal" href="_modules/core/components/customisable/conditions.html#ConditionFunctions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.customisable.conditions.ConditionFunctions" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class contains all the customisable functions or operators which are used to represent the conditions of an action e.g. whether a <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Resource</span></tt></a> has a value of <tt class="docutils literal"><span class="pre">True</span></tt>.
+The <cite>conditionDict</cite> container is a dictionary containing key-value pairs of an operator/function (e.g. <tt class="xref py py-func docutils literal"><span class="pre">operator.eq()</span></tt>) and its name in a human-readable form, for use in an editor or elsewhere (e.g. &#8216;equals&#8217;).</p>
+</dd></dl>
+
+<dl class="docutils">
+<dt>It also contains functions used to interface with the editor (the default editor is written in C#):</dt>
+<dd><ul class="first last simple">
+<li><tt class="xref py py-func docutils literal"><span class="pre">getEffectCount()</span></tt>, returns the count of available functions in <a class="reference internal" href="#core.components.customisable.effects.EffectFunctions" title="core.components.customisable.effects.EffectFunctions"><tt class="xref py py-class docutils literal"><span class="pre">core.components.customisable.effects.EffectFunctions</span></tt></a>.</li>
+<li><tt class="xref py py-func docutils literal"><span class="pre">getConditionCount()</span></tt>, returns the count of available functions in <a class="reference internal" href="#core.components.customisable.conditions.ConditionFunctions" title="core.components.customisable.conditions.ConditionFunctions"><tt class="xref py py-class docutils literal"><span class="pre">core.components.customisable.conditions.ConditionFunctions</span></tt></a>.</li>
+<li><tt class="xref py py-func docutils literal"><span class="pre">getEffectKeys()</span></tt>, returns the keys of available functions in <a class="reference internal" href="#core.components.customisable.effects.EffectFunctions" title="core.components.customisable.effects.EffectFunctions"><tt class="xref py py-class docutils literal"><span class="pre">core.components.customisable.effects.EffectFunctions</span></tt></a>.</li>
+<li><tt class="xref py py-func docutils literal"><span class="pre">getConditionKeys()</span></tt>, returns the keys of available functions in <a class="reference internal" href="#core.components.customisable.conditions.ConditionFunctions" title="core.components.customisable.conditions.ConditionFunctions"><tt class="xref py py-class docutils literal"><span class="pre">core.components.customisable.conditions.ConditionFunctions</span></tt></a>.</li>
+</ul>
+</dd>
+</dl>
+<span class="target" id="module-core.components.customisable"></span></div></blockquote>
+</div>
+</div>
 </div>
 
 
@@ -178,16 +432,21 @@ are visible and cases when actions are invisible.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">The core module</a><ul>
-<li><a class="reference internal" href="#core-components">core.components</a></li>
+<li><a class="reference internal" href="#">core</a><ul>
+<li><a class="reference internal" href="#core-components">core.components</a><ul>
+<li><a class="reference internal" href="#core-components-customisable">core.components.customisable</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#statemachine">StateMachine</a></li>
+</ul>
+</li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="index.html"
                         title="previous chapter">Welcome to TAINT&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="dataParser.html"
+                        title="next chapter">dataParser</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/core.txt"
@@ -220,6 +479,9 @@ are visible and cases when actions are invisible.</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
+          <a href="dataParser.html" title="dataParser"
+             >next</a> |</li>
+        <li class="right" >
           <a href="index.html" title="Welcome to TAINT’s documentation!"
              >previous</a> |</li>
         <li><a href="index.html">TAINT 1.0 documentation</a> &raquo;</li> 
@@ -227,7 +489,7 @@ are visible and cases when actions are invisible.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2013, Alexandros Gouvatsos.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
     </div>
   </body>
 </html>

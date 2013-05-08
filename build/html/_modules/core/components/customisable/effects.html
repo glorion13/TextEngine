@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>core.components.customisable.effects &mdash; TAINT 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="TAINT 1.0 documentation" href="../../../../index.html" />
+    <link rel="up" title="core.components" href="../../components.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">TAINT 1.0 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../components.html" accesskey="U">core.components</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for core.components.customisable.effects</h1><pre>
+"""
+Fasoladitsa.
+"""
+
+<div class="viewcode-block" id="EffectFunctions"><a class="viewcode-back" href="../../../../dev_core.html#core.components.customisable.effects.EffectFunctions">[docs]</a>class EffectFunctions:
+    """
+    Poli fasolada.
+    """
+    def cmdOutputText(self, text):
+        self.narrative += [text]
+    def goToScene(self, scene):
+    	self.currentScene = scene
+    	self.cmdOutputText(scene.description)
+    def outputVisibleSceneActions(self, scene):
+    	possibleActions = [ action.name for action in scene.actions if action.visible ]
+    	if not possibleActions == []:
+    		self.cmdOutputText(str(possibleActions))
+    def addGlobalResource(self, text, primitive):
+        self.addResource(text, primitive)
+    def editGlobalResource(self, gresource, primitive):
+        gresource.value = primitive
+    def deleteGlobalResource(self, gresource):
+        self.removeResource(gresource)
+    def enableAction(self):
+        return 0
+    def disableAction(self):
+        return 0
+    def makeActionVisible(self):
+        return 0
+    def makeActionInvisible(self):
+        return 0
+    def outputAllActions(self):
+        return 0
+
+    effectDict = {
+        'Tell player'                   : cmdOutputText,
+        'Add global resource'           : addGlobalResource,
+        'Edit global resource'          : editGlobalResource,
+        'Delete global resource'        : deleteGlobalResource,
+        'Enable action'                 : enableAction,
+        'Disable action'                : disableAction,
+        'Make action visible'           : makeActionVisible,
+        'Make action invisible'         : makeActionInvisible,
+        'Go to scene'                   : goToScene,
+        'Display all visible actions'   : outputVisibleSceneActions,
+        'Display all actions'           : outputAllActions
+    }</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">TAINT 1.0 documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../../components.html" >core.components</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Alexandros Gouvatsos.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

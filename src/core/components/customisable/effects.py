@@ -1,4 +1,8 @@
 class EffectFunctions:
+    """
+    This class contains all the customisable functions which are used to represent the output of an action e.g. go to another scene or give information to the player.
+    The `effectDict` container is a dictionary containing key-value pairs of a function (e.g. :func:`goToScene`) and its name in a human-readable form, for use in an editor or elsewhere (e.g. 'Go to scene')
+    """
     def cmdOutputText(self, text):
         self.narrative += [text]
     def goToScene(self, scene):

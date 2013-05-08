@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>dataParser &mdash; TAINT 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="TAINT 1.0 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">TAINT 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for dataParser</h1><pre>
+from xml.etree import ElementTree
+
+import core
+
+<div class="viewcode-block" id="GameParser"><a class="viewcode-back" href="../dev_dataParser.html#dataParser.GameParser">[docs]</a>class GameParser:
+	"""
+	"""
+	def __init__(self):
+		self.game = None
+		self.typeConverter = {
+		"Boolean" 	: lambda(n): n,
+		"Number" 	: lambda(n): float(n),
+		"Text" 		: lambda(n): str(n),
+		"Resource" 	: lambda(n): self.game.getResourceByName(str(n)),
+		"Scene" 	: lambda(n): self.game.getSceneByName(str(n))
+		}
+
+<div class="viewcode-block" id="GameParser.stringToBoolean"><a class="viewcode-back" href="../dev_dataParser.html#dataParser.GameParser.stringToBoolean">[docs]</a>	def stringToBoolean(self, s):
+		return s == "True"
+</div>
+<div class="viewcode-block" id="GameParser.loadXMLGameData"><a class="viewcode-back" href="../dev_dataParser.html#dataParser.GameParser.loadXMLGameData">[docs]</a>	def loadXMLGameData(self, gameDataFile):
+		# Load data
+		try:
+			xmlTree = ElementTree.parse(gameDataFile)
+			root = xmlTree.getroot()
+		except:
+			print("Error loading game file.")
+			return "Error 0"
+		# Main game data
+		self.game = core.components.Game()
+		gameName = root.find("GameName").text
+		gameAuthor = root.find("Author").text
+		startingScene = root.find("StartingScene").text
+		self.game.name = gameName
+		self.game.author = gameAuthor
+		# Global resources
+		globalResourcesNode = root.find("GlobalResources")
+		self.game.globalResources = [self.createResourceObject(resource) for resource in globalResourcesNode]
+		# Global actions
+		globalActionsNode = root.find("GlobalActions")
+		self.game.globalActions = [self.createActionObject(action, self.game) for action in globalActionsNode]
+		# Scenes
+		scenesNode = root.find("Scenes")
+		for scene in scenesNode:
+			sceneObject = core.components.Scene()
+			sceneObject.name = scene.find("Name").text
+			sceneObject.description = scene.find("Description").text
+			# Scene resources (local)
+			resourcesNode = scene.find("Resources")
+			scene.resources = [self.createResourceObject(resource) for resource in resourcesNode]
+			# Scene actions (local)
+			actionsNode = scene.find("Actions")
+			sceneObject.actions = [self.createActionObject(action, self.game) for action in actionsNode]
+			self.game.scenes.append(sceneObject)
+		self.game.startingScene = self.game.getSceneByName(str(startingScene))
+		return self.game
+
+	# Auxiliary parsing functions
+</div>
+<div class="viewcode-block" id="GameParser.createActionObject"><a class="viewcode-back" href="../dev_dataParser.html#dataParser.GameParser.createActionObject">[docs]</a>	def createActionObject(self, action, game):
+		actionObject = core.components.Action(action.find("Name").text, self.stringToBoolean(action.find("Visible").text), self.stringToBoolean(action.find("Enabled").text), self.stringToBoolean(action.find("Active").text))
+		# Conditions
+		conditionsNode = action.find("Conditions")
+		actionObject.conditions = [self.createConditionObject(condition, game) for condition in conditionsNode]
+		# Effects if True
+		effectsTrueNode = action.find("EffectsIfTrue")
+		actionObject.effectsIfTrue = [self.createEffectObject(effect, game) for effect in effectsTrueNode]
+		# Effects if False
+		effectsFalseNode = action.find("EffectsIfFalse")
+		actionObject.effectsIfFalse = [self.createEffectObject(effect, game) for effect in effectsFalseNode]
+		return actionObject
+</div>
+<div class="viewcode-block" id="GameParser.createEffectObject"><a class="viewcode-back" href="../dev_dataParser.html#dataParser.GameParser.createEffectObject">[docs]</a>	def createEffectObject(self, effect, game):
+		argsNode = effect.find("args")
+		effectObject = core.components.Effect()
+		effectObject.args = [self.typeConverter[arg.attrib.get('Type')] for arg in argsNode]
+		effectObject.rawArgs = [arg.text for arg in argsNode]
+		effectObject.parent = game
+		if effect.find("EffectFunction").text == None:
+			effectObject.effectFunction = ""
+		else:
+			effectObject.effectFunction = game.effectDict[effect.find("EffectFunction").text]
+		return effectObject
+</div>
+<div class="viewcode-block" id="GameParser.createConditionObject"><a class="viewcode-back" href="../dev_dataParser.html#dataParser.GameParser.createConditionObject">[docs]</a>	def createConditionObject(self, condition, game):
+		# Left hand side element
+		leftHandSideNode = condition.find("LeftHandSide")
+		if leftHandSideNode.attrib.get('Type') == None or leftHandSideNode.attrib.get('Type') == '':
+			leftHandSide = ""
+		else:
+			leftHandSide = self.typeConverter[leftHandSideNode.attrib.get('Type')]
+		# Right hand side element
+		rightHandSideNode = condition.find("RightHandSide")
+		if rightHandSideNode.attrib.get('Type') == None  or rightHandSideNode.attrib.get('Type') == '':
+			rightHandSide = ""
+		else:
+			rightHandSide = self.typeConverter[rightHandSideNode.attrib.get('Type')]
+		# Create condition object
+		conditionObject = core.components.Condition()
+		conditionObject.args = [leftHandSide, rightHandSide]
+		conditionObject.rawArgs = [leftHandSideNode.text, rightHandSideNode.text]
+		if condition.find("ConditionFunction").text == None:
+			conditionObject.conditionFunction = ""
+		else:
+			conditionObject.conditionFunction = game.conditionDict[condition.find("ConditionFunction").text]
+		return conditionObject
+</div>
+<div class="viewcode-block" id="GameParser.createResourceObject"><a class="viewcode-back" href="../dev_dataParser.html#dataParser.GameParser.createResourceObject">[docs]</a>	def createResourceObject(self, resource):
+		resourceType = resource.find("Type").text
+		resourceValue = ""
+		if resourceType == "Boolean":
+			resourceValue = bool(resource.find("Value").text)
+		elif resourceType == "Number":
+			resourceValue = float(resource.find("Value").text)
+		elif resourceType == "Text":
+			resourceValue = str(resource.find("Value").text)
+		resourceObject = core.components.Resource(resource.find("Name").text, resourceValue)
+		return resourceObject</pre></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">TAINT 1.0 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Alexandros Gouvatsos.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

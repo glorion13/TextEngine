@@ -1,17 +1,5 @@
 import customisable
 
-"""
-The :mod:`core.components` module contains the following classes:
-
-   - :class:`Game`, which represents the structure of the game (interactive novel or text adventure).
-   - :class:`Resource`, which represents global information, such as the date or the weather in the fictional world, or values like the health state of the player.
-   - :class:`Scene`, which represents a location or a state in the fictional world.
-   - :class:`Action`, which represents an action that can be triggered by the player. An :class:`Action` consists of a :class:`Condition` and an :class:`Effect`. The :class:`Effect` is only resolved if the condition is ``True``.
-   - :class:`Condition`, which represents a logical evaluation which can be part of an :class:`Action`. When evaluated it returns a value of ``True`` or ``False``.
-   - :class:`Effect`, which represents the outcome of a given Action that the player performs. An :class:`Effect` can be anything from changing the scene, interacting with the world or even losing the game.
-
-"""
-
 class Game(customisable.effects.EffectFunctions, customisable.conditions.ConditionFunctions):
 	"""
 	The :class:`Game` class basically represents the structure of the game (interactive novel or
@@ -20,17 +8,20 @@ class Game(customisable.effects.EffectFunctions, customisable.conditions.Conditi
 	current scene.
 
 	:Attributes:
-		- `startingScene` A :class:`Scene` object which is the first scene that the game will load.
-		- `currentScene` A :class:`Scene` object which is the scene the player is currently in.
-		- `scenes` A :class:`list` of :class:`Scene` objects which holds all of the scenes of the game, along with their corresponding attributes.
-		- `globalResources` A :class:`list` of :class:`Resource` for storing global resources, such as player HP.
-		- `globalActions` A :class:`list` of :class:`Action` for storing global actions, such as actions which are	always available to the player (e.g. `'help'`) or actions such as checking if the player's HP falls under a certain	threshold.
+		- `name`: A :class:`string` with the name of the game.
+		- `author`:  :class:`string` with the author(s) of the game.
+		- `startingScene`: A :class:`Scene` object which is the first scene that the game will load.
+		- `currentScene`: A :class:`Scene` object which is the scene the player is currently in.
+		- `scenes`: A :class:`list` of :class:`Scene` objects which holds all of the scenes of the game, along with their corresponding attributes.
+		- `globalResources`: A :class:`list` of :class:`Resource` for storing global resources, such as player HP.
+		- `globalActions`: A :class:`list` of :class:`Action` for storing global actions, such as actions which are	always available to the player (e.g. `'help'`) or actions such as checking if the player's HP falls under a certain	threshold.
+		- `narrative`: A :class:`list` of narrative elements (e.g. a :class:`string` equal to "You go south.").
 
 	"""
 	def __init__(self):
 		"""Initialise a :class:`Game` object."""
-		self.name = None
-		self.author = None
+		self.name = ""
+		self.author = ""
 		self.startingScene = None
 		self.currentScene = None
 		self.scenes = []
@@ -38,32 +29,57 @@ class Game(customisable.effects.EffectFunctions, customisable.conditions.Conditi
 		self.globalActions = []
 		self.narrative = []
 	def addResource(self, name, value):
+		"""
+		Initialise a :class:`Resource` object and add it to the game's Global Resources :class:`list` `globalResources`.
+
+		:Parameters:
+		- `name`: The name of the new resource.
+		- `value`: The value of the new resource.
+		"""
 		self.globalResources.append(Resource(name, value))
 	def removeResource(self, resource):
+		"""
+		Remove a :class:`Resource` object from the the game's Global Resources :class:`list` `globalResources`.
+
+		:Parameters:
+		- `resource`: The :class:`Resource` object to be removed.
+		"""
 		self.globalResources.remove(resource)
-	def getSceneByID(self, idV):
-		firstScene = [scene for scene in self.scenes if scene.id == idV]
-		if len(firstScene) == 0:
-			return "No scene found"
-		else:
-			return firstScene[0]
 	def getSceneByName(self, name):
+		"""
+		Finds and returns a :class:`Scene` object given a :class:`string` with the name of the scene.
+
+		:Parameters:
+		- `name`: A :class:`string` containing the name of the scene.
+
+		:Raises:
+		- "ERROR: Scene not found." if no :class:`Scene` which matches `name` is found.
+
+		:Returns:
+		- The first :class:`Scene` object in `scenes` with a name that matches `name`. 
+		"""
 		firstScene = [scene for scene in self.scenes if scene.name == name]
 		if len(firstScene) == 0:
-			print("ERROR: Scene '" + name + "' not found!")
-			return "No scene found"
+			print("ERROR: Scene '" + name + "' not found.")
+			raise
 		else:
 			return firstScene[0]
-	def getResourceByID(self, idV):
-		firstResource = [resource for resource in self.globalResources if resource.id == idV]
-		if len(firstResource) == 0:
-			return "No resource found"
-		else:
-			return firstResource[0]
 	def getResourceByName(self, name):
+		"""
+		Finds and returns a :class:`Resource` object given a :class:`string` with the name of the resource.
+
+		:Parameters:
+		- `name`: A :class:`string` containing the name of the resource.
+
+		:Raises:
+		- "ERROR: Resource not found." if no :class:`Resource` which matches `name` is found.
+
+		:Returns:
+		- The first :class:`Resource` object in `globalResources` with a name that matches `name`. 
+		"""
 		firstResource = [resource for resource in self.globalResources if resource.name == name]
 		if len(firstResource) == 0:
-			return "No resource found"
+			return "ERROR: Resource '" + name + "' not found."
 		else:
 			return firstResource[0]
 
@@ -78,7 +94,9 @@ class Resource:
 		- `value`: This attribute holds the actual value of the resource, which can be of any type.	For example, if the resource represents the player's HP, the `value` of the :class:`Resource` can be an :class:`int` of value 10.
 	"""
 	def __init__(self, name, value):
-		"""Initialise a :class:`Resource` object."""
+		"""
+		Initialise a :class:`Resource` object.
+		"""
 		self.name = name
 		self.value = value
 	def __eq__(self, other):
@@ -94,21 +112,42 @@ class Resource:
 
 class Scene:
 	"""
-	An action can be visible (in the case of an interactive novel) or invisible (in the case of a text
-	adventure), by toggling the . In fact, even within the same game there might be cases when actions
-	are visible and cases when actions are invisible.
+	The :class:`Scene` class represents a location or a state in the game. Just like a :class:`Game` object
+	contains lists of global resources and global actions, a :class:`Scene` object contains lists of local resources
+	and local actions.
+
+	:Attributes:
+	- `name`: A :class:`string` containing the name of the scene (e.g. "Cave 1").
+	- `description`: A :class:`string` containing the description of the scene, which is used in the narrative of the game (e.g. "There are two doors in front of you".)
+	- `resources`: A :class:`list` of :class:`Resource` objects known as local resources of a scene.
+	- `actions`: A :class:`list` of :class:`Action` objects known as local actions of a scene.
 	"""
 	def __init__(self, description='default description', name='default room'):
-		"""Initialise a :class:`Scene` object."""
+		"""
+		Initialise a :class:`Scene` object.
+		"""
 		self.name = name
 		self.description = description
 		self.resources = []
 		self.actions = []
+	"""*TODO*: Add get resource functionality for local resources"""
 
 class Action:
 	"""
-	:class:`Action` object.
-	*TODO*: Handle Visibility, Enability and Passivity of an action
+	The :class:`Action` class represents an action that either occurs by itself or can be triggered by the player.
+	An action has three switches which can be toggled:
+	- `Visible`: if an action is visible it means that the player can see it as an available action.
+	- `Enabled`: if an action is enabled it means that it can be viewed and triggered.
+	- `Active`: if an action is active it means that it needs to be triggered by the player, otherwise it is performed on every frame.
+
+	:Attributes:
+	- `name`: A :class:`string` containing the name of the action (e.g. "Go south").
+	- `conditions`: A :class:`list` containing the :class:`Condition` objects that need to be evaluated before the action is performed.
+	- `effectsIfTrue`: A :class:`list` containing the :class:`Effect` objects that will be resolved if all of the `conditions` return ``True``.
+	- `effectsIfFalse`: A :class:`list` containing the :class:`Effect` objects that will be resolved if all of the `conditions` do NOT return ``True``.
+	- `visible`: A :class:`bool` representing whether the action is visible or not.
+	- `enabled`: A :class:`bool` representing whether the action is enabled or not.
+	- `active`: A :class:`bool` representing whether the action is active or not.
 	"""
 	def __init__(self, name='default action', visible=True, enabled=True, active=True, effectsIfTrue=[], effectsIfFalse=[], conditions=[]):
 		"""Initialise an :class:`Action` object."""
@@ -121,13 +160,19 @@ class Action:
 		self.active = active
 	def conditionsAreTrue(self):
 		"""
-		Glorious function.
+		Checks whether all of the :class:`Condition` objects in `condition` are evaluated as ``True``.
 
-		:params: self
+		:Returns:
+		- ``True`` if all conditions are evaluated as ``True``.
+		- ``False`` otherwise.
 		"""
 		booleanCount = sum( [condition.evaluate() for condition in self.conditions] )
 		return booleanCount == len(self.conditions)
 	def perform(self):
+		"""
+		Resolves the :class:`Effect` objects from `effectsIfTrue` if :func:`conditionsAreTrue` returns ``True``.
+		Resolves the :class:`Effect` objects from `effectsIfFalse` if :func:`conditionsAreTrue` returns ``False`.
+		"""
 		if self.conditionsAreTrue():
 			for effect in self.effectsIfTrue:
 				effect.resolve()
@@ -137,7 +182,13 @@ class Action:
 
 class Condition:
 	"""
-	A :class:`Condition`.
+	The :class:`Condition` class is used in an :class:`Action` object to create conditional evaluation of actions.
+
+	:Attributes:
+	- `conditionFunction`: A function which is used as an operator to compare `args`.
+	- `args`: A :class:`list` containing the arguments for the conditional (usually a left-hand side and a right-hand side element).
+	- `rawArgs`: A :class:`list` containing the names of the arguments from `args`.
+	- `evalArgs`: A :class:`list` which is populated with the actual values of `args`, which are evaluated during run-time.
 	"""
 	def __init__(self, conditionFunction=None, *args):
 		"""Initialise a :class:`Condition` object."""
@@ -146,12 +197,25 @@ class Condition:
 		self.rawArgs = []
 		self.evalArgs = []
 	def evaluate(self):
+		"""
+		Evaluate the condition.
+
+		:Returns:
+		- A :class:`bool`.
+		"""
 		self.evalArgs = [arg(n) for arg,n in zip(self.args, self.rawArgs)]
 		return self.conditionFunction(*self.evalArgs)
 
 class Effect:
 	"""
-	An :class:`Effect`.
+	The :class:`Effect` class is used in an :class:`Action` object to create the output of actions.
+
+	:Attributes:
+	- `effectFunction`: A function which performs the wanted behaviour of the effect.
+	- `args`: A :class:`list` containing the arguments which are passed to `effectFunction`.
+	- `rawArgs`: A :class:`list` containing the names of the arguments from `args`.
+	- `evalArgs`: A :class:`list` which is populated with the actual values of `args`, which are evaluated during run-time.
+	- `parent`: A container of the :class:`Action` object to which the current :class:`Effect` objects belongs.
 	"""
 	def __init__(self, effectFunction=None, *args):
 		""" Initialise an :class:`Effect` object."""
@@ -161,5 +225,8 @@ class Effect:
 		self.evalArgs = []
 		self.parent = None
 	def resolve(self):
+		"""
+		Resolve the effect.
+		"""
 		self.evalArgs = [self.parent] + [arg(n) for arg,n in zip(self.args, self.rawArgs)]
 		self.effectFunction(*self.evalArgs)
