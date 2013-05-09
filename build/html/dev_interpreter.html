@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="TAINT 1.0 documentation" href="index.html" />
-    <link rel="prev" title="How is a game stored" href="gameData.html" /> 
+    <link rel="prev" title="dataParser" href="dev_dataParser.html" /> 
   </head>
   <body>
     <div class="related">
@@ -37,7 +37,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="gameData.html" title="How is a game stored"
+          <a href="dev_dataParser.html" title="dataParser"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">TAINT 1.0 documentation</a> &raquo;</li> 
       </ul>
@@ -50,6 +50,205 @@
             
   <div class="section" id="interpreter">
 <h1>interpreter<a class="headerlink" href="#interpreter" title="Permalink to this headline">¶</a></h1>
+<p>There are two interpreter implementations provided by default and they are explained in this section.</p>
+<p>The first interpreter is a pure Python interpreter which makes use of the <a class="reference internal" href="dev_core.html#module-core" title="core"><tt class="xref py py-mod docutils literal"><span class="pre">core</span></tt></a> module and the <a class="reference internal" href="dev_dataParser.html#module-dataParser" title="dataParser"><tt class="xref py py-mod docutils literal"><span class="pre">dataParser</span></tt></a> module to playback a game.</p>
+<p>The second interpreter is also Python based, but using Google&#8217;s AppEngine it runs on any browser. This means that games created with TAINT are cross-platform!</p>
+<p>The great thing about how modular the whole system is, is that you can work on an interpreter exclusively without the need to go into the <a class="reference internal" href="dev_core.html#module-core" title="core"><tt class="xref py py-mod docutils literal"><span class="pre">core</span></tt></a> or the <a class="reference internal" href="dev_dataParser.html#module-dataParser" title="dataParser"><tt class="xref py py-mod docutils literal"><span class="pre">dataParser</span></tt></a> modules, focusing solely on the presentation and playback of a game.</p>
+<div class="section" id="python-interpreter">
+<h2>Python interpreter<a class="headerlink" href="#python-interpreter" title="Permalink to this headline">¶</a></h2>
+<p>Here you can see the source code of a very simple interpreter writtein in Python:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">core</span>
+<span class="kn">import</span> <span class="nn">dataParser</span>
+
+<span class="c"># Load Data</span>
+<span class="n">parser</span> <span class="o">=</span> <span class="n">dataParser</span><span class="o">.</span><span class="n">GameParser</span><span class="p">()</span>
+<span class="n">game</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">loadXMLGameData</span><span class="p">(</span><span class="s">&quot;game.xml&quot;</span><span class="p">)</span>
+<span class="c"># Load game</span>
+
+<span class="c"># Print game information</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;------------------------&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Game: &quot;</span>  <span class="o">+</span> <span class="n">game</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Author: &quot;</span><span class="o">+</span> <span class="n">game</span><span class="o">.</span><span class="n">author</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;------------------------&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+
+<span class="c"># Start game</span>
+<span class="n">game</span><span class="o">.</span><span class="n">effectDict</span><span class="p">[</span><span class="s">&#39;Go to scene&#39;</span><span class="p">](</span><span class="n">game</span><span class="p">,</span> <span class="n">game</span><span class="o">.</span><span class="n">startingScene</span><span class="p">)</span>
+
+<span class="c"># Core game loop</span>
+<span class="k">while</span> <span class="p">(</span><span class="bp">True</span><span class="p">):</span>
+        <span class="c"># Perform passive actions</span>
+        <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="p">[</span><span class="n">gAction</span> <span class="k">for</span> <span class="n">gAction</span> <span class="ow">in</span> <span class="n">game</span><span class="o">.</span><span class="n">globalActions</span> <span class="k">if</span> <span class="n">gAction</span><span class="o">.</span><span class="n">active</span> <span class="o">==</span> <span class="bp">False</span> <span class="ow">and</span> <span class="n">gAction</span><span class="o">.</span><span class="n">enabled</span> <span class="o">==</span> <span class="bp">True</span><span class="p">]:</span>
+                <span class="n">action</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="p">[</span><span class="n">lAction</span> <span class="k">for</span> <span class="n">lAction</span> <span class="ow">in</span> <span class="n">game</span><span class="o">.</span><span class="n">currentScene</span><span class="o">.</span><span class="n">actions</span> <span class="k">if</span> <span class="n">lAction</span><span class="o">.</span><span class="n">active</span> <span class="o">==</span> <span class="bp">False</span> <span class="ow">and</span> <span class="n">lAction</span><span class="o">.</span><span class="n">enabled</span> <span class="o">==</span> <span class="bp">True</span><span class="p">]:</span>
+                <span class="n">action</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+        <span class="c"># Display narrative</span>
+        <span class="k">for</span> <span class="n">narr</span> <span class="ow">in</span> <span class="n">game</span><span class="o">.</span><span class="n">narrative</span><span class="p">:</span>
+                <span class="k">print</span> <span class="n">narr</span>
+        <span class="n">game</span><span class="o">.</span><span class="n">narrative</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c"># Display visible actions</span>
+        <span class="k">print</span> <span class="p">[</span><span class="n">gAction</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">gAction</span> <span class="ow">in</span> <span class="n">game</span><span class="o">.</span><span class="n">globalActions</span> <span class="k">if</span> <span class="n">gAction</span><span class="o">.</span><span class="n">active</span> <span class="o">==</span> <span class="bp">True</span> <span class="ow">and</span> <span class="n">gAction</span><span class="o">.</span><span class="n">enabled</span> <span class="o">==</span> <span class="bp">True</span> <span class="ow">and</span> <span class="n">gAction</span><span class="o">.</span><span class="n">visible</span> <span class="o">==</span> <span class="bp">True</span><span class="p">]</span>
+        <span class="k">print</span> <span class="p">[</span><span class="n">lAction</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">lAction</span> <span class="ow">in</span> <span class="n">game</span><span class="o">.</span><span class="n">currentScene</span><span class="o">.</span><span class="n">actions</span> <span class="k">if</span> <span class="n">lAction</span><span class="o">.</span><span class="n">active</span> <span class="o">==</span> <span class="bp">True</span> <span class="ow">and</span> <span class="n">lAction</span><span class="o">.</span><span class="n">enabled</span> <span class="o">==</span> <span class="bp">True</span> <span class="ow">and</span> <span class="n">lAction</span><span class="o">.</span><span class="n">visible</span> <span class="o">==</span> <span class="bp">True</span><span class="p">]</span>
+        <span class="c"># Wait for user action</span>
+        <span class="k">try</span><span class="p">:</span>
+                <span class="n">userInput</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&gt;&#39;</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">&quot;Input error.&quot;</span><span class="p">)</span>
+                <span class="k">break</span>
+        <span class="c"># Evaluate user action</span>
+        <span class="n">lActions</span> <span class="o">=</span> <span class="p">[</span><span class="n">action</span> <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">game</span><span class="o">.</span><span class="n">currentScene</span><span class="o">.</span><span class="n">actions</span> <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">enabled</span> <span class="o">==</span> <span class="bp">True</span> <span class="ow">and</span> <span class="n">action</span><span class="o">.</span><span class="n">active</span> <span class="o">==</span> <span class="bp">True</span><span class="p">]</span>
+        <span class="n">gActions</span> <span class="o">=</span> <span class="p">[</span><span class="n">action</span> <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">game</span><span class="o">.</span><span class="n">globalActions</span> <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">enabled</span> <span class="o">==</span> <span class="bp">True</span> <span class="ow">and</span> <span class="n">action</span><span class="o">.</span><span class="n">active</span> <span class="o">==</span> <span class="bp">True</span><span class="p">]</span>
+        <span class="n">allActions</span> <span class="o">=</span> <span class="n">lActions</span> <span class="o">+</span> <span class="n">gActions</span>
+        <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">allActions</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">userInput</span><span class="p">:</span>
+                        <span class="n">action</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+                        <span class="k">break</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="web-interpreter">
+<h2>Web interpreter<a class="headerlink" href="#web-interpreter" title="Permalink to this headline">¶</a></h2>
+<p>Using Google&#8217;s AppEngine, it is similarly simple to create an interpreter which works as a web application! Here you can find the sample source code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">cgi</span>
+<span class="kn">import</span> <span class="nn">webapp2</span>
+<span class="kn">import</span> <span class="nn">urllib</span>
+
+<span class="kn">from</span> <span class="nn">google.appengine.api</span> <span class="kn">import</span> <span class="n">users</span>
+<span class="kn">from</span> <span class="nn">google.appengine.ext</span> <span class="kn">import</span> <span class="n">db</span>
+
+<span class="kn">import</span> <span class="nn">core</span>
+<span class="kn">import</span> <span class="nn">dataParser</span>
+
+
+<span class="k">def</span> <span class="nf">createActionsHTML</span><span class="p">(</span><span class="n">game_id</span><span class="p">,</span> <span class="n">game</span><span class="p">):</span>
+  <span class="n">actionsHTML</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+  <span class="c"># Display local visible actions</span>
+  <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="p">[</span><span class="n">lAction</span> <span class="k">for</span> <span class="n">lAction</span> <span class="ow">in</span> <span class="n">game</span><span class="o">.</span><span class="n">currentScene</span><span class="o">.</span><span class="n">actions</span> <span class="k">if</span> <span class="n">lAction</span><span class="o">.</span><span class="n">active</span> <span class="o">==</span> <span class="bp">True</span> <span class="ow">and</span> <span class="n">lAction</span><span class="o">.</span><span class="n">enabled</span> <span class="o">==</span> <span class="bp">True</span> <span class="ow">and</span> <span class="n">lAction</span><span class="o">.</span><span class="n">visible</span> <span class="o">==</span> <span class="bp">True</span><span class="p">]:</span>
+    <span class="n">actionsHTML</span> <span class="o">+=</span> <span class="s">&quot;&quot;&quot;&lt;form action=&quot;/game/&quot;&quot;&quot;</span><span class="o">+</span><span class="n">game_id</span><span class="o">+</span><span class="s">&quot;&quot;&quot;&quot; method=&quot;post&quot;&gt;&lt;div&gt;&lt;input name=&quot;action&quot; type=&quot;submit&quot; value=</span><span class="se">\&quot;</span><span class="s">&quot;&quot;&quot;</span><span class="o">+</span><span class="n">action</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s">&quot;&quot;&quot;</span><span class="se">\&quot;</span><span class="s">&gt;&lt;/div&gt;&lt;/form&gt;&quot;&quot;&quot;</span>
+  <span class="c"># Display global visible actions</span>
+  <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="p">[</span><span class="n">gAction</span> <span class="k">for</span> <span class="n">gAction</span> <span class="ow">in</span> <span class="n">game</span><span class="o">.</span><span class="n">globalActions</span> <span class="k">if</span> <span class="n">gAction</span><span class="o">.</span><span class="n">active</span> <span class="o">==</span> <span class="bp">True</span> <span class="ow">and</span> <span class="n">gAction</span><span class="o">.</span><span class="n">enabled</span> <span class="o">==</span> <span class="bp">True</span> <span class="ow">and</span> <span class="n">gAction</span><span class="o">.</span><span class="n">visible</span> <span class="o">==</span> <span class="bp">True</span><span class="p">]:</span>
+    <span class="n">actionsHTML</span> <span class="o">+=</span> <span class="s">&quot;&quot;&quot;&lt;form action=&quot;/game/&quot;&quot;&quot;</span><span class="o">+</span><span class="n">game_id</span><span class="o">+</span><span class="s">&quot;&quot;&quot;&quot; method=&quot;post&quot;&gt;&lt;div&gt;&lt;input name=&quot;action&quot; type=&quot;submit&quot; value=</span><span class="se">\&quot;</span><span class="s">&quot;&quot;&quot;</span><span class="o">+</span><span class="n">action</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s">&quot;&quot;&quot;</span><span class="se">\&quot;</span><span class="s">&gt;&lt;/div&gt;&lt;/form&gt;&quot;&quot;&quot;</span>
+  <span class="c"># Display additional actions (new game, logout etc.)</span>
+  <span class="n">actionsHTML</span> <span class="o">+=</span> <span class="s">&quot;&quot;&quot;&lt;form action=&quot;/game/&quot;&quot;&quot;</span><span class="o">+</span><span class="n">game_id</span><span class="o">+</span><span class="s">&quot;&quot;&quot;&quot; method=&quot;post&quot;&gt;&lt;div&gt;&lt;input name=&quot;action&quot; type=&quot;submit&quot; value=&quot;Start again&quot;&gt;&lt;/div&gt;&lt;/form&gt;&quot;&quot;&quot;</span>
+  <span class="n">actionsHTML</span> <span class="o">+=</span> <span class="s">&quot;&quot;&quot;&lt;form action=&quot;/logout&quot; method=&quot;post&quot;&gt;&lt;div&gt;&lt;input name=&quot;action&quot; type=&quot;submit&quot; value=&quot;Logout&quot;&gt;&lt;/div&gt;&lt;/form&gt;&quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">actionsHTML</span>
+
+<span class="k">def</span> <span class="nf">createNarrativeHTML</span><span class="p">(</span><span class="n">game</span><span class="p">):</span>
+  <span class="n">narrativeHTML</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+  <span class="k">for</span> <span class="n">narr</span> <span class="ow">in</span> <span class="n">game</span><span class="o">.</span><span class="n">narrative</span><span class="p">:</span>
+    <span class="n">narrativeHTML</span> <span class="o">+=</span> <span class="s">&quot;&lt;br&gt;&lt;p&gt;&quot;</span> <span class="o">+</span> <span class="n">narr</span> <span class="o">+</span> <span class="s">&quot;&lt;/p&gt;&quot;</span>
+  <span class="k">return</span> <span class="n">narrativeHTML</span>
+
+<span class="k">def</span> <span class="nf">createCombinedHTML</span><span class="p">(</span><span class="n">narrativeHTML</span><span class="p">,</span> <span class="n">actionsHTML</span><span class="p">):</span>
+  <span class="n">html</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="s">        &lt;html&gt;</span>
+<span class="s">          &lt;body&gt;</span>
+<span class="s">            &lt;p&gt;&quot;&quot;&quot;</span><span class="o">+</span> <span class="n">game</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span><span class="s">&quot;&quot;&quot; by &quot;&quot;&quot;</span><span class="o">+</span> <span class="n">game</span><span class="o">.</span><span class="n">author</span> <span class="o">+</span><span class="s">&quot;&quot;&quot;&lt;/p&gt;</span>
+<span class="s">            &quot;&quot;&quot;</span><span class="o">+</span> <span class="n">narrativeHTML</span> <span class="o">+</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">            &quot;&quot;&quot;</span><span class="o">+</span> <span class="n">actionsHTML</span> <span class="o">+</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">          &lt;/body&gt;</span>
+<span class="s">        &lt;/html&gt;&quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="n">html</span>
+
+<span class="k">def</span> <span class="nf">createHTML</span><span class="p">(</span><span class="n">game_id</span><span class="p">,</span> <span class="n">game</span><span class="p">):</span>
+  <span class="n">narrativeHTML</span> <span class="o">=</span> <span class="n">createNarrativeHTML</span><span class="p">(</span><span class="n">game</span><span class="p">)</span>
+  <span class="n">actionsHTML</span> <span class="o">=</span> <span class="n">createActionsHTML</span><span class="p">(</span><span class="n">game_id</span><span class="p">,</span> <span class="n">game</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">createCombinedHTML</span><span class="p">(</span><span class="n">narrativeHTML</span><span class="p">,</span> <span class="n">actionsHTML</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">LogoutPage</span><span class="p">(</span><span class="n">webapp2</span><span class="o">.</span><span class="n">RequestHandler</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">redirect</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">create_logout_url</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">))</span>
+  <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">redirect</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">create_logout_url</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">))</span>
+
+<span class="k">class</span> <span class="nc">MainPage</span><span class="p">(</span><span class="n">webapp2</span><span class="o">.</span><span class="n">RequestHandler</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;&quot;&quot;&lt;form action=&quot;/&quot; method=&quot;post&quot;&gt;&lt;div&gt;&lt;input name=&quot;gameChoice&quot; type=&quot;submit&quot; value=&quot;Game 1&quot;&gt;&lt;/div&gt;&lt;/form&gt;&quot;&quot;&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;&quot;&quot;&lt;form action=&quot;/&quot; method=&quot;post&quot;&gt;&lt;div&gt;&lt;input name=&quot;gameChoice&quot; type=&quot;submit&quot; value=&quot;Game 5&quot;&gt;&lt;/div&gt;&lt;/form&gt;&quot;&quot;&quot;</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">playerInput</span> <span class="o">=</span> <span class="n">cgi</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;gameChoice&#39;</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">redirect</span><span class="p">(</span><span class="s">&quot;/game/&quot;</span><span class="o">+</span><span class="n">playerInput</span><span class="o">+</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">GamePage</span><span class="p">(</span><span class="n">webapp2</span><span class="o">.</span><span class="n">RequestHandler</span><span class="p">):</span>
+  <span class="k">global</span> <span class="n">game</span>
+  <span class="k">global</span> <span class="n">parser</span>
+  <span class="k">global</span> <span class="n">gameDataUrl</span>
+  <span class="n">parser</span> <span class="o">=</span> <span class="n">dataParser</span><span class="o">.</span><span class="n">GameParser</span><span class="p">()</span>
+
+  <span class="k">def</span> <span class="nf">resetGame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game_id</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">game</span>
+    <span class="n">game</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">loadXMLGameData</span><span class="p">(</span><span class="n">game_id</span><span class="p">)</span>
+    <span class="n">game</span><span class="o">.</span><span class="n">effectDict</span><span class="p">[</span><span class="s">&#39;Go to scene&#39;</span><span class="p">](</span><span class="n">game</span><span class="p">,</span> <span class="n">game</span><span class="o">.</span><span class="n">startingScene</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game_id</span><span class="p">):</span>
+    <span class="c"># Make sure user is logged in</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">users</span><span class="o">.</span><span class="n">get_current_user</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">user</span><span class="p">:</span>
+      <span class="c"># Load game data</span>
+      <span class="k">global</span> <span class="n">game</span>
+      <span class="n">game_id</span> <span class="o">=</span> <span class="n">game_id</span> <span class="o">+</span> <span class="s">&quot;.xml&quot;</span>
+      <span class="n">game</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">loadXMLGameData</span><span class="p">(</span><span class="n">game_id</span><span class="p">)</span>
+      <span class="n">game</span><span class="o">.</span><span class="n">effectDict</span><span class="p">[</span><span class="s">&#39;Go to scene&#39;</span><span class="p">](</span><span class="n">game</span><span class="p">,</span> <span class="n">game</span><span class="o">.</span><span class="n">startingScene</span><span class="p">)</span>
+      <span class="c"># Perform passive actions</span>
+      <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="p">[</span><span class="n">gAction</span> <span class="k">for</span> <span class="n">gAction</span> <span class="ow">in</span> <span class="n">game</span><span class="o">.</span><span class="n">globalActions</span> <span class="k">if</span> <span class="n">gAction</span><span class="o">.</span><span class="n">active</span> <span class="o">==</span> <span class="bp">False</span> <span class="ow">and</span> <span class="n">gAction</span><span class="o">.</span><span class="n">enabled</span> <span class="o">==</span> <span class="bp">True</span><span class="p">]:</span>
+        <span class="n">action</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+      <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="p">[</span><span class="n">lAction</span> <span class="k">for</span> <span class="n">lAction</span> <span class="ow">in</span> <span class="n">game</span><span class="o">.</span><span class="n">currentScene</span><span class="o">.</span><span class="n">actions</span> <span class="k">if</span> <span class="n">lAction</span><span class="o">.</span><span class="n">active</span> <span class="o">==</span> <span class="bp">False</span> <span class="ow">and</span> <span class="n">lAction</span><span class="o">.</span><span class="n">enabled</span> <span class="o">==</span> <span class="bp">True</span><span class="p">]:</span>
+        <span class="n">action</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+      <span class="c"># Display narrative</span>
+      <span class="n">HTML</span> <span class="o">=</span> <span class="n">createHTML</span><span class="p">(</span><span class="n">game_id</span><span class="p">,</span> <span class="n">game</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">HTML</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="c"># If not logged in redirect to login page</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">redirect</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">create_login_url</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">uri</span><span class="p">))</span>
+
+  <span class="k">def</span> <span class="nf">post</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">game_id</span><span class="p">):</span>
+    <span class="c"># Make sure user is logged in</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">users</span><span class="o">.</span><span class="n">get_current_user</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">user</span><span class="p">:</span>
+      <span class="c"># Evaluate user action</span>
+      <span class="n">playerInput</span> <span class="o">=</span> <span class="n">cgi</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;action&#39;</span><span class="p">))</span>
+      <span class="c"># Side actions (e.g. logout, start new game etc.)</span>
+      <span class="k">if</span> <span class="n">playerInput</span> <span class="o">==</span> <span class="s">&quot;Start again&quot;</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resetGame</span><span class="p">(</span><span class="n">game_id</span><span class="p">)</span>
+        <span class="n">HTML</span> <span class="o">=</span> <span class="n">createHTML</span><span class="p">(</span><span class="n">game_id</span><span class="p">,</span> <span class="n">game</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">HTML</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="c"># Game actions</span>
+        <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">game</span><span class="o">.</span><span class="n">currentScene</span><span class="o">.</span><span class="n">actions</span><span class="p">:</span>
+          <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">playerInput</span><span class="p">:</span>
+            <span class="n">action</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+            <span class="k">break</span>
+        <span class="c"># Perform passive actions</span>
+        <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="p">[</span><span class="n">gAction</span> <span class="k">for</span> <span class="n">gAction</span> <span class="ow">in</span> <span class="n">game</span><span class="o">.</span><span class="n">globalActions</span> <span class="k">if</span> <span class="n">gAction</span><span class="o">.</span><span class="n">active</span> <span class="o">==</span> <span class="bp">False</span> <span class="ow">and</span> <span class="n">gAction</span><span class="o">.</span><span class="n">enabled</span> <span class="o">==</span> <span class="bp">True</span><span class="p">]:</span>
+          <span class="n">action</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="p">[</span><span class="n">lAction</span> <span class="k">for</span> <span class="n">lAction</span> <span class="ow">in</span> <span class="n">game</span><span class="o">.</span><span class="n">currentScene</span><span class="o">.</span><span class="n">actions</span> <span class="k">if</span> <span class="n">lAction</span><span class="o">.</span><span class="n">active</span> <span class="o">==</span> <span class="bp">False</span> <span class="ow">and</span> <span class="n">lAction</span><span class="o">.</span><span class="n">enabled</span> <span class="o">==</span> <span class="bp">True</span><span class="p">]:</span>
+          <span class="n">action</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+        <span class="c"># Display narrative</span>
+        <span class="n">HTML</span> <span class="o">=</span> <span class="n">createHTML</span><span class="p">(</span><span class="n">game_id</span><span class="p">,</span> <span class="n">game</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">HTML</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">redirect</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">create_login_url</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">uri</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+  <span class="n">app</span> <span class="o">=</span> <span class="n">webapp2</span><span class="o">.</span><span class="n">WSGIApplication</span><span class="p">([(</span><span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="n">MainPage</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;/game/([^/]+)&#39;</span><span class="p">,</span> <span class="n">GamePage</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;/logout&#39;</span><span class="p">,</span> <span class="n">LogoutPage</span><span class="p">)],</span> <span class="n">debug</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">app</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The <tt class="file docutils literal"><span class="pre">app.yaml</span></tt> file only contains the basics:</p>
+<div class="highlight-python"><pre>application: textengine
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /.*
+  script: textengine.app</pre>
+</div>
+</div>
 </div>
 
 
@@ -58,9 +257,18 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">interpreter</a><ul>
+<li><a class="reference internal" href="#python-interpreter">Python interpreter</a></li>
+<li><a class="reference internal" href="#web-interpreter">Web interpreter</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
-  <p class="topless"><a href="gameData.html"
-                        title="previous chapter">How is a game stored</a></p>
+  <p class="topless"><a href="dev_dataParser.html"
+                        title="previous chapter">dataParser</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/dev_interpreter.txt"
@@ -93,7 +301,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="gameData.html" title="How is a game stored"
+          <a href="dev_dataParser.html" title="dataParser"
              >previous</a> |</li>
         <li><a href="index.html">TAINT 1.0 documentation</a> &raquo;</li> 
       </ul>

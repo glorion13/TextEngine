@@ -1,8 +1,8 @@
 import core
-import DataParser
+import dataParser
 
 # Load Data
-parser = DataParser.GameParser()
+parser = dataParser.GameParser()
 game = parser.loadXMLGameData("game.xml")
 # Load game
 
@@ -19,14 +19,15 @@ game.effectDict['Go to scene'](game, game.startingScene)
 
 # Core game loop
 while (True):
-	for narr in game.narrative:
-		print narr
-	game.narrative = []
-	# Evaluate passive actions
+	# Perform passive actions
 	for action in [gAction for gAction in game.globalActions if gAction.active == False and gAction.enabled == True]:
 		action.perform()
 	for action in [lAction for lAction in game.currentScene.actions if lAction.active == False and lAction.enabled == True]:
 		action.perform()
+	# Display narrative
+	for narr in game.narrative:
+		print narr
+	game.narrative = []
 	# Display visible actions
 	print [gAction.name for gAction in game.globalActions if gAction.active == True and gAction.enabled == True and gAction.visible == True]
 	print [lAction.name for lAction in game.currentScene.actions if lAction.active == True and lAction.enabled == True and lAction.visible == True]

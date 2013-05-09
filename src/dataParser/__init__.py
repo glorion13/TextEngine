@@ -58,7 +58,11 @@ class GameParser:
 		# Main game data
 		self.game = core.components.Game()
 		gameName = root.find("GameName").text
+		if (gameName == None):
+			gameName = ""
 		gameAuthor = root.find("Author").text
+		if (gameAuthor == None):
+			gameAuthor = ""
 		startingScene = root.find("StartingScene").text
 		self.game.name = gameName
 		self.game.author = gameAuthor
@@ -76,7 +80,7 @@ class GameParser:
 			sceneObject.description = scene.find("Description").text
 			# Scene resources (local)
 			resourcesNode = scene.find("Resources")
-			scene.resources = [self.createResourceObject(resource) for resource in resourcesNode]
+			sceneObject.resources = [self.createResourceObject(resource) for resource in resourcesNode]
 			# Scene actions (local)
 			actionsNode = scene.find("Actions")
 			sceneObject.actions = [self.createActionObject(action, self.game) for action in actionsNode]

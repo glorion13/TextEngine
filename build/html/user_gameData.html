@@ -54,6 +54,62 @@
             
   <div class="section" id="how-is-a-game-stored">
 <h1>How is a game stored?<a class="headerlink" href="#how-is-a-game-stored" title="Permalink to this headline">¶</a></h1>
+<p>Games using the TAINT model can be created in whatever way you prefer, as long as they adhere to the game model and are stored as an XML file.</p>
+<p>This means that one could potentially build games writing pure XML, although it&#8217;s probably much simpler to do it using some program with a user interface.</p>
+<p>The XML structure is only necessary if you wish to do more advanced stuff rather than just using the given <cite>editor</cite> and <cite>interpreter</cite>.</p>
+<p>Generally speaking, the overall idea is broken down into 3 modules: the <cite>model</cite>, the <cite>editor</cite> and the <cite>interpreter</cite>. While we provide an <cite>editor</cite> (a program that allows you to graphically create games) and two <cite>interpreters</cite> (a program that allows you to play the games), anyone is welcome to build or use their own. The only important thing is that they adhere to the <cite>model</cite> specifications as explained in the <a class="reference internal" href="user_gameModel.html#game-model"><em>What is a TAINT game?</em></a> section.</p>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>Simple game with 1 scene which contains 1 action and 1 resource:</p>
+<div class="highlight-python"><pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Game&gt;
+        &lt;GameName&gt;Test Game&lt;/GameName&gt;
+        &lt;Author&gt;Alex&lt;/Author&gt;
+        &lt;StartingScene&gt;New Scene&lt;/StartingScene&gt;
+        &lt;GlobalResources&gt;
+        &lt;/GlobalResources&gt;
+        &lt;GlobalActions&gt;
+        &lt;/GlobalActions&gt;
+        &lt;Scenes&gt;
+                &lt;Scene&gt;
+                        &lt;Name&gt;New Scene&lt;/Name&gt;
+                        &lt;Description&gt;This is a new scene.&lt;/Description&gt;
+                        &lt;Resources&gt;
+                                &lt;Resource&gt;
+                                        &lt;Name&gt;HP&lt;/Name&gt;
+                                        &lt;Type&gt;Number&lt;/Type&gt;
+                                        &lt;Value&gt;50&lt;/Value&gt;
+                                &lt;/Resource&gt;
+                        &lt;/Resources&gt;
+                        &lt;Actions&gt;
+                                &lt;Action&gt;
+                                        &lt;Name&gt;go&lt;/Name&gt;
+                                        &lt;Visible&gt;True&lt;/Visible&gt;
+                                        &lt;Enabled&gt;True&lt;/Enabled&gt;
+                                        &lt;Active&gt;True&lt;/Active&gt;
+                                        &lt;Conditions&gt;
+                                                &lt;Condition&gt;
+                                                        &lt;ConditionFunction&gt;equals&lt;/ConditionFunction&gt;
+                                                        &lt;LeftHandSide Type="Resource"&gt;HP&lt;/LeftHandSide&gt;
+                                                        &lt;RightHandSide Type="Number"&gt;50&lt;/RightHandSide&gt;
+                                                &lt;/Condition&gt;
+                                        &lt;/Conditions&gt;
+                                        &lt;EffectsIfTrue&gt;
+                                                &lt;Effect&gt;
+                                                        &lt;EffectFunction&gt;Tell player&lt;/EffectFunction&gt;
+                                                        &lt;args&gt;
+                                                                &lt;arg Type="Text"&gt;Indeed the HP is equal to 50.&lt;/arg&gt;
+                                                        &lt;/args&gt;
+                                                &lt;/Effect&gt;
+                                        &lt;/EffectsIfTrue&gt;
+                                        &lt;EffectsIfFalse/&gt;
+                                &lt;/Action&gt;
+                        &lt;/Actions&gt;
+                &lt;/Scene&gt;
+        &lt;/Scenes&gt;
+&lt;/Game&gt;</pre>
+</div>
+</div>
 </div>
 
 
@@ -62,6 +118,14 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">How is a game stored?</a><ul>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="user_gameModel.html"
                         title="previous chapter">What is a TAINT game?</a></p>

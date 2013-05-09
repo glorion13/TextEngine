@@ -1,1 +1,47 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Game><GameName>haha</GameName><Author>jack</Author><StartingScene>New Scene</StartingScene><GlobalResources /><GlobalActions><Action><Name>New Action</Name><Visible>True</Visible><Enabled>True</Enabled><Active>False</Active><Conditions /><EffectsIfTrue><Effect><EffectFunction>Tell player</EffectFunction><args><arg Type="Text">fasoladitsa freskia</arg></args></Effect></EffectsIfTrue><EffectsIfFalse /></Action></GlobalActions><Scenes><Scene><Name>New Scene</Name><Description>This is a new scene.</Description><Resources /><Actions><Action><Name>go</Name><Visible>True</Visible><Enabled>True</Enabled><Active>True</Active><Conditions /><EffectsIfTrue><Effect><EffectFunction>Go to scene</EffectFunction><args><arg Type="Scene">New Scene (1)</arg></args></Effect></EffectsIfTrue><EffectsIfFalse /></Action></Actions></Scene><Scene><Name>New Scene (1)</Name><Description>This is a new scene.</Description><Resources /><Actions /></Scene></Scenes></Game>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Game>
+	<GameName>Test Game</GameName>
+	<Author>Alex</Author>
+	<StartingScene>New Scene</StartingScene>
+	<GlobalResources>
+	</GlobalResources>
+	<GlobalActions>
+	</GlobalActions>
+	<Scenes>
+		<Scene>
+			<Name>New Scene</Name>
+			<Description>This is a new scene.</Description>
+			<Resources>
+				<Resource>
+					<Name>HP</Name>
+					<Type>Number</Type>
+					<Value>50</Value>
+				</Resource>
+			</Resources>
+			<Actions>
+				<Action>
+					<Name>go</Name>
+					<Visible>True</Visible>
+					<Enabled>True</Enabled>
+					<Active>True</Active>
+					<Conditions>
+						<Condition>
+							<ConditionFunction>equals</ConditionFunction>
+							<LeftHandSide Type="Resource">HP</LeftHandSide>
+							<RightHandSide Type="Number">50</RightHandSide>
+						</Condition>
+					</Conditions>
+					<EffectsIfTrue>
+						<Effect>
+							<EffectFunction>Tell player</EffectFunction>
+							<args>
+								<arg Type="Text">Fasoladitsa freskia</arg>
+							</args>
+						</Effect>
+					</EffectsIfTrue>
+					<EffectsIfFalse/>
+				</Action>
+			</Actions>
+		</Scene>
+	</Scenes>
+</Game>

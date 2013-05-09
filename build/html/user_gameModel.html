@@ -53,7 +53,86 @@
           <div class="body">
             
   <div class="section" id="what-is-a-taint-game">
-<h1>What is a TAINT game?<a class="headerlink" href="#what-is-a-taint-game" title="Permalink to this headline">¶</a></h1>
+<span id="game-model"></span><h1>What is a TAINT game?<a class="headerlink" href="#what-is-a-taint-game" title="Permalink to this headline">¶</a></h1>
+<p>Games created with the TAINT model have a structure which is very simple and at the same time very powerful! Because it is very abstract, it really is up to you to use it and be creative.</p>
+<p>In this section you&#8217;ll learn exactly what the TAINT model is and how to use it to create your own games!</p>
+<div class="section" id="main-building-blocks">
+<h2>Main building blocks<a class="headerlink" href="#main-building-blocks" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>TAINT has the following core building blocks:</dt>
+<dd><ul class="first last simple">
+<li><cite>Scene</cite>: Scenes represent a location or a state in the game world.</li>
+<li><cite>Resource</cite>: Resources represent anything that needs to be tracked! The player&#8217;s HP, Mana, the time or date in the game world, whether or not the player has an item etc. One example of a resource can have a name of &#8220;Hitpoints&#8221; and a value of 10.</li>
+<li><cite>Action</cite>: Actions represent happenings in the game world, whether it is something that occurs by itself (passive) or something that is triggered by the player (active). An action consists of <cite>conditions</cite> and <cite>effects</cite>. One list of effects are triggered if the conditions are true and another if the conditions are false.</li>
+<li><cite>Condition</cite>: Conditions are ways to give further branching to your game, by checking if certain things are true or not (e.g. does the player have the required item to open the door?). Conditions have a left-hand side and a right-hand side argument and then an operator which compares them. For example, the left-hand side argument might be a <cite>Resource</cite> called &#8220;HP&#8221; and the right-hand side argument might be the number 0. Using a <cite>Condition</cite>, it is possible to check whether the &#8220;HP&#8221; has dropped below 0 or not.</li>
+<li><cite>Effect</cite>: Effects are the resolutions of an <cite>Action</cite>. Basically, effects can be things like going to a new <cite>Scene</cite>, changing the value of a <cite>Resource</cite> or simply giving some additional information to the player.</li>
+<li><cite>Narrative</cite>: The narrative is the story which is presented to the player in the form of text.</li>
+</ul>
+</dd>
+</dl>
+<p>These building blocks are then combined in the game structure in order to create interactive experiences!</p>
+</div>
+<div class="section" id="game-structure">
+<h2>Game structure<a class="headerlink" href="#game-structure" title="Permalink to this headline">¶</a></h2>
+<p>A game contains a list of <cite>scenes</cite>, a list of <cite>global resources</cite> and a list of <cite>global actions</cite>. <cite>Global resources</cite> are <cite>resources</cite> which are accessible from all scenes of the game. Similarly, <cite>Global actions</cite> are <cite>actions</cite> which are accessible from all scenes. A game also has a <cite>starting scene</cite> which is the scene in which the game begins.</p>
+<p>Each <cite>scene</cite> of the game, contains a list of <cite>actions</cite> and <cite>resources</cite>. Those are also called <cite>local actions</cite> and <cite>local resources</cite>, because unlike their <cite>global</cite> counterparts, they are only accessible within the scene to which they belong.</p>
+<p>So for example, a <cite>global action</cite> could be an action that tells the player what is in their inventory and it is global because you want the player to be able to check his inventory at all times, no matter where he is. On the other hand, a <cite>local action</cite> (an <cite>action</cite> within a <cite>scene</cite>) could be an action which opens a door in that specific scene. It is clear that there is no reason for this action to be available in any other scene of the game. Actions have three switches which can be toggled between on and off.</p>
+<p>The <cite>enabled</cite> switch, sets an action as accessible or entirely not accessible (as if it doesn&#8217;t exist).</p>
+<p>The <cite>active</cite> switch sets the action as passive or active. Active actions can only be triggered by the player (e.g. the player decides to open a door) while passive actions are evaluated in every turn (e.g. always check if the player&#8217;s &#8220;HP&#8221; falls below 0 and if it does let them know they are dead).</p>
+<p>The <cite>visible</cite> switch makes the action visible to the player.
+The player can always see a list of all visible actions (just like many traditional interactive novels). One case where you don&#8217;t want a scene to be visible is in the case you want the player to input commands rather than choose from a list. Another case would be to include easter eggs!</p>
+</div>
+<div class="section" id="types">
+<h2>Types<a class="headerlink" href="#types" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>There are 5 <cite>types</cite> (programmatically speaking) in a TAINT game:</dt>
+<dd><ul class="first last simple">
+<li><cite>Number</cite>: a number can be an integer like 10 or a float like 0.75.</li>
+<li><cite>Text</cite>: text is exactly what you would imagine; it is used for anything written.</li>
+<li><cite>Boolean</cite>: boolean can be either <tt class="docutils literal"><span class="pre">True</span></tt> or <tt class="docutils literal"><span class="pre">False</span></tt> and can be used for checks like whether or not something exists or whether or not the player has done something.</li>
+<li><cite>Resource</cite>: a resource is a type by itself as you can explicitly compare e.g. a <cite>resource</cite> with a <cite>boolean</cite>. A <cite>resource</cite> has the interesting property that its value can be any of the three types <cite>Number</cite>, <cite>Text</cite> or <cite>Boolean</cite>.</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="conditions-and-effects">
+<h2>Conditions and effects<a class="headerlink" href="#conditions-and-effects" title="Permalink to this headline">¶</a></h2>
+<p>Conditions and effects are a layer which can be customised to add your own. If you are interested in something like that, read more on the <a class="reference internal" href="user_customise.html#scripted-components"><em>How to extend TAINT with custom functions?</em></a> section. Having said that, the default list of conditions and effects should cover more than the basic needs of a game.</p>
+<dl class="docutils">
+<dt>Here is a list of all the comparisons you can do with the default conditions:</dt>
+<dd><ul class="first last simple">
+<li><cite>equals</cite>: Checks if two things are equal (e.g. <cite>Resource</cite> &#8220;PlayerHasAxe&#8221; equals <tt class="docutils literal"><span class="pre">True</span></tt>).</li>
+<li><cite>less than</cite>: Checks if the value of one thing is less than the value of another (e.g. <cite>Resource</cite> &#8220;HP&#8221; is less than 0).</li>
+<li><cite>less or equal</cite>: Similar to the above but checks if the value of one thing is less or equal to the value of another.</li>
+<li><cite>greater than</cite>: Checks if the value of one thing is greater than the value of another (e.g. <cite>Resource</cite> &#8220;ItemsInInventory&#8221; is greater than 10).</li>
+<li><cite>greater or equal</cite>: Similar to the above but checks if the value of one thing is greater or equal to the value of another.</li>
+</ul>
+</dd>
+<dt>This is a list of all the effects available by default:</dt>
+<dd><ul class="first last simple">
+<li><cite>Tell player</cite>: displays text to the player by adding it to the game&#8217;s <cite>Narrative</cite>.</li>
+<li><cite>Go to scene</cite>: takes the player to a new scene.</li>
+<li><cite>Add global resource</cite>: adds a global resource to the game.</li>
+<li><cite>Add local resource</cite>: adds a local resource to a scene.</li>
+<li><cite>Edit resource</cite>: changes the value of an already existing resource.</li>
+<li><cite>Delete resource</cite>: deletes an already existing resource.</li>
+<li><cite>Display all actions</cite>: displays all enabled actions to the player.</li>
+<li><cite>Display all visible actions</cite>: displays only the actions which are set as <cite>visible</cite>.</li>
+<li><cite>Make action visible</cite>: Sets an action as <cite>visible</cite>.</li>
+<li><cite>Make action invisible</cite>: Sets an action as not <cite>visible</cite>.</li>
+<li><cite>Make action enabled</cite>: Sets an action as <cite>enabled</cite>.</li>
+<li><cite>Make action disabled</cite>: Sets an action as not <cite>enabled</cite>.</li>
+<li><cite>Make action active</cite>: Sets an action as <cite>active</cite>.</li>
+<li><cite>Make action passive</cite>: Sets an action as not <cite>active</cite>.</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="resource-priority">
+<h2>Resource priority<a class="headerlink" href="#resource-priority" title="Permalink to this headline">¶</a></h2>
+<p>It is generally recommended that you use different names for each resource, even if one is global and the other is local. In the case that multiple resources have the same name, only the first resource found will be handled.</p>
+<p>Local resources are searched first before global resources.</p>
+</div>
 </div>
 
 
@@ -62,6 +141,18 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">What is a TAINT game?</a><ul>
+<li><a class="reference internal" href="#main-building-blocks">Main building blocks</a></li>
+<li><a class="reference internal" href="#game-structure">Game structure</a></li>
+<li><a class="reference internal" href="#types">Types</a></li>
+<li><a class="reference internal" href="#conditions-and-effects">Conditions and effects</a></li>
+<li><a class="reference internal" href="#resource-priority">Resource priority</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="index.html"
                         title="previous chapter">Welcome to TAINT&#8217;s documentation!</a></p>

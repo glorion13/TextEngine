@@ -246,7 +246,8 @@ current scene.</p>
 <dl class="method">
 <dt id="core.components.Game.getResourceByName">
 <tt class="descname">getResourceByName</tt><big>(</big><em>name</em><big>)</big><a class="reference internal" href="_modules/core/components.html#Game.getResourceByName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Game.getResourceByName" title="Permalink to this definition">¶</a></dt>
-<dd><p>Finds and returns a <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a> object given a <tt class="xref py py-class docutils literal"><span class="pre">string</span></tt> with the name of the resource.</p>
+<dd><p>Finds and returns a <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a> object given a <tt class="xref py py-class docutils literal"><span class="pre">string</span></tt> with the name of the resource. It returns the
+first resource which matches the name, starting by searching through the current scene and then through the global resources.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />

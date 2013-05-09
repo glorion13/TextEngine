@@ -66,7 +66,8 @@ class Game(customisable.effects.EffectFunctions, customisable.conditions.Conditi
 			return firstScene[0]
 	def getResourceByName(self, name):
 		"""
-		Finds and returns a :class:`Resource` object given a :class:`string` with the name of the resource.
+		Finds and returns a :class:`Resource` object given a :class:`string` with the name of the resource. It returns the
+		first resource which matches the name, starting by searching through the current scene and then through the global resources.
 
 		:Parameters:
 		- `name`: A :class:`string` containing the name of the resource.
@@ -77,7 +78,9 @@ class Game(customisable.effects.EffectFunctions, customisable.conditions.Conditi
 		:Returns:
 		- The first :class:`Resource` object in `globalResources` with a name that matches `name`. 
 		"""
-		firstResource = [resource for resource in self.globalResources if resource.name == name]
+		firstResource = [resource for resource in self.currentScene.resources if resource.name == name]
+		if len(firstResource) == 0:
+			firstResource = [resource for resource in self.globalResources if resource.name == name]
 		if len(firstResource) == 0:
 			return "ERROR: Resource '" + name + "' not found."
 		else:
@@ -130,7 +133,6 @@ class Scene:
 		self.description = description
 		self.resources = []
 		self.actions = []
-	"""*TODO*: Add get resource functionality for local resources"""
 
 class Action:
 	"""

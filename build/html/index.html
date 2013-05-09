@@ -52,33 +52,49 @@
 <h1>Welcome to TAINT&#8217;s documentation!<a class="headerlink" href="#welcome-to-taint-s-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="what-is-taint">
 <h2>What is TAINT?<a class="headerlink" href="#what-is-taint" title="Permalink to this headline">¶</a></h2>
-<p><cite>TAINT</cite> (Text Adventure &amp; Interactive Novel Toolkit) is a framework/engine for creating text adventure or interactive novel games.</p>
+<p><cite>TAINT</cite> (Text Adventure &amp; Interactive Novel Toolkit) is a framework/engine for creating text adventure or interactive novel games. It is created primarily in Python, while an editor is supplied which is written in C# and runs on Windows. Games created with TAINT are cross-platform as there is an interpreter which allows for games to be played directly in a web browser!</p>
+<p>If you don&#8217;t want to use the supplied editor, you&#8217;re welcome to create your own, building on top of the core framework of TAINT. In fact, TAINT games are just XML so you could even write them directly in XML! It&#8217;s really very flexible.</p>
 </div>
 <div class="section" id="why-would-i-use-it">
 <h2>Why would I use it?<a class="headerlink" href="#why-would-i-use-it" title="Permalink to this headline">¶</a></h2>
-<p>Blah blah.</p>
+<p>Did you ever want to create your own interactive novels or text adventures but didn&#8217;t know where to begin? You don&#8217;t know any programming but you also don&#8217;t want to be exposed to super-complicated interfaces? Do you want your games to be cross-platform? Then TAINT is for you! Through a very simple interface, TAINT gives you the potential to create complex, branching experiences!</p>
+<p>On the other hand, if you do want to go into the belly of the beast, TAINT is open-source and directly extensible through Python.</p>
 </div>
 <div class="section" id="how-do-i-get-started">
 <h2>How do I get started?<a class="headerlink" href="#how-do-i-get-started" title="Permalink to this headline">¶</a></h2>
-<p>Ble bleh.</p>
+<p>To get started with the basic game model of TAINT as well as how to create your own games, have a look at the <a class="reference internal" href="#user-documentation"><em>User documentation</em></a> section. To get started with development or to simply get a deeper under-the-hood understanding of the framework, have a look at the <a class="reference internal" href="#developer-documentation"><em>Developer documentation</em></a>.</p>
 </div>
 </div>
 <div class="section" id="user-documentation">
-<h1>User documentation<a class="headerlink" href="#user-documentation" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>User documentation<a class="headerlink" href="#user-documentation" title="Permalink to this headline">¶</a></h1>
 <p>User documentation explains the main ideas behind TAINT and going through it should allow you to start making your own games in no time!</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="user_gameModel.html">What is a TAINT game?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="user_gameData.html">How is a game stored?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_gameModel.html">What is a TAINT game?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user_gameModel.html#main-building-blocks">Main building blocks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_gameModel.html#game-structure">Game structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_gameModel.html#types">Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_gameModel.html#conditions-and-effects">Conditions and effects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_gameModel.html#resource-priority">Resource priority</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user_gameData.html">How is a game stored?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user_gameData.html#examples">Examples</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="user_gameCreation.html">How to make a game?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user_gamePlayback.html">How to play a TAINT game?</a></li>
-<li class="toctree-l1"><a class="reference internal" href="user_customise.html">How to extend TAINT with custom functions?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_customise.html">How to extend TAINT with custom functions?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user_customise.html#basic-ideas">Basic ideas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_customise.html#more-advanced">More advanced</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 <div class="section" id="developer-documentation">
-<h1>Developer documentation<a class="headerlink" href="#developer-documentation" title="Permalink to this headline">¶</a></h1>
-<p>Developer documentation contains documentation and source code about what goes on behind the scenes. Reading through it can help you get a real in-depth understanding of the engine as well as get you up and running with the codebase if you want to contribute with its development! It is assumed that you already understand everything in the <cite>User documentation</cite> section.</p>
+<span id="id2"></span><h1>Developer documentation<a class="headerlink" href="#developer-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Developer documentation contains documentation and source code about what goes on behind the scenes. Reading through it can help you get a real in-depth understanding of the engine as well as get you up and running with the codebase if you want to contribute with its development! It is assumed that you already understand everything in the <a class="reference internal" href="#user-documentation"><em>User documentation</em></a> section.</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="dev_core.html">core</a><ul>
@@ -86,8 +102,11 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="dev_dataParser.html">dataParser</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dev_interpreter.html">interpreter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dev_editor.html">editor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev_interpreter.html">interpreter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dev_interpreter.html#python-interpreter">Python interpreter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dev_interpreter.html#web-interpreter">Web interpreter</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>

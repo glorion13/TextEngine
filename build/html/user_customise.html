@@ -53,7 +53,44 @@
           <div class="body">
             
   <div class="section" id="how-to-extend-taint-with-custom-functions">
-<h1>How to extend TAINT with custom functions?<a class="headerlink" href="#how-to-extend-taint-with-custom-functions" title="Permalink to this headline">¶</a></h1>
+<span id="scripted-components"></span><h1>How to extend TAINT with custom functions?<a class="headerlink" href="#how-to-extend-taint-with-custom-functions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="basic-ideas">
+<h2>Basic ideas<a class="headerlink" href="#basic-ideas" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to easily customise effects and conditions for your games by editing the <a class="reference internal" href="dev_core.html#module-core.components.customisable.effects" title="core.components.customisable.effects"><tt class="xref py py-mod docutils literal"><span class="pre">core.components.customisable.effects</span></tt></a> and <a class="reference internal" href="dev_core.html#module-core.components.customisable.conditions" title="core.components.customisable.conditions"><tt class="xref py py-mod docutils literal"><span class="pre">core.components.customisable.conditions</span></tt></a> modules. All you need is some basic Python understanding!</p>
+<p>Let&#8217;s go through some examples of creating custom effects. First of all, open <tt class="file docutils literal"><span class="pre">effects.py</span></tt> from the <a class="reference internal" href="dev_core.html#module-core.components.customisable.effects" title="core.components.customisable.effects"><tt class="xref py py-mod docutils literal"><span class="pre">core.components.customisable.effects</span></tt></a> module, in your favourite text editor. You should be able to see a list of Python functions as well as a dictionary called <cite>effectDict</cite>.</p>
+<p>The <cite>effectDict</cite> dictionary looks something like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">effectDict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">&#39;Tell player&#39;</span>           <span class="p">:</span> <span class="n">cmdOutputText</span><span class="p">,</span>
+        <span class="s">&#39;Go to scene&#39;</span>           <span class="p">:</span> <span class="n">goToScene</span><span class="p">,</span>
+        <span class="s">&#39;Add global resource&#39;</span>   <span class="p">:</span> <span class="n">addGlobalResource</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>What it specifies is an effect function name and its corresponding function. The name is used in the <cite>game model</cite> and therefore is displayed in the default editor.</p>
+<p>So, from the above <cite>effectDict</cite> example, we can see that three functions are defined. Indeed, if you look through the functions in <tt class="file docutils literal"><span class="pre">effects.py</span></tt> you should be able to find <tt class="xref py py-func docutils literal"><span class="pre">cmdOutputText()</span></tt>, <tt class="xref py py-func docutils literal"><span class="pre">goToScene()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">addGlobalResource()</span></tt>.</p>
+<p>That&#8217;s all there really is to creating your custom functions! You need to write the function as you normally would in Python:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">cmdOutputText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">narrative</span> <span class="o">+=</span> <span class="p">[</span><span class="n">text</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>and then you need to make sure that you have added a new entry for this function to the <cite>effectDict</cite>.</p>
+<div class="section" id="passing-parameters-to-a-function">
+<h3>Passing parameters to a function<a class="headerlink" href="#passing-parameters-to-a-function" title="Permalink to this headline">¶</a></h3>
+<p>For some effects, it might be necessary to pass specific parameters which are related to the game. In order to do this, parameters need to follow a specific naming convention:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Global resources need to be called <cite>gresource</cite>.</li>
+<li>Local resources need to be called <cite>lresource</cite>.</li>
+<li>Any form of textual information needs to be called <cite>text</cite>.</li>
+<li>If something can potentially be <cite>text</cite>, <cite>number</cite> or <cite>boolean</cite> then the parameter needs to be called <cite>primitive</cite>.</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="more-advanced">
+<h2>More advanced<a class="headerlink" href="#more-advanced" title="Permalink to this headline">¶</a></h2>
+<p>If you feel comfortable with these ideas, then the next step would be to have a look at the <a class="reference internal" href="index.html#developer-documentation"><em>Developer documentation</em></a> section. It should give you all the information you need to even build your own interpreter or editor - or even change the very core of the system entirely! It&#8217;s really up to you.</p>
+</div>
 </div>
 
 
@@ -62,6 +99,18 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">How to extend TAINT with custom functions?</a><ul>
+<li><a class="reference internal" href="#basic-ideas">Basic ideas</a><ul>
+<li><a class="reference internal" href="#passing-parameters-to-a-function">Passing parameters to a function</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#more-advanced">More advanced</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="user_gamePlayback.html"
                         title="previous chapter">How to play a TAINT game?</a></p>
