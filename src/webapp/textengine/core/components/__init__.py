@@ -7,15 +7,15 @@ class Game(customisable.effects.EffectFunctions, customisable.conditions.Conditi
 	global :class:`Action` instances of the game. It also keeps track of the starting scene and the
 	current scene.
 
-	:Attributes:
-		- `name`: A :class:`string` with the name of the game.
-		- `author`:  :class:`string` with the author(s) of the game.
-		- `startingScene`: A :class:`Scene` object which is the first scene that the game will load.
-		- `currentScene`: A :class:`Scene` object which is the scene the player is currently in.
-		- `scenes`: A :class:`list` of :class:`Scene` objects which holds all of the scenes of the game, along with their corresponding attributes.
-		- `globalResources`: A :class:`list` of :class:`Resource` for storing global resources, such as player HP.
-		- `globalActions`: A :class:`list` of :class:`Action` for storing global actions, such as actions which are	always available to the player (e.g. `'help'`) or actions such as checking if the player's HP falls under a certain	threshold.
-		- `narrative`: A :class:`list` of narrative elements (e.g. a :class:`string` equal to "You go south.").
+	:attributes:
+	- `name`: A :class:`string` with the name of the game.
+	- `author`:  :class:`string` with the author(s) of the game.
+	- `startingScene`: A :class:`Scene` object which is the first scene that the game will load.
+	- `currentScene`: A :class:`Scene` object which is the scene the player is currently in.
+	- `scenes`: A :class:`list` of :class:`Scene` objects which holds all of the scenes of the game, along with their corresponding attributes.
+	- `globalResources`: A :class:`list` of :class:`Resource` for storing global resources, such as player HP.
+	- `globalActions`: A :class:`list` of :class:`Action` for storing global actions, such as actions which are	always available to the player (e.g. `'help'`) or actions such as checking if the player's HP falls under a certain	threshold.
+	- `narrative`: A :class:`list` of narrative elements (e.g. a :class:`string` equal to "You go south.").
 
 	"""
 	def __init__(self):
@@ -32,7 +32,7 @@ class Game(customisable.effects.EffectFunctions, customisable.conditions.Conditi
 		"""
 		Initialise a :class:`Resource` object and add it to the game's Global Resources :class:`list` `globalResources`.
 
-		:Parameters:
+		:parameters:
 		- `name`: The name of the new resource.
 		- `value`: The value of the new resource.
 		"""
@@ -41,7 +41,7 @@ class Game(customisable.effects.EffectFunctions, customisable.conditions.Conditi
 		"""
 		Remove a :class:`Resource` object from the the game's Global Resources :class:`list` `globalResources`.
 
-		:Parameters:
+		:parameters:
 		- `resource`: The :class:`Resource` object to be removed.
 		"""
 		self.globalResources.remove(resource)
@@ -49,10 +49,10 @@ class Game(customisable.effects.EffectFunctions, customisable.conditions.Conditi
 		"""
 		Finds and returns a :class:`Scene` object given a :class:`string` with the name of the scene.
 
-		:Parameters:
+		:parameters:
 		- `name`: A :class:`string` containing the name of the scene.
 
-		:Raises:
+		:exceptions:
 		- "ERROR: Scene not found." if no :class:`Scene` which matches `name` is found.
 
 		:Returns:
@@ -69,10 +69,10 @@ class Game(customisable.effects.EffectFunctions, customisable.conditions.Conditi
 		Finds and returns a :class:`Resource` object given a :class:`string` with the name of the resource. It returns the
 		first resource which matches the name, starting by searching through the current scene and then through the global resources.
 
-		:Parameters:
+		:parameters:
 		- `name`: A :class:`string` containing the name of the resource.
 
-		:Raises:
+		:exceptions:
 		- "ERROR: Resource not found." if no :class:`Resource` which matches `name` is found.
 
 		:Returns:
@@ -92,9 +92,9 @@ class Resource:
 	in the fictional world, or values like the health state of the player. It is basically a tuple,
 	containing a `name` attribute and a `value` attribute.
 
-	:Attributes:
-		- `name`: A :class:`string` which holds the name of the :class:`Resource`, e.g. 'HP'.
-		- `value`: This attribute holds the actual value of the resource, which can be of any type.	For example, if the resource represents the player's HP, the `value` of the :class:`Resource` can be an :class:`int` of value 10.
+	:attributes:
+	- `name`: A :class:`string` which holds the name of the :class:`Resource`, e.g. 'HP'.
+	- `value`: This attribute holds the actual value of the resource, which can be of any type.	For example, if the resource represents the player's HP, the `value` of the :class:`Resource` can be an :class:`int` of value 10.
 	"""
 	def __init__(self, name, value):
 		"""
@@ -119,7 +119,7 @@ class Scene:
 	contains lists of global resources and global actions, a :class:`Scene` object contains lists of local resources
 	and local actions.
 
-	:Attributes:
+	:attributes:
 	- `name`: A :class:`string` containing the name of the scene (e.g. "Cave 1").
 	- `description`: A :class:`string` containing the description of the scene, which is used in the narrative of the game (e.g. "There are two doors in front of you".)
 	- `resources`: A :class:`list` of :class:`Resource` objects known as local resources of a scene.
@@ -133,6 +133,23 @@ class Scene:
 		self.description = description
 		self.resources = []
 		self.actions = []
+	def addResource(self, name, value):
+		"""
+		Initialise a :class:`Resource` object and add it to the scene's local Resources :class:`list` `resources`.
+
+		:parameters:
+		- `name`: The name of the new resource.
+		- `value`: The value of the new resource.
+		"""
+		self.resources.append(Resource(name, value))
+	def removeResource(self, resource):
+		"""
+		Remove a :class:`Resource` object from the the scene's local Resources :class:`list` `resources`.
+
+		:parameters:
+		- `resource`: The :class:`Resource` object to be removed.
+		"""
+		self.resources.remove(resource)
 
 class Action:
 	"""
@@ -142,7 +159,7 @@ class Action:
 	- `Enabled`: if an action is enabled it means that it can be viewed and triggered.
 	- `Active`: if an action is active it means that it needs to be triggered by the player, otherwise it is performed on every frame.
 
-	:Attributes:
+	:attributes:
 	- `name`: A :class:`string` containing the name of the action (e.g. "Go south").
 	- `conditions`: A :class:`list` containing the :class:`Condition` objects that need to be evaluated before the action is performed.
 	- `effectsIfTrue`: A :class:`list` containing the :class:`Effect` objects that will be resolved if all of the `conditions` return ``True``.
@@ -186,7 +203,7 @@ class Condition:
 	"""
 	The :class:`Condition` class is used in an :class:`Action` object to create conditional evaluation of actions.
 
-	:Attributes:
+	:attributes:
 	- `conditionFunction`: A function which is used as an operator to compare `args`.
 	- `args`: A :class:`list` containing the arguments for the conditional (usually a left-hand side and a right-hand side element).
 	- `rawArgs`: A :class:`list` containing the names of the arguments from `args`.
@@ -212,7 +229,7 @@ class Effect:
 	"""
 	The :class:`Effect` class is used in an :class:`Action` object to create the output of actions.
 
-	:Attributes:
+	:attributes:
 	- `effectFunction`: A function which performs the wanted behaviour of the effect.
 	- `args`: A :class:`list` containing the arguments which are passed to `effectFunction`.
 	- `rawArgs`: A :class:`list` containing the names of the arguments from `args`.
