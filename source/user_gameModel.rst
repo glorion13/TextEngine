@@ -62,9 +62,11 @@ This is a list of all the effects available by default:
 	- `Tell player`: displays text to the player by adding it to the game's `Narrative`.
 	- `Go to scene`: takes the player to a new scene.
 	- `Add global resource`: adds a global resource to the game.
+	- `Edit global resource`: changes the value of an already existing global resource.
+	- `Delete global resource`: deletes an already existing global resource.
 	- `Add local resource`: adds a local resource to a scene.
-	- `Edit resource`: changes the value of an already existing resource.
-	- `Delete resource`: deletes an already existing resource.
+	- `Edit local resource`: changes the value of an already existing local resource.
+	- `Delete local resource`: deletes an already existing local resource.
 	- `Display all actions`: displays all enabled actions to the player.
 	- `Display all visible actions`: displays only the actions which are set as `visible`.
 	- `Make action visible`: Sets an action as `visible`.

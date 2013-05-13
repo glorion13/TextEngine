@@ -133,6 +133,23 @@ class Scene:
 		self.description = description
 		self.resources = []
 		self.actions = []
+	def addResource(self, name, value):
+		"""
+		Initialise a :class:`Resource` object and add it to the game's Global Resources :class:`list` `globalResources`.
+
+		:Parameters:
+		- `name`: The name of the new resource.
+		- `value`: The value of the new resource.
+		"""
+		self.resources.append(Resource(name, value))
+	def removeResource(self, resource):
+		"""
+		Remove a :class:`Resource` object from the the game's Global Resources :class:`list` `globalResources`.
+
+		:Parameters:
+		- `resource`: The :class:`Resource` object to be removed.
+		"""
+		self.resources.remove(resource)
 
 class Action:
 	"""

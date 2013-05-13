@@ -47,21 +47,22 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <h1>Source code for core.components.customisable.conditions</h1><pre>
-import operator
+  <h1>Source code for core.components.customisable.conditions</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">operator</span>
 
-<div class="viewcode-block" id="ConditionFunctions"><a class="viewcode-back" href="../../../../dev_core.html#core.components.customisable.conditions.ConditionFunctions">[docs]</a>class ConditionFunctions:
-	"""
-	This class contains all the customisable functions or operators which are used to represent the conditions of an action e.g. whether a :class:`core.components.Resource` has a value of ``True``.
-	The `conditionDict` container is a dictionary containing key-value pairs of an operator/function (e.g. :func:`operator.eq`) and its name in a human-readable form, for use in an editor or elsewhere (e.g. 'equals').
-	"""
-	conditionDict = {
-		'equals'			: operator.eq,
-		'less than'			: operator.lt,
-		'greater than'		: operator.gt,
-		'less or equal'		: operator.le,
-		'greater or equal'	: operator.le
-	}</pre></div>
+<div class="viewcode-block" id="ConditionFunctions"><a class="viewcode-back" href="../../../../dev_core.html#core.components.customisable.conditions.ConditionFunctions">[docs]</a><span class="k">class</span> <span class="nc">ConditionFunctions</span><span class="p">:</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	This class contains all the customisable functions or operators which are used to represent the conditions of an action e.g. whether a :class:`core.components.Resource` has a value of ``True``.</span>
+<span class="sd">	The `conditionDict` container is a dictionary containing key-value pairs of an operator/function (e.g. :func:`operator.eq`) and its name in a human-readable form, for use in an editor or elsewhere (e.g. &#39;equals&#39;).</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="n">conditionDict</span> <span class="o">=</span> <span class="p">{</span>
+		<span class="s">&#39;equals&#39;</span>			<span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">eq</span><span class="p">,</span>
+		<span class="s">&#39;less than&#39;</span>			<span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">lt</span><span class="p">,</span>
+		<span class="s">&#39;greater than&#39;</span>		<span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">gt</span><span class="p">,</span>
+		<span class="s">&#39;less or equal&#39;</span>		<span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">le</span><span class="p">,</span>
+		<span class="s">&#39;greater or equal&#39;</span>	<span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">le</span>
+	<span class="p">}</span></div>
+</pre></div>
 
           </div>
         </div>

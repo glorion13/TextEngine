@@ -5,8 +5,13 @@ Engine for interactive novels and text adventure games, in Python.
 
 The main motivation of the TAINT project is to allow non-technical people to bring their own stories to life, which they can then share with their friends and family or even release on a greater scale.
 
-Motivation:
-----------
+Documentation
+--------------
+
+To read through the documentation (both user and developer) open /build/html/index.html and read through.
+
+Motivation
+-----------
 
 Text adventures and interactive novels are another way to serve written fiction. It is similar to reading a book, however instead of having a completely passive experience, the reader can make choices that affect the course of the story. In this report, the term 'text adventure' is used for such interactive fiction where the reader interfaces with the system through commands, which are hidden to him. On the other hand, the term 'interactive novel' is used for interactive fiction where all the possible actions the player can take are always visible, like a multiple-choice list.
 

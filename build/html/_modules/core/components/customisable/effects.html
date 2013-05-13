@@ -47,51 +47,52 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <h1>Source code for core.components.customisable.effects</h1><pre>
-<div class="viewcode-block" id="EffectFunctions"><a class="viewcode-back" href="../../../../dev_core.html#core.components.customisable.effects.EffectFunctions">[docs]</a>class EffectFunctions:
-    """
-    This class contains all the customisable functions which are used to represent the output of an action e.g. go to another scene or give information to the player.
-    The `effectDict` container is a dictionary containing key-value pairs of a function (e.g. :func:`goToScene`) and its name in a human-readable form, for use in an editor or elsewhere (e.g. 'Go to scene')
-    """
-    def cmdOutputText(self, text):
-        self.narrative += [text]
-    def goToScene(self, scene):
-    	self.currentScene = scene
-    	self.cmdOutputText(scene.description)
-    def outputVisibleSceneActions(self, scene):
-    	possibleActions = [ action.name for action in scene.actions if action.visible ]
-    	if not possibleActions == []:
-    		self.cmdOutputText(str(possibleActions))
-    def addGlobalResource(self, text, primitive):
-        self.addResource(text, primitive)
-    def editGlobalResource(self, gresource, primitive):
-        gresource.value = primitive
-    def deleteGlobalResource(self, gresource):
-        self.removeResource(gresource)
-    def enableAction(self):
-        return 0
-    def disableAction(self):
-        return 0
-    def makeActionVisible(self):
-        return 0
-    def makeActionInvisible(self):
-        return 0
-    def outputAllActions(self):
-        return 0
+  <h1>Source code for core.components.customisable.effects</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="EffectFunctions"><a class="viewcode-back" href="../../../../dev_core.html#core.components.customisable.effects.EffectFunctions">[docs]</a><span class="k">class</span> <span class="nc">EffectFunctions</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class contains all the customisable functions which are used to represent the output of an action e.g. go to another scene or give information to the player.</span>
+<span class="sd">    The `effectDict` container is a dictionary containing key-value pairs of a function (e.g. :func:`goToScene`) and its name in a human-readable form, for use in an editor or elsewhere (e.g. &#39;Go to scene&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">cmdOutputText</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">narrative</span> <span class="o">+=</span> <span class="p">[</span><span class="n">text</span><span class="p">]</span>
+    <span class="k">def</span> <span class="nf">goToScene</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scene</span><span class="p">):</span>
+    	<span class="bp">self</span><span class="o">.</span><span class="n">currentScene</span> <span class="o">=</span> <span class="n">scene</span>
+    	<span class="bp">self</span><span class="o">.</span><span class="n">cmdOutputText</span><span class="p">(</span><span class="n">scene</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">outputVisibleSceneActions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scene</span><span class="p">):</span>
+    	<span class="n">possibleActions</span> <span class="o">=</span> <span class="p">[</span> <span class="n">action</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">scene</span><span class="o">.</span><span class="n">actions</span> <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">visible</span> <span class="p">]</span>
+    	<span class="k">if</span> <span class="ow">not</span> <span class="n">possibleActions</span> <span class="o">==</span> <span class="p">[]:</span>
+    		<span class="bp">self</span><span class="o">.</span><span class="n">cmdOutputText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">possibleActions</span><span class="p">))</span>
+    <span class="k">def</span> <span class="nf">addGlobalResource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">primitive</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addResource</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">primitive</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">editGlobalResource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gresource</span><span class="p">,</span> <span class="n">primitive</span><span class="p">):</span>
+        <span class="n">gresource</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">primitive</span>
+    <span class="k">def</span> <span class="nf">deleteGlobalResource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gresource</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">removeResource</span><span class="p">(</span><span class="n">gresource</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">enableAction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">def</span> <span class="nf">disableAction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">def</span> <span class="nf">makeActionVisible</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">def</span> <span class="nf">makeActionInvisible</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">def</span> <span class="nf">outputAllActions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">0</span>
 
-    effectDict = {
-        'Tell player'                   : cmdOutputText,
-        'Add global resource'           : addGlobalResource,
-        'Edit global resource'          : editGlobalResource,
-        'Delete global resource'        : deleteGlobalResource,
-        'Enable action'                 : enableAction,
-        'Disable action'                : disableAction,
-        'Make action visible'           : makeActionVisible,
-        'Make action invisible'         : makeActionInvisible,
-        'Go to scene'                   : goToScene,
-        'Display all visible actions'   : outputVisibleSceneActions,
-        'Display all actions'           : outputAllActions
-    }</pre></div>
+    <span class="n">effectDict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">&#39;Tell player&#39;</span>                   <span class="p">:</span> <span class="n">cmdOutputText</span><span class="p">,</span>
+        <span class="s">&#39;Add global resource&#39;</span>           <span class="p">:</span> <span class="n">addGlobalResource</span><span class="p">,</span>
+        <span class="s">&#39;Edit global resource&#39;</span>          <span class="p">:</span> <span class="n">editGlobalResource</span><span class="p">,</span>
+        <span class="s">&#39;Delete global resource&#39;</span>        <span class="p">:</span> <span class="n">deleteGlobalResource</span><span class="p">,</span>
+        <span class="s">&#39;Enable action&#39;</span>                 <span class="p">:</span> <span class="n">enableAction</span><span class="p">,</span>
+        <span class="s">&#39;Disable action&#39;</span>                <span class="p">:</span> <span class="n">disableAction</span><span class="p">,</span>
+        <span class="s">&#39;Make action visible&#39;</span>           <span class="p">:</span> <span class="n">makeActionVisible</span><span class="p">,</span>
+        <span class="s">&#39;Make action invisible&#39;</span>         <span class="p">:</span> <span class="n">makeActionInvisible</span><span class="p">,</span>
+        <span class="s">&#39;Go to scene&#39;</span>                   <span class="p">:</span> <span class="n">goToScene</span><span class="p">,</span>
+        <span class="s">&#39;Display all visible actions&#39;</span>   <span class="p">:</span> <span class="n">outputVisibleSceneActions</span><span class="p">,</span>
+        <span class="s">&#39;Display all actions&#39;</span>           <span class="p">:</span> <span class="n">outputAllActions</span>
+    <span class="p">}</span></div>
+</pre></div>
 
           </div>
         </div>

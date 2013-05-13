@@ -46,193 +46,198 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <h1>Source code for dataParser</h1><pre>
-from xml.etree import ElementTree
+  <h1>Source code for dataParser</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">xml.etree</span> <span class="kn">import</span> <span class="n">ElementTree</span>
 
-import core
+<span class="kn">import</span> <span class="nn">core</span>
 
-<div class="viewcode-block" id="GameParser"><a class="viewcode-back" href="../dev_dataParser.html#dataParser.GameParser">[docs]</a>class GameParser:
-	"""
-	This class can import games from XML files using the :func:`loadXMLGameData` function.
+<div class="viewcode-block" id="GameParser"><a class="viewcode-back" href="../dev_dataParser.html#dataParser.GameParser">[docs]</a><span class="k">class</span> <span class="nc">GameParser</span><span class="p">:</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	This class can import games from XML files using the :func:`loadXMLGameData` function.</span>
 
-	:Attributes:
-		- `game`: holds all the game data after :func:`loadXMLGameData` is called and
-		- `typeConverter`: a dictionary which contains key-value pairs between the different types of the game model (e.g. "Number") and a lambda expression to reconstruct it correctly for the game logic (e.g. ``lambda(n): float(n)``). The reason for using lambda expressions is in order to allow for the evaluation of these objects (e.g. if it is a :class:`core.components.Resource`) to be carried out during run-time instead of during initialisation. This means that everything is evaluated as it should, including objects which are created or edited on the fly during gameplay.
-	"""
-	def __init__(self):
-		"""
-		The initialisation function which sets up the typeConverter.
-		"""
-		self.game = None
-		self.typeConverter = {
-		"Boolean" 	: lambda(n): n,
-		"Number" 	: lambda(n): float(n),
-		"Text" 		: lambda(n): str(n),
-		"Resource" 	: lambda(n): self.game.getResourceByName(str(n)),
-		"Scene" 	: lambda(n): self.game.getSceneByName(str(n))
-		}
+<span class="sd">	:Attributes:</span>
+<span class="sd">		- `game`: holds all the game data after :func:`loadXMLGameData` is called and</span>
+<span class="sd">		- `typeConverter`: a dictionary which contains key-value pairs between the different types of the game model (e.g. &quot;Number&quot;) and a lambda expression to reconstruct it correctly for the game logic (e.g. ``lambda(n): float(n)``). The reason for using lambda expressions is in order to allow for the evaluation of these objects (e.g. if it is a :class:`core.components.Resource`) to be carried out during run-time instead of during initialisation. This means that everything is evaluated as it should, including objects which are created or edited on the fly during gameplay.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		The initialisation function which sets up the typeConverter.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">game</span> <span class="o">=</span> <span class="bp">None</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">typeConverter</span> <span class="o">=</span> <span class="p">{</span>
+		<span class="s">&quot;Boolean&quot;</span> 	<span class="p">:</span> <span class="k">lambda</span><span class="p">(</span><span class="n">n</span><span class="p">):</span> <span class="n">n</span><span class="p">,</span>
+		<span class="s">&quot;Number&quot;</span> 	<span class="p">:</span> <span class="k">lambda</span><span class="p">(</span><span class="n">n</span><span class="p">):</span> <span class="nb">float</span><span class="p">(</span><span class="n">n</span><span class="p">),</span>
+		<span class="s">&quot;Text&quot;</span> 		<span class="p">:</span> <span class="k">lambda</span><span class="p">(</span><span class="n">n</span><span class="p">):</span> <span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">),</span>
+		<span class="s">&quot;Resource&quot;</span> 	<span class="p">:</span> <span class="k">lambda</span><span class="p">(</span><span class="n">n</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">game</span><span class="o">.</span><span class="n">getResourceByName</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)),</span>
+		<span class="s">&quot;Scene&quot;</span> 	<span class="p">:</span> <span class="k">lambda</span><span class="p">(</span><span class="n">n</span><span class="p">):</span> <span class="bp">self</span><span class="o">.</span><span class="n">game</span><span class="o">.</span><span class="n">getSceneByName</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+		<span class="p">}</span>
 
-<div class="viewcode-block" id="GameParser.stringToBoolean"><a class="viewcode-back" href="../dev_dataParser.html#dataParser.GameParser.stringToBoolean">[docs]</a>	def stringToBoolean(self, s):
-		"""
-		Auxiliary function which converts a string ``s`` to a boolean for the purposes of this engine.
-		
-		:Returns:
-		- ``True`` if string ``s`` equals "True".
-		- ``False`` otherwise.
-		"""
-		return s == "True"
+<div class="viewcode-block" id="GameParser.stringToBoolean"><a class="viewcode-back" href="../dev_dataParser.html#dataParser.GameParser.stringToBoolean">[docs]</a>	<span class="k">def</span> <span class="nf">stringToBoolean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Auxiliary function which converts a string ``s`` to a boolean for the purposes of this engine.</span>
+<span class="sd">		</span>
+<span class="sd">		:Returns:</span>
+<span class="sd">		- ``True`` if string ``s`` equals &quot;True&quot;.</span>
+<span class="sd">		- ``False`` otherwise.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="n">s</span> <span class="o">==</span> <span class="s">&quot;True&quot;</span>
 </div>
-<div class="viewcode-block" id="GameParser.loadXMLGameData"><a class="viewcode-back" href="../dev_dataParser.html#dataParser.GameParser.loadXMLGameData">[docs]</a>	def loadXMLGameData(self, gameDataFile):
-		"""
-		The main function of this class, which loads an XML game data file into memory.
-		It uses the :class:`ElementTree` class from :mod:`xml.etree` to navigate through the XML tree and
-		gather all the information.
+<div class="viewcode-block" id="GameParser.loadXMLGameData"><a class="viewcode-back" href="../dev_dataParser.html#dataParser.GameParser.loadXMLGameData">[docs]</a>	<span class="k">def</span> <span class="nf">loadXMLGameData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gameDataFile</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		The main function of this class, which loads an XML game data file into memory.</span>
+<span class="sd">		It uses the :class:`ElementTree` class from :mod:`xml.etree` to navigate through the XML tree and</span>
+<span class="sd">		gather all the information.</span>
 
-		:Parameters:
-		- `gameDataFile`: a string to the XML file e.g. "game1.xml".
+<span class="sd">		:Parameters:</span>
+<span class="sd">		- `gameDataFile`: a string to the XML file e.g. &quot;game1.xml&quot;.</span>
 
-		:Raises:
-		- "Error loading game file." is the file is not found or if the file contains bad XML.
+<span class="sd">		:Raises:</span>
+<span class="sd">		- &quot;Error loading game file.&quot; is the file is not found or if the file contains bad XML.</span>
 
-		:Returns:
-		- A populated :class:`core.components.Game` object.
-		"""
-		# Load data
-		try:
-			xmlTree = ElementTree.parse(gameDataFile)
-			root = xmlTree.getroot()
-		except:
-			print("Error loading game file.")
-			raise
-		# Main game data
-		self.game = core.components.Game()
-		gameName = root.find("GameName").text
-		gameAuthor = root.find("Author").text
-		startingScene = root.find("StartingScene").text
-		self.game.name = gameName
-		self.game.author = gameAuthor
-		# Global resources
-		globalResourcesNode = root.find("GlobalResources")
-		self.game.globalResources = [self.createResourceObject(resource) for resource in globalResourcesNode]
-		# Global actions
-		globalActionsNode = root.find("GlobalActions")
-		self.game.globalActions = [self.createActionObject(action, self.game) for action in globalActionsNode]
-		# Scenes
-		scenesNode = root.find("Scenes")
-		for scene in scenesNode:
-			sceneObject = core.components.Scene()
-			sceneObject.name = scene.find("Name").text
-			sceneObject.description = scene.find("Description").text
-			# Scene resources (local)
-			resourcesNode = scene.find("Resources")
-			sceneObject.resources = [self.createResourceObject(resource) for resource in resourcesNode]
-			# Scene actions (local)
-			actionsNode = scene.find("Actions")
-			sceneObject.actions = [self.createActionObject(action, self.game) for action in actionsNode]
-			self.game.scenes.append(sceneObject)
-		self.game.startingScene = self.game.getSceneByName(str(startingScene))
-		return self.game
+<span class="sd">		:Returns:</span>
+<span class="sd">		- A populated :class:`core.components.Game` object.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="c"># Load data</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">xmlTree</span> <span class="o">=</span> <span class="n">ElementTree</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">gameDataFile</span><span class="p">)</span>
+			<span class="n">root</span> <span class="o">=</span> <span class="n">xmlTree</span><span class="o">.</span><span class="n">getroot</span><span class="p">()</span>
+		<span class="k">except</span><span class="p">:</span>
+			<span class="k">print</span><span class="p">(</span><span class="s">&quot;Error loading game file.&quot;</span><span class="p">)</span>
+			<span class="k">raise</span>
+		<span class="c"># Main game data</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">game</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">Game</span><span class="p">()</span>
+		<span class="n">gameName</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;GameName&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+		<span class="k">if</span> <span class="p">(</span><span class="n">gameName</span> <span class="o">==</span> <span class="bp">None</span><span class="p">):</span>
+			<span class="n">gameName</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+		<span class="n">gameAuthor</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;Author&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+		<span class="k">if</span> <span class="p">(</span><span class="n">gameAuthor</span> <span class="o">==</span> <span class="bp">None</span><span class="p">):</span>
+			<span class="n">gameAuthor</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+		<span class="n">startingScene</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;StartingScene&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">game</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">gameName</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">game</span><span class="o">.</span><span class="n">author</span> <span class="o">=</span> <span class="n">gameAuthor</span>
+		<span class="c"># Global resources</span>
+		<span class="n">globalResourcesNode</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;GlobalResources&quot;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">game</span><span class="o">.</span><span class="n">globalResources</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">createResourceObject</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span> <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">globalResourcesNode</span><span class="p">]</span>
+		<span class="c"># Global actions</span>
+		<span class="n">globalActionsNode</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;GlobalActions&quot;</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">game</span><span class="o">.</span><span class="n">globalActions</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">createActionObject</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">game</span><span class="p">)</span> <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">globalActionsNode</span><span class="p">]</span>
+		<span class="c"># Scenes</span>
+		<span class="n">scenesNode</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;Scenes&quot;</span><span class="p">)</span>
+		<span class="k">for</span> <span class="n">scene</span> <span class="ow">in</span> <span class="n">scenesNode</span><span class="p">:</span>
+			<span class="n">sceneObject</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">Scene</span><span class="p">()</span>
+			<span class="n">sceneObject</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;Name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+			<span class="n">sceneObject</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;Description&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+			<span class="c"># Scene resources (local)</span>
+			<span class="n">resourcesNode</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;Resources&quot;</span><span class="p">)</span>
+			<span class="n">sceneObject</span><span class="o">.</span><span class="n">resources</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">createResourceObject</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span> <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">resourcesNode</span><span class="p">]</span>
+			<span class="c"># Scene actions (local)</span>
+			<span class="n">actionsNode</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;Actions&quot;</span><span class="p">)</span>
+			<span class="n">sceneObject</span><span class="o">.</span><span class="n">actions</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">createActionObject</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">game</span><span class="p">)</span> <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">actionsNode</span><span class="p">]</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">game</span><span class="o">.</span><span class="n">scenes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sceneObject</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">game</span><span class="o">.</span><span class="n">startingScene</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">game</span><span class="o">.</span><span class="n">getSceneByName</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">startingScene</span><span class="p">))</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">game</span>
 
-	# Auxiliary parsing functions
+	<span class="c"># Auxiliary parsing functions</span>
 </div>
-<div class="viewcode-block" id="GameParser.createActionObject"><a class="viewcode-back" href="../dev_dataParser.html#dataParser.GameParser.createActionObject">[docs]</a>	def createActionObject(self, action, game):
-		"""
-		Auxiliary function used by :func:`loadXMLGameData` which creates a :class:`core.components.Action` object.
+<div class="viewcode-block" id="GameParser.createActionObject"><a class="viewcode-back" href="../dev_dataParser.html#dataParser.GameParser.createActionObject">[docs]</a>	<span class="k">def</span> <span class="nf">createActionObject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">game</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Auxiliary function used by :func:`loadXMLGameData` which creates a :class:`core.components.Action` object.</span>
 
-		:Parameters:
-		- `action`: an &lt;action&gt; XML node from the game data file.
-		- `game`: the `game` attribute of :class:`GameParser`.
+<span class="sd">		:Parameters:</span>
+<span class="sd">		- `action`: an &lt;action&gt; XML node from the game data file.</span>
+<span class="sd">		- `game`: the `game` attribute of :class:`GameParser`.</span>
 
-		:Returns:
-		- A populated :class:`core.components.Action`.
-		"""
-		actionObject = core.components.Action(action.find("Name").text, self.stringToBoolean(action.find("Visible").text), self.stringToBoolean(action.find("Enabled").text), self.stringToBoolean(action.find("Active").text))
-		# Conditions
-		conditionsNode = action.find("Conditions")
-		actionObject.conditions = [self.createConditionObject(condition, game) for condition in conditionsNode]
-		# Effects if True
-		effectsTrueNode = action.find("EffectsIfTrue")
-		actionObject.effectsIfTrue = [self.createEffectObject(effect, game) for effect in effectsTrueNode]
-		# Effects if False
-		effectsFalseNode = action.find("EffectsIfFalse")
-		actionObject.effectsIfFalse = [self.createEffectObject(effect, game) for effect in effectsFalseNode]
-		return actionObject
+<span class="sd">		:Returns:</span>
+<span class="sd">		- A populated :class:`core.components.Action`.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">actionObject</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">Action</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;Name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stringToBoolean</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;Visible&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">stringToBoolean</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;Enabled&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">stringToBoolean</span><span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;Active&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+		<span class="c"># Conditions</span>
+		<span class="n">conditionsNode</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;Conditions&quot;</span><span class="p">)</span>
+		<span class="n">actionObject</span><span class="o">.</span><span class="n">conditions</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">createConditionObject</span><span class="p">(</span><span class="n">condition</span><span class="p">,</span> <span class="n">game</span><span class="p">)</span> <span class="k">for</span> <span class="n">condition</span> <span class="ow">in</span> <span class="n">conditionsNode</span><span class="p">]</span>
+		<span class="c"># Effects if True</span>
+		<span class="n">effectsTrueNode</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;EffectsIfTrue&quot;</span><span class="p">)</span>
+		<span class="n">actionObject</span><span class="o">.</span><span class="n">effectsIfTrue</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">createEffectObject</span><span class="p">(</span><span class="n">effect</span><span class="p">,</span> <span class="n">game</span><span class="p">)</span> <span class="k">for</span> <span class="n">effect</span> <span class="ow">in</span> <span class="n">effectsTrueNode</span><span class="p">]</span>
+		<span class="c"># Effects if False</span>
+		<span class="n">effectsFalseNode</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;EffectsIfFalse&quot;</span><span class="p">)</span>
+		<span class="n">actionObject</span><span class="o">.</span><span class="n">effectsIfFalse</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">createEffectObject</span><span class="p">(</span><span class="n">effect</span><span class="p">,</span> <span class="n">game</span><span class="p">)</span> <span class="k">for</span> <span class="n">effect</span> <span class="ow">in</span> <span class="n">effectsFalseNode</span><span class="p">]</span>
+		<span class="k">return</span> <span class="n">actionObject</span>
 </div>
-<div class="viewcode-block" id="GameParser.createEffectObject"><a class="viewcode-back" href="../dev_dataParser.html#dataParser.GameParser.createEffectObject">[docs]</a>	def createEffectObject(self, effect, game):
-		"""
-		Auxiliary function used by :func:`createActionObject` which creates a :class:`core.components.Effect` object.
+<div class="viewcode-block" id="GameParser.createEffectObject"><a class="viewcode-back" href="../dev_dataParser.html#dataParser.GameParser.createEffectObject">[docs]</a>	<span class="k">def</span> <span class="nf">createEffectObject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">effect</span><span class="p">,</span> <span class="n">game</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Auxiliary function used by :func:`createActionObject` which creates a :class:`core.components.Effect` object.</span>
 
-		:Parameters:
-		- `effect`: an &lt;effect&gt; XML node from the game data file.
-		- `game`: the `game` attribute of :class:`GameParser`.
+<span class="sd">		:Parameters:</span>
+<span class="sd">		- `effect`: an &lt;effect&gt; XML node from the game data file.</span>
+<span class="sd">		- `game`: the `game` attribute of :class:`GameParser`.</span>
 
-		:Returns:
-		- A populated :class:`core.components.Effect`.
-		"""
-		argsNode = effect.find("args")
-		effectObject = core.components.Effect()
-		effectObject.args = [self.typeConverter[arg.attrib.get('Type')] for arg in argsNode]
-		effectObject.rawArgs = [arg.text for arg in argsNode]
-		effectObject.parent = game
-		if effect.find("EffectFunction").text == None:
-			effectObject.effectFunction = ""
-		else:
-			effectObject.effectFunction = game.effectDict[effect.find("EffectFunction").text]
-		return effectObject
+<span class="sd">		:Returns:</span>
+<span class="sd">		- A populated :class:`core.components.Effect`.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">argsNode</span> <span class="o">=</span> <span class="n">effect</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;args&quot;</span><span class="p">)</span>
+		<span class="n">effectObject</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">Effect</span><span class="p">()</span>
+		<span class="n">effectObject</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">typeConverter</span><span class="p">[</span><span class="n">arg</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;Type&#39;</span><span class="p">)]</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">argsNode</span><span class="p">]</span>
+		<span class="n">effectObject</span><span class="o">.</span><span class="n">rawArgs</span> <span class="o">=</span> <span class="p">[</span><span class="n">arg</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">argsNode</span><span class="p">]</span>
+		<span class="n">effectObject</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">game</span>
+		<span class="k">if</span> <span class="n">effect</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;EffectFunction&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+			<span class="n">effectObject</span><span class="o">.</span><span class="n">effectFunction</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">effectObject</span><span class="o">.</span><span class="n">effectFunction</span> <span class="o">=</span> <span class="n">game</span><span class="o">.</span><span class="n">effectDict</span><span class="p">[</span><span class="n">effect</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;EffectFunction&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">]</span>
+		<span class="k">return</span> <span class="n">effectObject</span>
 </div>
-<div class="viewcode-block" id="GameParser.createConditionObject"><a class="viewcode-back" href="../dev_dataParser.html#dataParser.GameParser.createConditionObject">[docs]</a>	def createConditionObject(self, condition, game):
-		"""
-		Auxiliary function used by :func:`createActionObject` which creates a :class:`core.components.Condition` object.
+<div class="viewcode-block" id="GameParser.createConditionObject"><a class="viewcode-back" href="../dev_dataParser.html#dataParser.GameParser.createConditionObject">[docs]</a>	<span class="k">def</span> <span class="nf">createConditionObject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">condition</span><span class="p">,</span> <span class="n">game</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Auxiliary function used by :func:`createActionObject` which creates a :class:`core.components.Condition` object.</span>
 
-		:Parameters:
-		- `condition`: a &lt;condition&gt; XML node from the game data file.
-		- `game`: the `game` attribute of :class:`GameParser`.
+<span class="sd">		:Parameters:</span>
+<span class="sd">		- `condition`: a &lt;condition&gt; XML node from the game data file.</span>
+<span class="sd">		- `game`: the `game` attribute of :class:`GameParser`.</span>
 
-		:Returns:
-		- A populated :class:`core.components.Condition`.
-		"""
-		# Left hand side element
-		leftHandSideNode = condition.find("LeftHandSide")
-		if leftHandSideNode.attrib.get('Type') == None or leftHandSideNode.attrib.get('Type') == '':
-			leftHandSide = ""
-		else:
-			leftHandSide = self.typeConverter[leftHandSideNode.attrib.get('Type')]
-		# Right hand side element
-		rightHandSideNode = condition.find("RightHandSide")
-		if rightHandSideNode.attrib.get('Type') == None  or rightHandSideNode.attrib.get('Type') == '':
-			rightHandSide = ""
-		else:
-			rightHandSide = self.typeConverter[rightHandSideNode.attrib.get('Type')]
-		# Create condition object
-		conditionObject = core.components.Condition()
-		conditionObject.args = [leftHandSide, rightHandSide]
-		conditionObject.rawArgs = [leftHandSideNode.text, rightHandSideNode.text]
-		if condition.find("ConditionFunction").text == None:
-			conditionObject.conditionFunction = ""
-		else:
-			conditionObject.conditionFunction = game.conditionDict[condition.find("ConditionFunction").text]
-		return conditionObject
+<span class="sd">		:Returns:</span>
+<span class="sd">		- A populated :class:`core.components.Condition`.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="c"># Left hand side element</span>
+		<span class="n">leftHandSideNode</span> <span class="o">=</span> <span class="n">condition</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;LeftHandSide&quot;</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">leftHandSideNode</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;Type&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">leftHandSideNode</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;Type&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s">&#39;&#39;</span><span class="p">:</span>
+			<span class="n">leftHandSide</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">leftHandSide</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">typeConverter</span><span class="p">[</span><span class="n">leftHandSideNode</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;Type&#39;</span><span class="p">)]</span>
+		<span class="c"># Right hand side element</span>
+		<span class="n">rightHandSideNode</span> <span class="o">=</span> <span class="n">condition</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;RightHandSide&quot;</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">rightHandSideNode</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;Type&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="bp">None</span>  <span class="ow">or</span> <span class="n">rightHandSideNode</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;Type&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s">&#39;&#39;</span><span class="p">:</span>
+			<span class="n">rightHandSide</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">rightHandSide</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">typeConverter</span><span class="p">[</span><span class="n">rightHandSideNode</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;Type&#39;</span><span class="p">)]</span>
+		<span class="c"># Create condition object</span>
+		<span class="n">conditionObject</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">Condition</span><span class="p">()</span>
+		<span class="n">conditionObject</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">leftHandSide</span><span class="p">,</span> <span class="n">rightHandSide</span><span class="p">]</span>
+		<span class="n">conditionObject</span><span class="o">.</span><span class="n">rawArgs</span> <span class="o">=</span> <span class="p">[</span><span class="n">leftHandSideNode</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">rightHandSideNode</span><span class="o">.</span><span class="n">text</span><span class="p">]</span>
+		<span class="k">if</span> <span class="n">condition</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;ConditionFunction&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+			<span class="n">conditionObject</span><span class="o">.</span><span class="n">conditionFunction</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">conditionObject</span><span class="o">.</span><span class="n">conditionFunction</span> <span class="o">=</span> <span class="n">game</span><span class="o">.</span><span class="n">conditionDict</span><span class="p">[</span><span class="n">condition</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;ConditionFunction&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">]</span>
+		<span class="k">return</span> <span class="n">conditionObject</span>
 </div>
-<div class="viewcode-block" id="GameParser.createResourceObject"><a class="viewcode-back" href="../dev_dataParser.html#dataParser.GameParser.createResourceObject">[docs]</a>	def createResourceObject(self, resource):
-		"""
-		Auxiliary function used by :func:`loadXMLGameData` which creates a :class:`core.components.Resource` object.
+<div class="viewcode-block" id="GameParser.createResourceObject"><a class="viewcode-back" href="../dev_dataParser.html#dataParser.GameParser.createResourceObject">[docs]</a>	<span class="k">def</span> <span class="nf">createResourceObject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">resource</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Auxiliary function used by :func:`loadXMLGameData` which creates a :class:`core.components.Resource` object.</span>
 
-		:Parameters:
-		- `resource`: a &lt;resource&gt; XML node from the game data file.
+<span class="sd">		:Parameters:</span>
+<span class="sd">		- `resource`: a &lt;resource&gt; XML node from the game data file.</span>
 
-		:Returns:
-		- A populated :class:`core.components.Resource`.
-		"""
-		resourceType = resource.find("Type").text
-		resourceValue = ""
-		if resourceType == "Boolean":
-			resourceValue = bool(resource.find("Value").text)
-		elif resourceType == "Number":
-			resourceValue = float(resource.find("Value").text)
-		elif resourceType == "Text":
-			resourceValue = str(resource.find("Value").text)
-		resourceObject = core.components.Resource(resource.find("Name").text, resourceValue)
-		return resourceObject</pre></div></div>
+<span class="sd">		:Returns:</span>
+<span class="sd">		- A populated :class:`core.components.Resource`.</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">resourceType</span> <span class="o">=</span> <span class="n">resource</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;Type&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+		<span class="n">resourceValue</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+		<span class="k">if</span> <span class="n">resourceType</span> <span class="o">==</span> <span class="s">&quot;Boolean&quot;</span><span class="p">:</span>
+			<span class="n">resourceValue</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;Value&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="n">resourceType</span> <span class="o">==</span> <span class="s">&quot;Number&quot;</span><span class="p">:</span>
+			<span class="n">resourceValue</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;Value&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+		<span class="k">elif</span> <span class="n">resourceType</span> <span class="o">==</span> <span class="s">&quot;Text&quot;</span><span class="p">:</span>
+			<span class="n">resourceValue</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;Value&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+		<span class="n">resourceObject</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="n">Resource</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;Name&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">resourceValue</span><span class="p">)</span>
+		<span class="k">return</span> <span class="n">resourceObject</span></div></div>
+</pre></div>
 
           </div>
         </div>

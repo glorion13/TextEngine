@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Game>
+	<GameName>haha</GameName>
+	<Author>jack</Author>
+	<StartingScene>New Scene</StartingScene>
+	<GlobalResources/>
+	<GlobalActions>
+		<Action>
+			<Name>New Action</Name>
+			<Visible>True</Visible>
+			<Enabled>True</Enabled>
+			<Active>False</Active>
+			<Conditions/>
+			<EffectsIfTrue/>
+			<EffectsIfFalse>
+				<Effect>
+					<EffectFunction>Tell player</EffectFunction>
+					<args>
+						<arg Type="Text">passive action evaluated</arg>
+					</args>
+				</Effect>
+			</EffectsIfFalse>
+		</Action>
+	</GlobalActions>
+	<Scenes>
+		<Scene>
+			<Name>New Scene</Name>
+			<Description>This is a new scene.</Description>
+			<Resources/>
+			<Actions/>
+		</Scene>
+	</Scenes>
+</Game>

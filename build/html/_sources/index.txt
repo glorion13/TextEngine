@@ -36,9 +36,9 @@ User documentation explains the main ideas behind TAINT and going through it sho
 	:maxdepth: 2
 
 	user_gameModel.rst
-	user_gameData.rst
 	user_gameCreation.rst
 	user_gamePlayback.rst
+	user_gameData.rst
 	user_customise.rst
 
 .. _developer_documentation:

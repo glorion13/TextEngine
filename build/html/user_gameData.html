@@ -53,13 +53,107 @@
           <div class="body">
             
   <div class="section" id="how-is-a-game-stored">
-<h1>How is a game stored?<a class="headerlink" href="#how-is-a-game-stored" title="Permalink to this headline">¶</a></h1>
+<span id="game-xml"></span><h1>How is a game stored?<a class="headerlink" href="#how-is-a-game-stored" title="Permalink to this headline">¶</a></h1>
 <p>Games using the TAINT model can be created in whatever way you prefer, as long as they adhere to the game model and are stored as an XML file.</p>
 <p>This means that one could potentially build games writing pure XML, although it&#8217;s probably much simpler to do it using some program with a user interface.</p>
 <p>The XML structure is only necessary if you wish to do more advanced stuff rather than just using the given <cite>editor</cite> and <cite>interpreter</cite>.</p>
 <p>Generally speaking, the overall idea is broken down into 3 modules: the <cite>model</cite>, the <cite>editor</cite> and the <cite>interpreter</cite>. While we provide an <cite>editor</cite> (a program that allows you to graphically create games) and two <cite>interpreters</cite> (a program that allows you to play the games), anyone is welcome to build or use their own. The only important thing is that they adhere to the <cite>model</cite> specifications as explained in the <a class="reference internal" href="user_gameModel.html#game-model"><em>What is a TAINT game?</em></a> section.</p>
+<div class="section" id="xml-tags">
+<h2>XML tags<a class="headerlink" href="#xml-tags" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="game">
+<h3>&lt;Game&gt;<a class="headerlink" href="#game" title="Permalink to this headline">¶</a></h3>
+<p>The main tag which contains all the others is the &lt;Game&gt; tag. It contains the &lt;GameName&gt; the &lt;Author&gt; tags which contain the name of the game (e.g. Escape from the mines) and the name of the author(s). It also contains the &lt;StartingScene&gt; tag which sets the starting scene by name (e.g. Cave 1).</p>
+<p>It then contains the &lt;GlobalResources&gt;, &lt;GlobalActions&gt; and &lt;Scenes&gt; tags. The &lt;GlobalResources&gt; contains a number of &lt;Resource&gt; elements which represent the global resources of the game. The &lt;GlobalActions&gt; block contains a number of &lt;Action&gt; elements which represent the global actions of the game. Finally the &lt;Scenes&gt; block contains a block of &lt;Scene&gt; elements.</p>
+</div>
+<div class="section" id="resource">
+<h3>&lt;Resource&gt;<a class="headerlink" href="#resource" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>The &lt;Resource&gt; tag requires:</dt>
+<dd><ul class="first last simple">
+<li>A &lt;Name&gt; element which contains the resource&#8217;s name (e.g. HP).</li>
+<li>A &lt;Type&gt; element which sets the type of the resource (e.g. Number).</li>
+<li>A &lt;Value&gt; element which represents the value of said resource (e.g. 20).</li>
+</ul>
+</dd>
+</dl>
+<p>For example:</p>
+<div class="highlight-python"><pre>&lt;Resource&gt;
+        &lt;Name&gt;HP&lt;/Name&gt;
+        &lt;Type&gt;Number&lt;/Type&gt;
+        &lt;Value&gt;20&lt;/Value&gt;
+&lt;/Resource&gt;</pre>
+</div>
+</div>
+<div class="section" id="action">
+<h3>&lt;Action&gt;<a class="headerlink" href="#action" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>The &lt;Action&gt; tag requires:</dt>
+<dd><ul class="first last simple">
+<li>A &lt;Name&gt; element which is the name of the action (e.g. pick up rock).</li>
+<li>The &lt;Visible&gt;, &lt;Enabled&gt; and &lt;Active&gt; elements, each of which can be set to be either True or False.</li>
+<li>A &lt;Conditions&gt; block which contains a number of &lt;Condition&gt; elements.</li>
+<li>An &lt;EffectsIfTrue&gt; block which contains a number of &lt;Effect&gt; elements.</li>
+<li>An &lt;EffectsIfFalse&gt; block which contains a number of &lt;Effect&gt; elements.</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="condition">
+<h3>&lt;Condition&gt;<a class="headerlink" href="#condition" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>The &lt;Condition&gt; tag requires:</dt>
+<dd><ul class="first last simple">
+<li>The &lt;ConditionFunction&gt; element which needs to be set to one of the available condition names (e.g. equals).</li>
+<li>The &lt;LeftHandSide&gt; and &lt;RightHandSide&gt; elements, which requires an attribute <cite>Type</cite> to set the type and then a value of that type to compare.</li>
+</ul>
+</dd>
+</dl>
+<p>For example:</p>
+<div class="highlight-python"><pre>&lt;Condition&gt;
+        &lt;ConditionFunction&gt;equals&lt;/ConditionFunction&gt;
+        &lt;LeftHandSide Type="Resource"&gt;HP&lt;/LeftHandSide&gt;
+        &lt;RightHandSide Type="Number"&gt;50&lt;/RightHandSide&gt;
+&lt;/Condition&gt;</pre>
+</div>
+</div>
+<div class="section" id="effect">
+<h3>&lt;Effect&gt;<a class="headerlink" href="#effect" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>The &lt;Effect&gt; tag requires:</dt>
+<dd><ul class="first last simple">
+<li>The &lt;EffectFunction&gt; element which needs to be set to one of the available effect names (e.g. Tell player).</li>
+<li>The &lt;args&gt; block which contains a number of &lt;arg&gt; elements, representing the arguments passed to the effect function.</li>
+</ul>
+</dd>
+</dl>
+<p>Each &lt;arg&gt; element, similarly to the &lt;LeftHandSide&gt; and &lt;RightHandSide&gt; elements of a &lt;Condition&gt;, has a <cite>Type</cite> attribute to set the type of the argument passed to the function and of course a value of that type.</p>
+<p>For example:</p>
+<div class="highlight-python"><pre>&lt;Effect&gt;
+        &lt;EffectFunction&gt;Tell player&lt;/EffectFunction&gt;
+        &lt;args&gt;
+                &lt;arg Type="Text"&gt;You hear a voice.&lt;/arg&gt;
+        &lt;/args&gt;
+&lt;/Effect&gt;</pre>
+</div>
+</div>
+<div class="section" id="scene">
+<h3>&lt;Scene&gt;<a class="headerlink" href="#scene" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>A &lt;Scene&gt; element contains:</dt>
+<dd><ul class="first last simple">
+<li>A &lt;Name&gt; tag to set the scene&#8217;s name (e.g. Cave).</li>
+<li>A &lt;Description&gt; tag to set the scene&#8217;s narrative when the player enters.</li>
+<li>A &lt;Resources&gt; block which contains a number of &lt;Resource&gt; elements.</li>
+<li>An &lt;Actions&gt; block which contains a number of &lt;Action&gt; elements.</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="example-1">
+<h3>Example 1<a class="headerlink" href="#example-1" title="Permalink to this headline">¶</a></h3>
 <p>Simple game with 1 scene which contains 1 action and 1 resource:</p>
 <div class="highlight-python"><pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
 &lt;Game&gt;
@@ -111,6 +205,7 @@
 </div>
 </div>
 </div>
+</div>
 
 
           </div>
@@ -121,7 +216,19 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">How is a game stored?</a><ul>
-<li><a class="reference internal" href="#examples">Examples</a></li>
+<li><a class="reference internal" href="#xml-tags">XML tags</a><ul>
+<li><a class="reference internal" href="#game">&lt;Game&gt;</a></li>
+<li><a class="reference internal" href="#resource">&lt;Resource&gt;</a></li>
+<li><a class="reference internal" href="#action">&lt;Action&gt;</a></li>
+<li><a class="reference internal" href="#condition">&lt;Condition&gt;</a></li>
+<li><a class="reference internal" href="#effect">&lt;Effect&gt;</a></li>
+<li><a class="reference internal" href="#scene">&lt;Scene&gt;</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#examples">Examples</a><ul>
+<li><a class="reference internal" href="#example-1">Example 1</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

@@ -54,6 +54,68 @@
             
   <div class="section" id="how-to-make-a-game">
 <h1>How to make a game?<a class="headerlink" href="#how-to-make-a-game" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="using-the-default-editor-recommended">
+<h2>Using the default editor (recommended)<a class="headerlink" href="#using-the-default-editor-recommended" title="Permalink to this headline">¶</a></h2>
+<p>Hopefully you have a clear understanding of the TAINT game model (if not, read through <a class="reference internal" href="user_gameModel.html#game-model"><em>What is a TAINT game?</em></a>) and you are ready to start creating your own games!</p>
+<p>The great thing is that if you understand the game model, following the instructions in this section should allow you to flesh out your ideas easily, with no programming effort required, only point and click. Let&#8217;s get started!</p>
+<a class="reference internal image-reference" href="_images/mainview.png"><img alt="_images/mainview.png" src="_images/mainview.png" style="width: 624px; height: 470px;" /></a>
+<p>The editor has only one view, which can be seen in the image above. The editor in general follows a master-details layout. The column on the right is the details view while everything on its left is the master view. From the master view you can select individual components that you want to examine or edit. You then perform the editing from the details view.</p>
+<div class="section" id="master-view">
+<h3>Master view<a class="headerlink" href="#master-view" title="Permalink to this headline">¶</a></h3>
+<p>At the very top, you can set the game&#8217;s starting scene (using the dropdown box to select one of the available scenes), the game&#8217;s name and the author&#8217;s name. In this case we just set them to &#8216;Test game&#8217; and &#8216;Alex&#8217;, while the starting scene is the Courtyard.</p>
+<p>Below these, you can see three lists. The left-most list is a list of all the game&#8217;s scenes. To add a new scene simply press the &#8216;Add scene&#8217; button below that. To delete a scene simply press on the &#8216;X&#8217; which can be found next to the specific scene&#8217;s name.</p>
+<p>The list in the middle is a list of all the game&#8217;s global action. In the image above you can see a passive action which checks every round to see whether the player&#8217;s HP has dropped to 0 or below. To add a new global action, simply press on the &#8216;Add global action&#8217; button below the list. To delete a global action press on the &#8216;X&#8217; which can be found next to the specific global action&#8217;s name.</p>
+<p>The third list, the right-most one, contains the game&#8217;s global resources. Similarly to the other two lists, to add a new global resource press the &#8216;Add global resource&#8217; button below the list. To delete a glocal resource press on the &#8216;X&#8217; which can be found next to the specific global resource&#8217;s name.</p>
+</div>
+<div class="section" id="details-view">
+<h3>Details view<a class="headerlink" href="#details-view" title="Permalink to this headline">¶</a></h3>
+<p>Whenever you select something in the master view, be it a scene, a global action or a global resource, you will see the detail view change to display the properties of that specific element. For example, if we select the HP global resource, the details view is updated to display the resource information, as seen below.</p>
+<a class="reference internal image-reference" href="_images/resourceview.png"><img alt="_images/resourceview.png" src="_images/resourceview.png" style="width: 312px; height: 230px;" /></a>
+<p>Similarly, looking at the image below, you can see that when the Courtyard scene is selected, the details view on the right is populated with all the scene information.</p>
+<a class="reference internal image-reference" href="_images/sceneview.png"><img alt="_images/sceneview.png" src="_images/sceneview.png" style="width: 312px; height: 230px;" /></a>
+<p>It is important to note that the scene also contains a list of actions and a list of resources, also known as local actions and local resources. While when you select an element from the master view -such as a scene or a resource- only that is displayed in the details view, when selecting a scene&#8217;s local element it will be displayed directly below the scene information, as seen in the image below.</p>
+<a class="reference internal image-reference" href="_images/sceneactionview.png"><img alt="_images/sceneactionview.png" src="_images/sceneactionview.png" style="width: 312px; height: 230px;" /></a>
+</div>
+<div class="section" id="exporting-and-testing">
+<h3>Exporting and testing<a class="headerlink" href="#exporting-and-testing" title="Permalink to this headline">¶</a></h3>
+<p>To export the game simply press the &#8216;Export&#8217; button found at the very bottom left of the program. It will create an XML file with all the information so far.</p>
+<p>To test a game, press the &#8216;Test game&#8217; button found near the &#8216;Export button&#8217;. When you do that, a new XML file is created (therefore overwriting any other exports) and then loaded in the TAINT python interpreter, as seen in the image below.</p>
+<a class="reference internal image-reference" href="_images/pythonview.png"><img alt="_images/pythonview.png" src="_images/pythonview.png" style="width: 312px; height: 230px;" /></a>
+</div>
+</div>
+<div class="section" id="creating-your-first-game">
+<h2>Creating your first game<a class="headerlink" href="#creating-your-first-game" title="Permalink to this headline">¶</a></h2>
+<p>In this tutorial we will create a very simple game called &#8216;Escape from the troll cave&#8217;. Let&#8217;s start with a clean slate!</p>
+<a class="reference internal image-reference" href="_images/cleanslate.png"><img alt="_images/cleanslate.png" src="_images/cleanslate.png" style="width: 312px; height: 230px;" /></a>
+<p>First of all, set the game name and author name by editing the corresponding fields at the top of the program. Type in &#8216;Escape from the troll cave&#8217; in the game name field, and type your name in the author field.</p>
+<p>First of all, for our game we want two global resources: the player&#8217;s hitpoints and the player&#8217;s mana. Both will be of <cite>Number</cite> type. So click twice on the &#8216;Add global resource&#8217; button to create two new global resources. Select the first one, and notice how the details view changed. Edit the resource name and change it to &#8216;HP&#8217;, and for the value select a <cite>Number</cite> type and type in 20. Now we have a global resource HP with a value of 20, representing the player&#8217;s 20 hitpoints.</p>
+<a class="reference internal image-reference" href="_images/hitpointsresource.png"><img alt="_images/hitpointsresource.png" src="_images/hitpointsresource.png" style="width: 312px; height: 230px;" /></a>
+<p>Similarly for the second global resource we created, change it to &#8216;MP&#8217; and a <cite>Number</cite> value of 5. This represents the player&#8217;s 5 starting mana points.</p>
+<p>Now click on the &#8216;Add scene&#8217; button, to create a new scene. Notice that the starting scene field at the top is now set to this new scene. Click on the &#8216;Add scene&#8217; button again, to create a second scene. Select the first scene created, named &#8216;New Scene&#8217; and notice the change in the details view.</p>
+<a class="reference internal image-reference" href="_images/sceneedit.png"><img alt="_images/sceneedit.png" src="_images/sceneedit.png" style="width: 312px; height: 230px;" /></a>
+<p>Change its name to &#8216;Forest&#8217; and type in for the description &#8216;You have successfully escaped from the cave! You now find yourself in a forest.&#8217;.</p>
+<p>Now select the other scene from the list, called &#8216;New Scene (1)&#8217;. From the details view, change its name to &#8216;Cave&#8217; and its description to &#8216;You are in a dark cave. The stench of troll is all over and you know you have to leave this place as soon as possible. You see a door in front of you which must be the exit.&#8217;.</p>
+<p>It&#8217;s time to create some actions for the player, in order to make our story interactive! Press on the &#8216;Add action&#8217; button found below the scene&#8217;s list of actions (so far empty). A new action should be added to the list; select it and notice how its properties are displayed underneath.</p>
+<a class="reference internal image-reference" href="_images/actionedit.png"><img alt="_images/actionedit.png" src="_images/actionedit.png" style="width: 312px; height: 230px;" /></a>
+<p>Change the action&#8217;s name to &#8216;Open the door&#8217; and click on the &#8216;Add effect&#8217; button below the &#8216;Action effects if True&#8217; section twice, to add two effects. If we wanted the door to be locked, we could add some conditions and make it more complicated, however for this simple example let&#8217;s assume the door is unlocked.</p>
+<p>Select the first effect (the one at the top of the list) and click on the drop-down box to select one of the predefined effect functions. Note that you can edit these to create your own effect functions (<a class="reference internal" href="user_customise.html#scripted-components"><em>How to extend TAINT with custom functions?</em></a>). Select &#8216;Tell player&#8217; and as a <cite>Text</cite> argument, type in &#8216;You open the door and feel a light breeze in your face. The exit is near. You walk for a bit longer and find yourself out of the cave.&#8217; in the available editbox.</p>
+<p>Now select the second effect and click on the drop-down box to select &#8216;Go to scene&#8217;. As the <cite>Scene</cite> argument, select the Forest scene.</p>
+<a class="reference internal image-reference" href="_images/effectedit.png"><img alt="_images/effectedit.png" src="_images/effectedit.png" style="width: 312px; height: 230px;" /></a>
+<p>Finally, from the top of the program, change the starting scene to be the Cave scene. That&#8217;s it! You have created your first text adventure, all you need to do now is press &#8216;Test game&#8217; and see the results for yourself! Congratulations!</p>
+<a class="reference internal image-reference" href="_images/final.png"><img alt="_images/final.png" src="_images/final.png" style="width: 312px; height: 230px;" /></a>
+</div>
+<div class="section" id="using-xml">
+<h2>Using XML<a class="headerlink" href="#using-xml" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>Creating a game directly in XML is possible, however it isn&#8217;t recommended because</dt>
+<dd><ol class="first last arabic simple">
+<li>it&#8217;s slow!</li>
+<li>it&#8217;s easy to make mistakes!</li>
+</ol>
+</dd>
+</dl>
+<p>Nonetheless, you are free to do so as long as you understand the different XML tags explained in the <a class="reference internal" href="user_gameData.html#game-xml"><em>How is a game stored?</em></a> section.</p>
+</div>
 </div>
 
 
@@ -62,6 +124,21 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">How to make a game?</a><ul>
+<li><a class="reference internal" href="#using-the-default-editor-recommended">Using the default editor (recommended)</a><ul>
+<li><a class="reference internal" href="#master-view">Master view</a></li>
+<li><a class="reference internal" href="#details-view">Details view</a></li>
+<li><a class="reference internal" href="#exporting-and-testing">Exporting and testing</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#creating-your-first-game">Creating your first game</a></li>
+<li><a class="reference internal" href="#using-xml">Using XML</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="user_gameData.html"
                         title="previous chapter">How is a game stored?</a></p>

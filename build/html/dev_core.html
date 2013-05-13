@@ -381,6 +381,41 @@ and local actions.</p>
 <li><cite>resources</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a> objects known as local resources of a scene.</li>
 <li><cite>actions</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#core.components.Action" title="core.components.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a> objects known as local actions of a scene.</li>
 </ul>
+<dl class="method">
+<dt id="core.components.Scene.addResource">
+<tt class="descname">addResource</tt><big>(</big><em>name</em>, <em>value</em><big>)</big><a class="headerlink" href="#core.components.Scene.addResource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialise a <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a> object and add it to the game&#8217;s Global Resources <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> <cite>globalResources</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>name</cite>: The name of the new resource.</li>
+<li><cite>value</cite>: The value of the new resource.</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.components.Scene.removeResource">
+<tt class="descname">removeResource</tt><big>(</big><em>resource</em><big>)</big><a class="headerlink" href="#core.components.Scene.removeResource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a> object from the the game&#8217;s Global Resources <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> <cite>globalResources</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>resource</cite>: The <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a> object to be removed.</li>
+</ul>
+</dd></dl>
+
 </dd></dl>
 
 <div class="section" id="core-components-customisable">

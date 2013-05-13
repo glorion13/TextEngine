@@ -685,7 +685,6 @@ namespace TextEngineEditor.ViewModel
         public ICommand ImportXmlCommand { get; set; }
         private void ImportFromXml()
         {
-            PythonCore = Python.CreateRuntime().ImportModule("Python/dataParser");
         }
 
         public ICommand ReloadPythonCommand { get; set; }
