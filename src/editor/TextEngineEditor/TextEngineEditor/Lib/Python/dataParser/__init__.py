@@ -7,8 +7,8 @@ class GameParser:
 	This class can import games from XML files using the :func:`loadXMLGameData` function.
 
 	:Attributes:
-		- `game`: holds all the game data after :func:`loadXMLGameData` is called and
-		- `typeConverter`: a dictionary which contains key-value pairs between the different types of the game model (e.g. "Number") and a lambda expression to reconstruct it correctly for the game logic (e.g. ``lambda(n): float(n)``). The reason for using lambda expressions is in order to allow for the evaluation of these objects (e.g. if it is a :class:`core.components.Resource`) to be carried out during run-time instead of during initialisation. This means that everything is evaluated as it should, including objects which are created or edited on the fly during gameplay.
+	- `game`: holds all the game data after :func:`loadXMLGameData` is called and
+	- `typeConverter`: a dictionary which contains key-value pairs between the different types of the game model (e.g. "Number") and a lambda expression to reconstruct it correctly for the game logic (e.g. ``lambda(n): float(n)``). The reason for using lambda expressions is in order to allow for the evaluation of these objects (e.g. if it is a :class:`core.components.Resource`) to be carried out during run-time instead of during initialisation. This means that everything is evaluated as it should, including objects which are created or edited on the fly during gameplay.
 	"""
 	def __init__(self):
 		"""

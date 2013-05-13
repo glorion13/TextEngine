@@ -8,14 +8,14 @@ class Game(customisable.effects.EffectFunctions, customisable.conditions.Conditi
 	current scene.
 
 	:Attributes:
-		- `name`: A :class:`string` with the name of the game.
-		- `author`:  :class:`string` with the author(s) of the game.
-		- `startingScene`: A :class:`Scene` object which is the first scene that the game will load.
-		- `currentScene`: A :class:`Scene` object which is the scene the player is currently in.
-		- `scenes`: A :class:`list` of :class:`Scene` objects which holds all of the scenes of the game, along with their corresponding attributes.
-		- `globalResources`: A :class:`list` of :class:`Resource` for storing global resources, such as player HP.
-		- `globalActions`: A :class:`list` of :class:`Action` for storing global actions, such as actions which are	always available to the player (e.g. `'help'`) or actions such as checking if the player's HP falls under a certain	threshold.
-		- `narrative`: A :class:`list` of narrative elements (e.g. a :class:`string` equal to "You go south.").
+	- `name`: A :class:`string` with the name of the game.
+	- `author`:  :class:`string` with the author(s) of the game.
+	- `startingScene`: A :class:`Scene` object which is the first scene that the game will load.
+	- `currentScene`: A :class:`Scene` object which is the scene the player is currently in.
+	- `scenes`: A :class:`list` of :class:`Scene` objects which holds all of the scenes of the game, along with their corresponding attributes.
+	- `globalResources`: A :class:`list` of :class:`Resource` for storing global resources, such as player HP.
+	- `globalActions`: A :class:`list` of :class:`Action` for storing global actions, such as actions which are	always available to the player (e.g. `'help'`) or actions such as checking if the player's HP falls under a certain	threshold.
+	- `narrative`: A :class:`list` of narrative elements (e.g. a :class:`string` equal to "You go south.").
 
 	"""
 	def __init__(self):
@@ -93,8 +93,8 @@ class Resource:
 	containing a `name` attribute and a `value` attribute.
 
 	:Attributes:
-		- `name`: A :class:`string` which holds the name of the :class:`Resource`, e.g. 'HP'.
-		- `value`: This attribute holds the actual value of the resource, which can be of any type.	For example, if the resource represents the player's HP, the `value` of the :class:`Resource` can be an :class:`int` of value 10.
+	- `name`: A :class:`string` which holds the name of the :class:`Resource`, e.g. 'HP'.
+	- `value`: This attribute holds the actual value of the resource, which can be of any type.	For example, if the resource represents the player's HP, the `value` of the :class:`Resource` can be an :class:`int` of value 10.
 	"""
 	def __init__(self, name, value):
 		"""
@@ -135,7 +135,7 @@ class Scene:
 		self.actions = []
 	def addResource(self, name, value):
 		"""
-		Initialise a :class:`Resource` object and add it to the game's Global Resources :class:`list` `globalResources`.
+		Initialise a :class:`Resource` object and add it to the scene's local Resources :class:`list` `resources`.
 
 		:Parameters:
 		- `name`: The name of the new resource.
@@ -144,7 +144,7 @@ class Scene:
 		self.resources.append(Resource(name, value))
 	def removeResource(self, resource):
 		"""
-		Remove a :class:`Resource` object from the the game's Global Resources :class:`list` `globalResources`.
+		Remove a :class:`Resource` object from the the scene's local Resources :class:`list` `resources`.
 
 		:Parameters:
 		- `resource`: The :class:`Resource` object to be removed.

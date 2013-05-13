@@ -211,7 +211,11 @@ current scene.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Attributes :</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Attributes :</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
 <li><cite>name</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">string</span></tt> with the name of the game.</li>
 <li><cite>author</cite>:  <tt class="xref py py-class docutils literal"><span class="pre">string</span></tt> with the author(s) of the game.</li>
 <li><cite>startingScene</cite>: A <a class="reference internal" href="#core.components.Scene" title="core.components.Scene"><tt class="xref py py-class docutils literal"><span class="pre">Scene</span></tt></a> object which is the first scene that the game will load.</li>
@@ -221,10 +225,6 @@ current scene.</p>
 <li><cite>globalActions</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#core.components.Action" title="core.components.Action"><tt class="xref py py-class docutils literal"><span class="pre">Action</span></tt></a> for storing global actions, such as actions which are     always available to the player (e.g. <cite>&#8216;help&#8217;</cite>) or actions such as checking if the player&#8217;s HP falls under a certain     threshold.</li>
 <li><cite>narrative</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> of narrative elements (e.g. a <tt class="xref py py-class docutils literal"><span class="pre">string</span></tt> equal to &#8220;You go south.&#8221;).</li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
 <dl class="method">
 <dt id="core.components.Game.addResource">
 <tt class="descname">addResource</tt><big>(</big><em>name</em>, <em>value</em><big>)</big><a class="reference internal" href="_modules/core/components.html#Game.addResource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.components.Game.addResource" title="Permalink to this definition">¶</a></dt>
@@ -351,14 +351,14 @@ containing a <cite>name</cite> attribute and a <cite>value</cite> attribute.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Attributes :</th><td class="field-body"><ul class="first last simple">
-<li><cite>name</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">string</span></tt> which holds the name of the <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a>, e.g. &#8216;HP&#8217;.</li>
-<li><cite>value</cite>: This attribute holds the actual value of the resource, which can be of any type.     For example, if the resource represents the player&#8217;s HP, the <cite>value</cite> of the <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a> can be an <tt class="xref py py-class docutils literal"><span class="pre">int</span></tt> of value 10.</li>
-</ul>
-</td>
+<tr class="field-odd field"><th class="field-name">Attributes :</th><td class="field-body"></td>
 </tr>
 </tbody>
 </table>
+<ul class="simple">
+<li><cite>name</cite>: A <tt class="xref py py-class docutils literal"><span class="pre">string</span></tt> which holds the name of the <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a>, e.g. &#8216;HP&#8217;.</li>
+<li><cite>value</cite>: This attribute holds the actual value of the resource, which can be of any type.     For example, if the resource represents the player&#8217;s HP, the <cite>value</cite> of the <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a> can be an <tt class="xref py py-class docutils literal"><span class="pre">int</span></tt> of value 10.</li>
+</ul>
 </dd></dl>
 
 <dl class="class">
@@ -384,7 +384,7 @@ and local actions.</p>
 <dl class="method">
 <dt id="core.components.Scene.addResource">
 <tt class="descname">addResource</tt><big>(</big><em>name</em>, <em>value</em><big>)</big><a class="headerlink" href="#core.components.Scene.addResource" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialise a <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a> object and add it to the game&#8217;s Global Resources <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> <cite>globalResources</cite>.</p>
+<dd><p>Initialise a <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a> object and add it to the scene&#8217;s local Resources <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> <cite>resources</cite>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -402,7 +402,7 @@ and local actions.</p>
 <dl class="method">
 <dt id="core.components.Scene.removeResource">
 <tt class="descname">removeResource</tt><big>(</big><em>resource</em><big>)</big><a class="headerlink" href="#core.components.Scene.removeResource" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove a <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a> object from the the game&#8217;s Global Resources <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> <cite>globalResources</cite>.</p>
+<dd><p>Remove a <a class="reference internal" href="#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">Resource</span></tt></a> object from the the scene&#8217;s local Resources <tt class="xref py py-class docutils literal"><span class="pre">list</span></tt> <cite>resources</cite>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />

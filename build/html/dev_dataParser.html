@@ -65,14 +65,14 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Attributes :</th><td class="field-body"><ul class="first last simple">
-<li><cite>game</cite>: holds all the game data after <a class="reference internal" href="#dataParser.GameParser.loadXMLGameData" title="dataParser.GameParser.loadXMLGameData"><tt class="xref py py-func docutils literal"><span class="pre">loadXMLGameData()</span></tt></a> is called and</li>
-<li><cite>typeConverter</cite>: a dictionary which contains key-value pairs between the different types of the game model (e.g. &#8220;Number&#8221;) and a lambda expression to reconstruct it correctly for the game logic (e.g. <tt class="docutils literal"><span class="pre">lambda(n):</span> <span class="pre">float(n)</span></tt>). The reason for using lambda expressions is in order to allow for the evaluation of these objects (e.g. if it is a <a class="reference internal" href="dev_core.html#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Resource</span></tt></a>) to be carried out during run-time instead of during initialisation. This means that everything is evaluated as it should, including objects which are created or edited on the fly during gameplay.</li>
-</ul>
-</td>
+<tr class="field-odd field"><th class="field-name">Attributes :</th><td class="field-body"></td>
 </tr>
 </tbody>
 </table>
+<ul class="simple">
+<li><cite>game</cite>: holds all the game data after <a class="reference internal" href="#dataParser.GameParser.loadXMLGameData" title="dataParser.GameParser.loadXMLGameData"><tt class="xref py py-func docutils literal"><span class="pre">loadXMLGameData()</span></tt></a> is called and</li>
+<li><cite>typeConverter</cite>: a dictionary which contains key-value pairs between the different types of the game model (e.g. &#8220;Number&#8221;) and a lambda expression to reconstruct it correctly for the game logic (e.g. <tt class="docutils literal"><span class="pre">lambda(n):</span> <span class="pre">float(n)</span></tt>). The reason for using lambda expressions is in order to allow for the evaluation of these objects (e.g. if it is a <a class="reference internal" href="dev_core.html#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Resource</span></tt></a>) to be carried out during run-time instead of during initialisation. This means that everything is evaluated as it should, including objects which are created or edited on the fly during gameplay.</li>
+</ul>
 <dl class="method">
 <dt id="dataParser.GameParser.createActionObject">
 <tt class="descname">createActionObject</tt><big>(</big><em>action</em>, <em>game</em><big>)</big><a class="reference internal" href="_modules/dataParser.html#GameParser.createActionObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dataParser.GameParser.createActionObject" title="Permalink to this definition">¶</a></dt>
