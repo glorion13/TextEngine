@@ -51,7 +51,7 @@ namespace TextEngineEditor {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/TextEngineEditor;component/introwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/TAINT Editor;component/introwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\IntroWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

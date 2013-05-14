@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="TAINT Editor.exe" version="1.0.0.9" publicKeyToken="0e92c9302df76439" language="neutral" processorArchitecture="msil" type="win32" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="TAINT Editor" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <commandLine file="TAINT Editor.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          UAC Manifest Options
+          If you want to change the Windows User Account Control level replace the 
+          requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         If you want to utilize File and Registry Virtualization for backward 
+         compatibility then delete the requestedExecutionLevel node.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="GalaSoft.MvvmLight.Extras.WPF45.dll" size="24576">
+      <assemblyIdentity name="GalaSoft.MvvmLight.Extras.WPF45" version="4.1.27.22784" publicKeyToken="0E27B6F8BE9B2EF7" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>bOijjTjMnKzlpUQKt1Q8sLIgw3G82TvgbsVc1Q+QArQ=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="GalaSoft.MvvmLight.WPF45.dll" size="28160">
+      <assemblyIdentity name="GalaSoft.MvvmLight.WPF45" version="4.1.27.22784" publicKeyToken="EABBF6A5F5AF5004" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>Y/tdBh1rTKPfvTpDk8jboLOIJPKvsw0z/MMNHJfW9qI=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="IronPython.dll" size="1798656">
+      <assemblyIdentity name="IronPython" version="2.7.0.40" publicKeyToken="7F709C5B713576E1" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>dE/78wvV+83HRtuW7bWx3eQXbCudJVu1qA5fzNsY8Pc=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="IronPython.Modules.dll" size="731648">
+      <assemblyIdentity name="IronPython.Modules" version="2.7.0.40" publicKeyToken="7F709C5B713576E1" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>AvAFYhnxWmqHyRzXXxsYdbE5ow/SBR/vWstcuHRoip8=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Microsoft.Dynamic.dll" size="1044480">
+      <assemblyIdentity name="Microsoft.Dynamic" version="1.1.0.20" publicKeyToken="7F709C5B713576E1" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>Due/pzNQ54LCf3BQ/l8XuSCRO5Qty5xKw2Erha6cyGk=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Microsoft.Practices.ServiceLocation.dll" size="29760">
+      <assemblyIdentity name="Microsoft.Practices.ServiceLocation" version="1.0.0.0" publicKeyToken="31BF3856AD364E35" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>eee+a+dQmhpSY/ApLxRipXdEp8UsTaZHXHClBU0Iwyc=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Microsoft.Scripting.dll" size="143872">
+      <assemblyIdentity name="Microsoft.Scripting" version="1.1.0.20" publicKeyToken="7F709C5B713576E1" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>XAc22uS2xUKcNqEONyxL824892WbFkSm8dJp8ikpm1s=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Microsoft.Scripting.Metadata.dll" size="93184">
+      <assemblyIdentity name="Microsoft.Scripting.Metadata" version="1.1.0.20" publicKeyToken="7F709C5B713576E1" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>c1YBxU1ZETMR5elMQ6zM+y0vioGktGWVGzgwzYLwniI=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="System.Windows.Interactivity.dll" size="55880">
+      <assemblyIdentity name="System.Windows.Interactivity" version="4.5.0.0" publicKeyToken="31BF3856AD364E35" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>M7AGuwOLBusi8Zwdwfi6GpJkeq91F6sqqZzFPd0zbF0=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TAINT Editor.exe" size="61952">
+      <assemblyIdentity name="TAINT Editor" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>fI+ll+N0HvCqoDtFNi70unFDlRTr7AXGLeXaWag/7uo=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="Lib\Python\core\__init__.py" size="17">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>O8UGw/efaRon2azqujjo/mhWneMMftMGlJqY0MYbRng=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Lib\Python\core\components\__init__.py" size="10883">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>4wsOEBOeTMSrcgGRlOc2c2jI8DjkMxvXuDLGWwdo1AA=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Lib\Python\core\components\customisable\__init__.py" size="403">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>L2DTe/fhUff00HvMiOzlIwX3od+y0k8DkBDk5Gnq4uM=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Lib\Python\core\components\customisable\conditions.py" size="658">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>yjfYjI2scYPh5nb+ar2XPaSNPzrsYJV930w0qhoPVk4=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Lib\Python\core\components\customisable\effects.py" size="2530">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>e3h11t+78uAePppna878PlOA+Qfa3tGx+QTm+VvELJo=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Lib\Python\dataParser\__init__.py" size="7896">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>F8EDKE+5DWVooeKpItzGpMxBr9adwkmjyWmSgAv+Dsc=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Lib\Python\interpreter.py" size="1734">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>jbJb7I1MRoVZlL3eeuPaCwhblISrH/qkGvDUXvX1vak=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="TAINT Editor.exe.config" size="187">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>xm4bo26HQ0LNVwz1vdPYtzhkpMnp2AI5i+f0b+OahTI=</dsig:DigestValue>
+    </hash>
+  </file>
+<publisherIdentity name="CN=HRA2Z\alex.guvastsos" issuerKeyHash="0b52e751771c91caa7de5a28722d3ca8ffafc191" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>YH5MVaEu43H4c8ql9rsTU3jy95z2r+g2bqvhM50OVfo=</DigestValue></Reference></SignedInfo><SignatureValue>cd95X32pfN1BHMnfI6JoFRQotjz7d5XiNnnXhC35HkMxMbcSjCxa0+RMkgoogWnKdrDr8ioi1e7Drz6XS8u5ORCEryUasJcodHG0GNKchFdDhXLTWVZVicbtmynKiLQnQEUy769r/w9mw/zSbdqYwN8apNSlrgm4J3pSasAnUms=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>i/2AgY5fAEpqzXEShZEGmoLE54oHP99z9NgOQqVbiebKH3LptsmGPCpSBRgG1HlXEW992iEE2aAUFvmQz9C/5VhcD4c6/i361gQ5/gQENsSr5RSZPdlB1xqemanO47QijdvKR4ftXi4Zq4YTRfiPnubkPEqPs632drrDqjjT17k=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="fa550e9d33e1ab6e36e8aff69cf7f2785313bbf6a5ca73f871e32ea1554c7e60" Description="" Url=""><as:assemblyIdentity name="TAINT Editor.exe" version="1.0.0.9" publicKeyToken="0e92c9302df76439" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=HRA2Z\alex.guvastsos</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>LV9jvGwXsjYCIo9gMP9PvnbwlIuMXzTdL76EwWCbRq4=</DigestValue></Reference></SignedInfo><SignatureValue>PaLLzdahX/YyWeR7Ts5ArjLY4X8EqMezQKDAjOCTuCV+ldD9DZk6QJyW/gABLzzfuF4yCNGJcN/tYOR6r45p6FPcEHXSDF5QIpE0l+paVjytsvWP7qpBb6jWyX8/SCvmsWN0IW0NUAXVXLAZawoeLYxOeWV/L5nbto+O1jaHnmk=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>i/2AgY5fAEpqzXEShZEGmoLE54oHP99z9NgOQqVbiebKH3LptsmGPCpSBRgG1HlXEW992iEE2aAUFvmQz9C/5VhcD4c6/i361gQ5/gQENsSr5RSZPdlB1xqemanO47QijdvKR4ftXi4Zq4YTRfiPnubkPEqPs632drrDqjjT17k=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB6TCCAVKgAwIBAgIQN37yJIibVYFKYkp3IaQ0njANBgkqhkiG9w0BAQsFADAzMTEwLwYDVQQDHigASABSAEEAMgBaAFwAYQBsAGUAeAAuAGcAdQB2AGEAcwB0AHMAbwBzMB4XDTEzMDUxNDE0MTUwMVoXDTE0MDUxNDIwMTUwMVowMzExMC8GA1UEAx4oAEgAUgBBADIAWgBcAGEAbABlAHgALgBnAHUAdgBhAHMAdABzAG8AczCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAi/2AgY5fAEpqzXEShZEGmoLE54oHP99z9NgOQqVbiebKH3LptsmGPCpSBRgG1HlXEW992iEE2aAUFvmQz9C/5VhcD4c6/i361gQ5/gQENsSr5RSZPdlB1xqemanO47QijdvKR4ftXi4Zq4YTRfiPnubkPEqPs632drrDqjjT17kCAwEAATANBgkqhkiG9w0BAQsFAAOBgQB3MaiqcdleT4biV6laZhnMcA2p4JdmW3YvOU+HlAEC0f2tKBsa+Os/ZoCFTLTWaWYcCqYXDatbEzTP8NYRmd1NaI9GTUK+7HNoQx9rMrqCrzBUBSGE1tldwl3n9w7Lm2BGNIAJofl21wpKTHzOdOIfqQxgyZ0Mtr+DVv8UO4929w==</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

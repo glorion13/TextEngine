@@ -702,8 +702,8 @@ namespace TextEngineEditor.ViewModel
         public ICommand ImportXmlCommand { get; set; }
         private void ImportFromXml()
         {
-            dynamic dataParser = Python.CreateRuntime().ImportModule("Python/dataParser");
-            dynamic gp = dataParser.GameParser();
+            //dynamic dataParser = Python.CreateRuntime().ImportModule("Python/dataParser");
+            //dynamic gp = dataParser.GameParser();
             //dynamic game = gp.loadXMLGameData("game.xml");
         }
 
@@ -713,10 +713,11 @@ namespace TextEngineEditor.ViewModel
             bool success = doXmlExport();
             if (success)
             {
+                string pythonPath = "python";
+                string filePath = new System.Uri(System.AppDomain.CurrentDomain.BaseDirectory + "Lib/Python/interpreter.py", System.UriKind.RelativeOrAbsolute).ToString();
                 System.Diagnostics.ProcessStartInfo start = new System.Diagnostics.ProcessStartInfo();
-                string pythonPath = "C:\\Python27\\python.exe";
                 start.FileName = pythonPath;
-                start.Arguments = new System.Uri("Lib/Python/interpreter.py", System.UriKind.RelativeOrAbsolute).ToString();
+                start.Arguments = filePath;
                 start.UseShellExecute = true;
                 start.RedirectStandardOutput = false;
                 System.Diagnostics.Process.Start(start);

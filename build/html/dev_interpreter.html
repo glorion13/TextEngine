@@ -88,8 +88,10 @@
                 <span class="k">print</span> <span class="n">narr</span>
         <span class="n">game</span><span class="o">.</span><span class="n">narrative</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="c"># Display visible actions</span>
-        <span class="k">print</span> <span class="p">[</span><span class="n">gAction</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">gAction</span> <span class="ow">in</span> <span class="n">game</span><span class="o">.</span><span class="n">globalActions</span> <span class="k">if</span> <span class="n">gAction</span><span class="o">.</span><span class="n">active</span> <span class="o">==</span> <span class="bp">True</span> <span class="ow">and</span> <span class="n">gAction</span><span class="o">.</span><span class="n">enabled</span> <span class="o">==</span> <span class="bp">True</span> <span class="ow">and</span> <span class="n">gAction</span><span class="o">.</span><span class="n">visible</span> <span class="o">==</span> <span class="bp">True</span><span class="p">]</span>
-        <span class="k">print</span> <span class="p">[</span><span class="n">lAction</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">lAction</span> <span class="ow">in</span> <span class="n">game</span><span class="o">.</span><span class="n">currentScene</span><span class="o">.</span><span class="n">actions</span> <span class="k">if</span> <span class="n">lAction</span><span class="o">.</span><span class="n">active</span> <span class="o">==</span> <span class="bp">True</span> <span class="ow">and</span> <span class="n">lAction</span><span class="o">.</span><span class="n">enabled</span> <span class="o">==</span> <span class="bp">True</span> <span class="ow">and</span> <span class="n">lAction</span><span class="o">.</span><span class="n">visible</span> <span class="o">==</span> <span class="bp">True</span><span class="p">]</span>
+        <span class="n">gActs</span> <span class="o">=</span> <span class="p">[</span><span class="n">gAction</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">gAction</span> <span class="ow">in</span> <span class="n">game</span><span class="o">.</span><span class="n">globalActions</span> <span class="k">if</span> <span class="n">gAction</span><span class="o">.</span><span class="n">active</span> <span class="o">==</span> <span class="bp">True</span> <span class="ow">and</span> <span class="n">gAction</span><span class="o">.</span><span class="n">enabled</span> <span class="o">==</span> <span class="bp">True</span> <span class="ow">and</span> <span class="n">gAction</span><span class="o">.</span><span class="n">visible</span> <span class="o">==</span> <span class="bp">True</span><span class="p">]</span>
+        <span class="n">lActs</span> <span class="o">=</span> <span class="p">[</span><span class="n">lAction</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">lAction</span> <span class="ow">in</span> <span class="n">game</span><span class="o">.</span><span class="n">currentScene</span><span class="o">.</span><span class="n">actions</span> <span class="k">if</span> <span class="n">lAction</span><span class="o">.</span><span class="n">active</span> <span class="o">==</span> <span class="bp">True</span> <span class="ow">and</span> <span class="n">lAction</span><span class="o">.</span><span class="n">enabled</span> <span class="o">==</span> <span class="bp">True</span> <span class="ow">and</span> <span class="n">lAction</span><span class="o">.</span><span class="n">visible</span> <span class="o">==</span> <span class="bp">True</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gActs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span> <span class="k">print</span> <span class="n">gActs</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lActs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span> <span class="k">print</span> <span class="n">lActs</span>
         <span class="c"># Wait for user action</span>
         <span class="k">try</span><span class="p">:</span>
                 <span class="n">userInput</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&gt;&#39;</span><span class="p">)</span>
@@ -101,7 +103,7 @@
         <span class="n">gActions</span> <span class="o">=</span> <span class="p">[</span><span class="n">action</span> <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">game</span><span class="o">.</span><span class="n">globalActions</span> <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">enabled</span> <span class="o">==</span> <span class="bp">True</span> <span class="ow">and</span> <span class="n">action</span><span class="o">.</span><span class="n">active</span> <span class="o">==</span> <span class="bp">True</span><span class="p">]</span>
         <span class="n">allActions</span> <span class="o">=</span> <span class="n">lActions</span> <span class="o">+</span> <span class="n">gActions</span>
         <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">allActions</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">userInput</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">userInput</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">userInput</span> <span class="ow">in</span> <span class="n">action</span><span class="o">.</span><span class="n">keywords</span><span class="p">):</span>
                         <span class="n">action</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
                         <span class="k">break</span>
 </pre></div>
@@ -216,7 +218,7 @@
       <span class="k">else</span><span class="p">:</span>
         <span class="c"># Game actions</span>
         <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">game</span><span class="o">.</span><span class="n">currentScene</span><span class="o">.</span><span class="n">actions</span><span class="p">:</span>
-          <span class="k">if</span> <span class="n">action</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">playerInput</span><span class="p">:</span>
+          <span class="k">if</span> <span class="p">(</span><span class="n">action</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">playerInput</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">playerInput</span> <span class="ow">in</span> <span class="n">action</span><span class="o">.</span><span class="n">keywords</span><span class="p">):</span>
             <span class="n">action</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
             <span class="k">break</span>
         <span class="c"># Perform passive actions</span>
@@ -236,17 +238,6 @@
 
 <span class="n">app</span> <span class="o">=</span> <span class="n">main</span><span class="p">()</span>
 </pre></div>
-</div>
-<p>The <tt class="file docutils literal"><span class="pre">app.yaml</span></tt> file only contains the basics:</p>
-<div class="highlight-python"><pre>application: textengine
-version: 1
-runtime: python27
-api_version: 1
-threadsafe: true
-
-handlers:
-- url: /.*
-  script: textengine.app</pre>
 </div>
 </div>
 </div>

@@ -23,7 +23,7 @@ On the other hand, if you do want to go into the belly of the beast, TAINT is op
 How do I get started?
 -------------------------
 
-To get started with the basic game model of TAINT as well as how to create your own games, have a look at the :ref:`user_documentation` section. To get started with development or to simply get a deeper under-the-hood understanding of the framework, have a look at the :ref:`developer_documentation`.
+To get started with the basic game model of TAINT as well as to learn how to create your own games, have a look at the :ref:`user_documentation` section. To get started with development or to simply get a deeper under-the-hood understanding of the framework, have a look at the :ref:`developer_documentation`.
 
 .. _user_documentation:
 

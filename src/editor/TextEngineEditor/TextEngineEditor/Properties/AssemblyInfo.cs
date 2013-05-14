@@ -7,12 +7,12 @@ using System.Windows;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TextEngineEditor")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("TAINT Editor")]
+[assembly: AssemblyDescription("A GUI editor for creating games using the TAINT model.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("TextEngineEditor")]
-[assembly: AssemblyCopyright("Copyright ©  2013")]
+[assembly: AssemblyProduct("TAINT")]
+[assembly: AssemblyCopyright("Copyright © Alexandros Gouvatsos 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

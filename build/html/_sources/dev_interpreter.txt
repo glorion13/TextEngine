@@ -45,8 +45,10 @@ Here you can see the source code of a very simple interpreter writtein in Python
 			print narr
 		game.narrative = []
 		# Display visible actions
-		print [gAction.name for gAction in game.globalActions if gAction.active == True and gAction.enabled == True and gAction.visible == True]
-		print [lAction.name for lAction in game.currentScene.actions if lAction.active == True and lAction.enabled == True and lAction.visible == True]
+		gActs = [gAction.name for gAction in game.globalActions if gAction.active == True and gAction.enabled == True and gAction.visible == True]
+		lActs = [lAction.name for lAction in game.currentScene.actions if lAction.active == True and lAction.enabled == True and lAction.visible == True]
+		if not (len(gActs) == 0): print gActs
+		if not (len(lActs) == 0): print lActs
 		# Wait for user action
 		try:
 			userInput = raw_input('\n>')
@@ -58,7 +60,7 @@ Here you can see the source code of a very simple interpreter writtein in Python
 		gActions = [action for action in game.globalActions if action.enabled == True and action.active == True]
 		allActions = lActions + gActions
 		for action in allActions:
-			if action.name == userInput:
+			if (action.name == userInput) or (userInput in action.keywords):
 				action.perform()
 				break
 
@@ -173,7 +175,7 @@ Using Google's AppEngine, it is similarly simple to create an interpreter which 
 	      else:
 	        # Game actions
 	        for action in game.currentScene.actions:
-	          if action.name == playerInput:
+	          if (action.name == playerInput) or (playerInput in action.keywords):
 	            action.perform()
 	            break
 	        # Perform passive actions
@@ -192,15 +194,3 @@ Using Google's AppEngine, it is similarly simple to create an interpreter which 
 	  return app
 
 	app = main()
-
-The :file:`app.yaml` file only contains the basics::
-
-	application: textengine
-	version: 1
-	runtime: python27
-	api_version: 1
-	threadsafe: true
-
-	handlers:
-	- url: /.*
-	  script: textengine.app
