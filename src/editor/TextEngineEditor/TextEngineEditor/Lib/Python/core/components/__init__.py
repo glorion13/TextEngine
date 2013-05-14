@@ -171,6 +171,7 @@ class Action:
 	def __init__(self, name='default action', visible=True, enabled=True, active=True, effectsIfTrue=[], effectsIfFalse=[], conditions=[]):
 		"""Initialise an :class:`Action` object."""
 		self.name = name
+		self.keywords = []
 		self.conditions = conditions
 		self.effectsIfTrue = effectsIfTrue
 		self.effectsIfFalse = effectsIfFalse

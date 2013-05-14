@@ -104,7 +104,7 @@ class GamePage(webapp2.RequestHandler):
       else:
         # Game actions
         for action in game.currentScene.actions:
-          if action.name == playerInput:
+          if (action.name == playerInput) or (playerInput in action.keywords):
             action.perform()
             break
         # Perform passive actions

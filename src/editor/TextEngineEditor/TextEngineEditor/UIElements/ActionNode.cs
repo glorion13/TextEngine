@@ -59,6 +59,7 @@ namespace TextEngineEditor
         public ObservableCollection<ConditionNode> Conditions { get; private set; }
         public ObservableCollection<EffectNode> EffectsIfTrue { get; private set; }
         public ObservableCollection<EffectNode> EffectsIfFalse { get; private set; }
+        public ObservableCollection<string> Keywords { get; private set; }
         
         public ActionNode()
         {
@@ -69,6 +70,7 @@ namespace TextEngineEditor
             Conditions = new ObservableCollection<ConditionNode>();
             EffectsIfTrue = new ObservableCollection<EffectNode>();
             EffectsIfFalse = new ObservableCollection<EffectNode>();
+            Keywords = new ObservableCollection<string>();
         }
         public ActionNode(string name)
         {
@@ -79,6 +81,7 @@ namespace TextEngineEditor
             Conditions = new ObservableCollection<ConditionNode>();
             EffectsIfTrue = new ObservableCollection<EffectNode>();
             EffectsIfFalse = new ObservableCollection<EffectNode>();
+            Keywords = new ObservableCollection<string>();
         }
 
         public override string ToString()

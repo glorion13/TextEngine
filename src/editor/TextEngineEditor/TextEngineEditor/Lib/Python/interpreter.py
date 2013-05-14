@@ -44,6 +44,6 @@ while (True):
 	gActions = [action for action in game.globalActions if action.enabled == True and action.active == True]
 	allActions = lActions + gActions
 	for action in allActions:
-		if action.name == userInput:
+		if (action.name == userInput) or (userInput in action.keywords):
 			action.perform()
 			break

@@ -1,5 +1,4 @@
 from xml.etree import ElementTree
-
 import core
 
 class GameParser:
@@ -102,6 +101,9 @@ class GameParser:
 		- A populated :class:`core.components.Action`.
 		"""
 		actionObject = core.components.Action(action.find("Name").text, self.stringToBoolean(action.find("Visible").text), self.stringToBoolean(action.find("Enabled").text), self.stringToBoolean(action.find("Active").text))
+		# Keywords
+		keywordsNode = action.find("Keywords")
+		if not (keywordsNode == None): actionObject.keywords = [keyword.text for keyword in keywordsNode]
 		# Conditions
 		conditionsNode = action.find("Conditions")
 		actionObject.conditions = [self.createConditionObject(condition, game) for condition in conditionsNode]

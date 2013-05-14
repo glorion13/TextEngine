@@ -70,6 +70,8 @@ namespace TextEngineEditor.ViewModel
                 ChangeToResourceLayoutCommand = new RelayCommand(ChangeToResourceLayout);
                 ChangeToSceneLayoutWithActionsCommand = new RelayCommand(ChangeToSceneLayoutWithActions);
                 ChangeToSceneLayoutWithResourcesCommand = new RelayCommand(ChangeToSceneLayoutWithResources);
+                AddKeywordCommand = new RelayCommand(AddKeyword);
+                RemoveKeywordCommand = new RelayCommand<string>(RemoveKeyword);
 
                 // Initialise UI objects
                 SceneNodes = new ObservableCollection<INode>();
@@ -188,6 +190,19 @@ namespace TextEngineEditor.ViewModel
             }
         }
 
+        private string currentKeyword;
+        public string CurrentKeyword
+        {
+            get
+            {
+                return currentKeyword;
+            }
+            set
+            {
+                Set(() => CurrentKeyword, ref currentKeyword, value);
+            }
+        }
+
         private ActionNode selectedActionNode;
         public ActionNode SelectedActionNode
         {
@@ -252,22 +267,6 @@ namespace TextEngineEditor.ViewModel
         public BindingList<string> PythonEffects { get; set; }
         public BindingList<string> PythonConditionTypes { get; set; }
         public BindingList<string> PythonResourceTypes { get; set; }
-
-        public ICommand RunInterpreterCommand { get; set; }
-        private void RunInterpreter()
-        {
-            bool success = doXmlExport();
-            if (success)
-            {
-                System.Diagnostics.ProcessStartInfo start = new System.Diagnostics.ProcessStartInfo();
-                string pythonPath = "C:\\Python27\\python.exe";
-                start.FileName = pythonPath;
-                start.Arguments = new System.Uri("Lib/Python/interpreter.py", System.UriKind.RelativeOrAbsolute).ToString();
-                start.UseShellExecute = true;
-                start.RedirectStandardOutput = false;
-                System.Diagnostics.Process.Start(start);
-            }
-        }
 
         public ICommand ChangeToSceneLayoutCommand { get; set; }
         private void ChangeToSceneLayout()
@@ -489,6 +488,15 @@ namespace TextEngineEditor.ViewModel
                         writer.WriteElementString("Enabled", action.Enabled.ToString().Substring(0, 1).ToUpper() + action.Enabled.ToString().Substring(1));
                         writer.WriteElementString("Active", action.Active.ToString().Substring(0, 1).ToUpper() + action.Active.ToString().Substring(1));
 
+                        #region <Keywords>
+                        writer.WriteStartElement("Keywords");
+                        foreach (string keyword in action.Keywords)
+                        {
+                            writer.WriteElementString("Keyword", keyword);
+                        }
+                        writer.WriteEndElement();
+                        #endregion <Keywords>
+
                         #region <Conditions>
                         writer.WriteStartElement("Conditions");
                         foreach (ConditionNode condition in action.Conditions)
@@ -593,6 +601,15 @@ namespace TextEngineEditor.ViewModel
                             writer.WriteElementString("Enabled", action.Enabled.ToString().Substring(0, 1).ToUpper() + action.Enabled.ToString().Substring(1));
                             writer.WriteElementString("Active", action.Active.ToString().Substring(0, 1).ToUpper() + action.Active.ToString().Substring(1));
 
+                            #region <Keywords>
+                            writer.WriteStartElement("Keywords");
+                            foreach (string keyword in action.Keywords)
+                            {
+                                writer.WriteElementString("Keyword", keyword);
+                            }
+                            writer.WriteEndElement();
+                            #endregion <Keywords>
+
                             #region <Conditions>
                             writer.WriteStartElement("Conditions");
                             foreach (ConditionNode condition in action.Conditions)
@@ -685,6 +702,25 @@ namespace TextEngineEditor.ViewModel
         public ICommand ImportXmlCommand { get; set; }
         private void ImportFromXml()
         {
+            dynamic dataParser = Python.CreateRuntime().ImportModule("Python/dataParser");
+            dynamic gp = dataParser.GameParser();
+            //dynamic game = gp.loadXMLGameData("game.xml");
+        }
+
+        public ICommand RunInterpreterCommand { get; set; }
+        private void RunInterpreter()
+        {
+            bool success = doXmlExport();
+            if (success)
+            {
+                System.Diagnostics.ProcessStartInfo start = new System.Diagnostics.ProcessStartInfo();
+                string pythonPath = "C:\\Python27\\python.exe";
+                start.FileName = pythonPath;
+                start.Arguments = new System.Uri("Lib/Python/interpreter.py", System.UriKind.RelativeOrAbsolute).ToString();
+                start.UseShellExecute = true;
+                start.RedirectStandardOutput = false;
+                System.Diagnostics.Process.Start(start);
+            }
         }
 
         public ICommand ReloadPythonCommand { get; set; }
@@ -712,6 +748,18 @@ namespace TextEngineEditor.ViewModel
             // Print out log of warnings in case there are some that were deleted
             // If Python does not work don't load it - somehow evaluate python scripts for errors
             // General debugging and error handling
+        }
+
+        public ICommand AddKeywordCommand { get; set; }
+        private void AddKeyword()
+        {
+            SelectedActionNode.Keywords.Add(CurrentKeyword);
+        }
+
+        public ICommand RemoveKeywordCommand { get; set; }
+        private void RemoveKeyword(string keyword)
+        {
+            SelectedActionNode.Keywords.Remove(keyword);
         }
     }
 }

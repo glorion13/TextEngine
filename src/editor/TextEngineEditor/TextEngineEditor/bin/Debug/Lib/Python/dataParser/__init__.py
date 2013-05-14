@@ -1,14 +1,13 @@
 from xml.etree import ElementTree
-
 import core
 
 class GameParser:
 	"""
 	This class can import games from XML files using the :func:`loadXMLGameData` function.
 
-	:Attributes:
-		- `game`: holds all the game data after :func:`loadXMLGameData` is called and
-		- `typeConverter`: a dictionary which contains key-value pairs between the different types of the game model (e.g. "Number") and a lambda expression to reconstruct it correctly for the game logic (e.g. ``lambda(n): float(n)``). The reason for using lambda expressions is in order to allow for the evaluation of these objects (e.g. if it is a :class:`core.components.Resource`) to be carried out during run-time instead of during initialisation. This means that everything is evaluated as it should, including objects which are created or edited on the fly during gameplay.
+	:attributes:
+	- `game`: holds all the game data after :func:`loadXMLGameData` is called and
+	- `typeConverter`: a dictionary which contains key-value pairs between the different types of the game model (e.g. "Number") and a lambda expression to reconstruct it correctly for the game logic (e.g. ``lambda(n): float(n)``). The reason for using lambda expressions is in order to allow for the evaluation of these objects (e.g. if it is a :class:`core.components.Resource`) to be carried out during run-time instead of during initialisation. This means that everything is evaluated as it should, including objects which are created or edited on the fly during gameplay.
 	"""
 	def __init__(self):
 		"""
@@ -39,10 +38,10 @@ class GameParser:
 		It uses the :class:`ElementTree` class from :mod:`xml.etree` to navigate through the XML tree and
 		gather all the information.
 
-		:Parameters:
+		:parameters:
 		- `gameDataFile`: a string to the XML file e.g. "game1.xml".
 
-		:Raises:
+		:exceptions:
 		- "Error loading game file." is the file is not found or if the file contains bad XML.
 
 		:Returns:
@@ -94,7 +93,7 @@ class GameParser:
 		"""
 		Auxiliary function used by :func:`loadXMLGameData` which creates a :class:`core.components.Action` object.
 
-		:Parameters:
+		:parameters:
 		- `action`: an <action> XML node from the game data file.
 		- `game`: the `game` attribute of :class:`GameParser`.
 
@@ -102,6 +101,9 @@ class GameParser:
 		- A populated :class:`core.components.Action`.
 		"""
 		actionObject = core.components.Action(action.find("Name").text, self.stringToBoolean(action.find("Visible").text), self.stringToBoolean(action.find("Enabled").text), self.stringToBoolean(action.find("Active").text))
+		# Keywords
+		keywordsNode = action.find("Keywords")
+		if not (keywordsNode == None): actionObject.keywords = [keyword.text for keyword in keywordsNode]
 		# Conditions
 		conditionsNode = action.find("Conditions")
 		actionObject.conditions = [self.createConditionObject(condition, game) for condition in conditionsNode]
@@ -117,7 +119,7 @@ class GameParser:
 		"""
 		Auxiliary function used by :func:`createActionObject` which creates a :class:`core.components.Effect` object.
 
-		:Parameters:
+		:parameters:
 		- `effect`: an <effect> XML node from the game data file.
 		- `game`: the `game` attribute of :class:`GameParser`.
 
@@ -139,7 +141,7 @@ class GameParser:
 		"""
 		Auxiliary function used by :func:`createActionObject` which creates a :class:`core.components.Condition` object.
 
-		:Parameters:
+		:parameters:
 		- `condition`: a <condition> XML node from the game data file.
 		- `game`: the `game` attribute of :class:`GameParser`.
 
@@ -172,7 +174,7 @@ class GameParser:
 		"""
 		Auxiliary function used by :func:`loadXMLGameData` which creates a :class:`core.components.Resource` object.
 
-		:Parameters:
+		:parameters:
 		- `resource`: a <resource> XML node from the game data file.
 
 		:Returns:

@@ -282,6 +282,18 @@
                                 </ListBox.ItemTemplate>
                             </ListBox>
                             <Button Content="Add effect" Command="{Binding AddFalseEffectCommand}" />
+                            <TextBox Text="{Binding CurrentKeyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <Button Content="Add keyword" Command="{Binding AddKeywordCommand}" />
+                            <ListBox ItemsSource="{Binding SelectedActionNode.Keywords}" Height="100">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button Content="X" Command="{Binding Main.RemoveKeywordCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" />
+                                            <TextBlock Text="{Binding}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
                             <CheckBox Content="Visible" IsChecked="{Binding SelectedActionNode.Visible, Mode=TwoWay}" />
                             <CheckBox Content="Enabled" IsChecked="{Binding SelectedActionNode.Enabled, Mode=TwoWay}" />
                             <CheckBox Content="Active" IsChecked="{Binding SelectedActionNode.Active, Mode=TwoWay}" />
