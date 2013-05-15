@@ -36,11 +36,12 @@ while (True):
 	if not (len(lActs) == 0):
 		print(lActs)
 	# Wait for user action
+	# Make input() function work on both Python 2.x and 3.x
 	try:
-		userInput = input('\n>')
+		input = raw_input
 	except:
-		print("Input error.")
-		break
+		pass
+	userInput = input('\n>')
 	# Evaluate user action
 	lActions = [action for action in game.currentScene.actions if action.enabled == True and action.active == True]
 	gActions = [action for action in game.globalActions if action.enabled == True and action.active == True]
