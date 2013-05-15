@@ -115,3 +115,4 @@ C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\
 C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\obj\Debug\TAINT Editor.application
 C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\obj\Debug\TAINT Editor.exe
 C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\obj\Debug\TAINT Editor.pdb
+C:\Users\alex.guvastsos\Documents\GitHub\TextEngine\src\editor\TextEngineEditor\TextEngineEditor\obj\Debug\TextEngineEditor.csprojResolveAssemblyReference.cache

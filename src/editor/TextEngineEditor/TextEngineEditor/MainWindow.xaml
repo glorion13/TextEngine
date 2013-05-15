@@ -318,7 +318,7 @@
         <Grid Margin="0,20,0,0" x:Name="toolbar" Grid.Row="1">
             <StackPanel Orientation="Horizontal">
                 <Button Width="100" Command="{Binding ExportXmlCommand}" Content="Export" />
-                <Button Width="100" Command="{Binding ImportXmlCommand}" Content="Import" />
+                <Button Width="100" Visibility="Collapsed" Command="{Binding ImportXmlCommand}" Content="Import" />
                 <Button Width="100" Command="{Binding RunInterpreterCommand}" Content="Test game" />
             </StackPanel>
         </Grid>

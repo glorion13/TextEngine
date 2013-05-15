@@ -42,16 +42,18 @@ Here you can see the source code of a very simple interpreter writtein in Python
 			action.perform()
 		# Display narrative
 		for narr in game.narrative:
-			print narr
+			print(narr)
 		game.narrative = []
 		# Display visible actions
 		gActs = [gAction.name for gAction in game.globalActions if gAction.active == True and gAction.enabled == True and gAction.visible == True]
 		lActs = [lAction.name for lAction in game.currentScene.actions if lAction.active == True and lAction.enabled == True and lAction.visible == True]
-		if not (len(gActs) == 0): print gActs
-		if not (len(lActs) == 0): print lActs
+		if not (len(gActs) == 0):
+			print(gActs)
+		if not (len(lActs) == 0):
+			print(lActs)
 		# Wait for user action
 		try:
-			userInput = raw_input('\n>')
+			userInput = input('\n>')
 		except:
 			print("Input error.")
 			break
@@ -73,12 +75,13 @@ Using Google's AppEngine, it is similarly simple to create an interpreter which 
 	import webapp2
 	import urllib
 
+	import glob
+
 	from google.appengine.api import users
 	from google.appengine.ext import db
 
 	import core
 	import dataParser
-
 
 	def createActionsHTML(game_id, game):
 	  actionsHTML = ""
@@ -123,8 +126,8 @@ Using Google's AppEngine, it is similarly simple to create an interpreter which 
 
 	class MainPage(webapp2.RequestHandler):
 	  def get(self):
-	    self.response.write("""<form action="/" method="post"><div><input name="gameChoice" type="submit" value="Game 1"></div></form>""")
-	    self.response.write("""<form action="/" method="post"><div><input name="gameChoice" type="submit" value="Game 5"></div></form>""")
+	    for f in glob.glob("*.xml"):
+	      self.response.write("""<form action="/" method="post"><div><input name="gameChoice" type="submit" value=\""""+ f[0:-4] +"""\"></div></form>""")
 	  def post(self):
 	    playerInput = cgi.escape(self.request.get('gameChoice'))
 	    self.redirect("/game/"+playerInput+"")

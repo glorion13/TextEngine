@@ -713,14 +713,21 @@ namespace TextEngineEditor.ViewModel
             bool success = doXmlExport();
             if (success)
             {
-                string pythonPath = "python";
-                string filePath = "Lib/Python/interpreter.py";
-                System.Diagnostics.ProcessStartInfo start = new System.Diagnostics.ProcessStartInfo();
-                start.FileName = pythonPath;
-                start.Arguments = filePath;
-                start.UseShellExecute = true;
-                start.RedirectStandardOutput = false;
-                System.Diagnostics.Process.Start(start);
+                try
+                {
+                    string pythonPath = "python";
+                    string filePath = "Lib/Python/interpreter.py";
+                    System.Diagnostics.ProcessStartInfo start = new System.Diagnostics.ProcessStartInfo();
+                    start.FileName = pythonPath;
+                    start.Arguments = filePath;
+                    start.UseShellExecute = true;
+                    start.RedirectStandardOutput = false;
+                    System.Diagnostics.Process.Start(start);
+                }
+                catch
+                {
+                    MessageBox.Show("Make sure your python installation is in the PATH environment variable.");
+                }
             }
         }
 

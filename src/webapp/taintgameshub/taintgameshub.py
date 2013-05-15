@@ -2,12 +2,13 @@ import cgi
 import webapp2
 import urllib
 
+import glob
+
 from google.appengine.api import users
 from google.appengine.ext import db
 
 import core
 import dataParser
-
 
 def createActionsHTML(game_id, game):
   actionsHTML = ""
@@ -52,8 +53,9 @@ class LogoutPage(webapp2.RequestHandler):
 
 class MainPage(webapp2.RequestHandler):
   def get(self):
-    self.response.write("""<form action="/" method="post"><div><input name="gameChoice" type="submit" value="Game 1"></div></form>""")
-    self.response.write("""<form action="/" method="post"><div><input name="gameChoice" type="submit" value="Game 5"></div></form>""")
+    self.response.write("""<p>Welcome to the TAINT hub! Here you can find and play games created using the TAINT game engine. Have fun!</p>""")
+    for f in glob.glob("*.xml"):
+      self.response.write("""<form action="/" method="post"><div><input name="gameChoice" type="submit" value=\""""+ f[0:-4] +"""\"></div></form>""")
   def post(self):
     playerInput = cgi.escape(self.request.get('gameChoice'))
     self.redirect("/game/"+playerInput+"")

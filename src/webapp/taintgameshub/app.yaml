@@ -1,4 +1,4 @@
-application: textengine
+application: taintgameshub
 version: 1
 runtime: python27
 api_version: 1
@@ -6,4 +6,4 @@ threadsafe: true
 
 handlers:
 - url: /.*
-  script: textengine.app
+  script: taintgameshub.app
