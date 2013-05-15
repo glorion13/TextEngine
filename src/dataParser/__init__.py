@@ -7,8 +7,8 @@ class GameParser:
 	This class can import games from XML files using the :func:`loadXMLGameData` function.
 
 	:attributes:
-	- `game`: holds all the game data after :func:`loadXMLGameData` is called and
-	- `typeConverter`: a dictionary which contains key-value pairs between the different types of the game model (e.g. "Number") and a lambda expression to reconstruct it correctly for the game logic (e.g. ``lambda(n): float(n)``). The reason for using lambda expressions is in order to allow for the evaluation of these objects (e.g. if it is a :class:`core.components.Resource`) to be carried out during run-time instead of during initialisation. This means that everything is evaluated as it should, including objects which are created or edited on the fly during gameplay.
+		- `game`: holds all the game data after :func:`loadXMLGameData` is called and
+		- `typeConverter`: a dictionary which contains key-value pairs between the different types of the game model (e.g. "Number") and a lambda expression to reconstruct it correctly for the game logic (e.g. ``lambda(n): float(n)``). The reason for using lambda expressions is in order to allow for the evaluation of these objects (e.g. if it is a :class:`core.components.Resource`) to be carried out during run-time instead of during initialisation. This means that everything is evaluated as it should, including objects which are created or edited on the fly during gameplay.
 	"""
 	def __init__(self):
 		"""
@@ -28,8 +28,8 @@ class GameParser:
 		Auxiliary function which converts a string ``s`` to a boolean for the purposes of this engine.
 		
 		:Returns:
-		- ``True`` if string ``s`` equals "True".
-		- ``False`` otherwise.
+			- ``True`` if string ``s`` equals "True".
+			- ``False`` otherwise.
 		"""
 		return s == "True"
 
@@ -40,13 +40,13 @@ class GameParser:
 		gather all the information.
 
 		:parameters:
-		- `gameDataFile`: a string to the XML file e.g. "game1.xml".
+			- `gameDataFile`: a string to the XML file e.g. "game1.xml".
 
 		:exceptions:
-		- "Error loading game file." is the file is not found or if the file contains bad XML.
+			- "Error loading game file." is the file is not found or if the file contains bad XML.
 
 		:Returns:
-		- A populated :class:`core.components.Game` object.
+			- A populated :class:`core.components.Game` object.
 		"""
 		# Load data
 		try:
@@ -95,11 +95,11 @@ class GameParser:
 		Auxiliary function used by :func:`loadXMLGameData` which creates a :class:`core.components.Action` object.
 
 		:parameters:
-		- `action`: an <action> XML node from the game data file.
-		- `game`: the `game` attribute of :class:`GameParser`.
+			- `action`: an <action> XML node from the game data file.
+			- `game`: the `game` attribute of :class:`GameParser`.
 
 		:Returns:
-		- A populated :class:`core.components.Action`.
+			- A populated :class:`core.components.Action`.
 		"""
 		actionObject = core.components.Action(action.find("Name").text, self.stringToBoolean(action.find("Visible").text), self.stringToBoolean(action.find("Enabled").text), self.stringToBoolean(action.find("Active").text))
 		# Keywords
@@ -121,11 +121,11 @@ class GameParser:
 		Auxiliary function used by :func:`createActionObject` which creates a :class:`core.components.Effect` object.
 
 		:parameters:
-		- `effect`: an <effect> XML node from the game data file.
-		- `game`: the `game` attribute of :class:`GameParser`.
+			- `effect`: an <effect> XML node from the game data file.
+			- `game`: the `game` attribute of :class:`GameParser`.
 
 		:Returns:
-		- A populated :class:`core.components.Effect`.
+			- A populated :class:`core.components.Effect`.
 		"""
 		argsNode = effect.find("args")
 		effectObject = core.components.Effect()
@@ -143,11 +143,11 @@ class GameParser:
 		Auxiliary function used by :func:`createActionObject` which creates a :class:`core.components.Condition` object.
 
 		:parameters:
-		- `condition`: a <condition> XML node from the game data file.
-		- `game`: the `game` attribute of :class:`GameParser`.
+			- `condition`: a <condition> XML node from the game data file.
+			- `game`: the `game` attribute of :class:`GameParser`.
 
 		:Returns:
-		- A populated :class:`core.components.Condition`.
+			- A populated :class:`core.components.Condition`.
 		"""
 		# Left hand side element
 		leftHandSideNode = condition.find("LeftHandSide")
@@ -176,10 +176,10 @@ class GameParser:
 		Auxiliary function used by :func:`loadXMLGameData` which creates a :class:`core.components.Resource` object.
 
 		:parameters:
-		- `resource`: a <resource> XML node from the game data file.
+			- `resource`: a <resource> XML node from the game data file.
 
 		:Returns:
-		- A populated :class:`core.components.Resource`.
+			- A populated :class:`core.components.Resource`.
 		"""
 		resourceType = resource.find("Type").text
 		resourceValue = ""
