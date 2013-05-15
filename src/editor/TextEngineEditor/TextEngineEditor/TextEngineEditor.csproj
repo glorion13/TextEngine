@@ -165,6 +165,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClassDiagram.cd" />
     <None Include="Lib\Python\core\components\customisable\conditions.pyc" />
     <None Include="Lib\Python\core\components\customisable\effects.pyc" />
     <None Include="Lib\Python\core\components\customisable\__init__.pyc" />
