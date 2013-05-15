@@ -16,11 +16,11 @@ class GameParser:
 		"""
 		self.game = None
 		self.typeConverter = {
-		"Boolean" 	: lambda(n): n,
-		"Number" 	: lambda(n): float(n),
-		"Text" 		: lambda(n): str(n),
-		"Resource" 	: lambda(n): self.game.getResourceByName(str(n)),
-		"Scene" 	: lambda(n): self.game.getSceneByName(str(n))
+		"Boolean" 	: lambda n: n,
+		"Number" 	: lambda n: float(n),
+		"Text" 		: lambda n: str(n),
+		"Resource" 	: lambda n: self.game.getResourceByName(str(n)),
+		"Scene" 	: lambda n: self.game.getSceneByName(str(n))
 		}
 
 	def stringToBoolean(self, s):

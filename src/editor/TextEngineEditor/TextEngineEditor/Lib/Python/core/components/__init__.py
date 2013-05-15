@@ -1,4 +1,4 @@
-import customisable
+from . import customisable
 
 class Game(customisable.effects.EffectFunctions, customisable.conditions.ConditionFunctions):
 	"""

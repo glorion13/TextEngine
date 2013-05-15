@@ -26,13 +26,15 @@ while (True):
 		action.perform()
 	# Display narrative
 	for narr in game.narrative:
-		print narr
+		print(narr)
 	game.narrative = []
 	# Display visible actions
 	gActs = [gAction.name for gAction in game.globalActions if gAction.active == True and gAction.enabled == True and gAction.visible == True]
 	lActs = [lAction.name for lAction in game.currentScene.actions if lAction.active == True and lAction.enabled == True and lAction.visible == True]
-	if not (len(gActs) == 0): print gActs
-	if not (len(lActs) == 0): print lActs
+	if not (len(gActs) == 0):
+		print(gActs)
+	if not (len(lActs) == 0):
+		print(lActs)
 	# Wait for user action
 	try:
 		userInput = raw_input('\n>')

@@ -714,7 +714,7 @@ namespace TextEngineEditor.ViewModel
             if (success)
             {
                 string pythonPath = "python";
-                string filePath = new System.Uri(System.AppDomain.CurrentDomain.BaseDirectory + "Lib/Python/interpreter.py", System.UriKind.RelativeOrAbsolute).ToString();
+                string filePath = "Lib/Python/interpreter.py";
                 System.Diagnostics.ProcessStartInfo start = new System.Diagnostics.ProcessStartInfo();
                 start.FileName = pythonPath;
                 start.Arguments = filePath;

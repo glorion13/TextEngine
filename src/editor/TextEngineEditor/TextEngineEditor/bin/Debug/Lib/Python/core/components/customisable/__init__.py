@@ -1,5 +1,5 @@
-import effects
-import conditions
+from . import effects
+from . import conditions
 
 def getEffectCount():
     return len(effects.EffectFunctions().effectDict)
