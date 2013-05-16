@@ -39,7 +39,7 @@ The player can always see a list of all visible actions (just like many traditio
 Types
 ----------
 
-There are 5 `types` (programmatically speaking) in a TAINT game:
+There are 4 `types` (programmatically speaking) in a TAINT game:
 	- `Number`: a number can be an integer like 10 or a float like 0.75.
 	- `Text`: text is exactly what you would imagine; it is used for anything written.
 	- `Boolean`: boolean can be either ``True`` or ``False`` and can be used for checks like whether or not something exists or whether or not the player has done something.

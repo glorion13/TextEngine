@@ -65,14 +65,14 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Attributes :</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<ul class="simple">
+<tr class="field-odd field"><th class="field-name">Attributes :</th><td class="field-body"><ul class="first last simple">
 <li><cite>game</cite>: holds all the game data after <a class="reference internal" href="#dataParser.GameParser.loadXMLGameData" title="dataParser.GameParser.loadXMLGameData"><tt class="xref py py-func docutils literal"><span class="pre">loadXMLGameData()</span></tt></a> is called and</li>
 <li><cite>typeConverter</cite>: a dictionary which contains key-value pairs between the different types of the game model (e.g. &#8220;Number&#8221;) and a lambda expression to reconstruct it correctly for the game logic (e.g. <tt class="docutils literal"><span class="pre">lambda(n):</span> <span class="pre">float(n)</span></tt>). The reason for using lambda expressions is in order to allow for the evaluation of these objects (e.g. if it is a <a class="reference internal" href="dev_core.html#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Resource</span></tt></a>) to be carried out during run-time instead of during initialisation. This means that everything is evaluated as it should, including objects which are created or edited on the fly during gameplay.</li>
 </ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="dataParser.GameParser.createActionObject">
 <tt class="descname">createActionObject</tt><big>(</big><em>action</em>, <em>game</em><big>)</big><a class="reference internal" href="_modules/dataParser.html#GameParser.createActionObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dataParser.GameParser.createActionObject" title="Permalink to this definition">¶</a></dt>
@@ -81,25 +81,19 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<ul class="simple">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><ul class="first simple">
 <li><cite>action</cite>: an &lt;action&gt; XML node from the game data file.</li>
 <li><cite>game</cite>: the <cite>game</cite> attribute of <a class="reference internal" href="#dataParser.GameParser" title="dataParser.GameParser"><tt class="xref py py-class docutils literal"><span class="pre">GameParser</span></tt></a>.</li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"></td>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><ul class="first last simple">
+<li>A populated <a class="reference internal" href="dev_core.html#core.components.Action" title="core.components.Action"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Action</span></tt></a>.</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
-<ul class="simple">
-<li>A populated <a class="reference internal" href="dev_core.html#core.components.Action" title="core.components.Action"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Action</span></tt></a>.</li>
-</ul>
 </dd></dl>
 
 <dl class="method">
@@ -110,25 +104,19 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<ul class="simple">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><ul class="first simple">
 <li><cite>condition</cite>: a &lt;condition&gt; XML node from the game data file.</li>
 <li><cite>game</cite>: the <cite>game</cite> attribute of <a class="reference internal" href="#dataParser.GameParser" title="dataParser.GameParser"><tt class="xref py py-class docutils literal"><span class="pre">GameParser</span></tt></a>.</li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"></td>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><ul class="first last simple">
+<li>A populated <a class="reference internal" href="dev_core.html#core.components.Condition" title="core.components.Condition"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Condition</span></tt></a>.</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
-<ul class="simple">
-<li>A populated <a class="reference internal" href="dev_core.html#core.components.Condition" title="core.components.Condition"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Condition</span></tt></a>.</li>
-</ul>
 </dd></dl>
 
 <dl class="method">
@@ -139,25 +127,19 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<ul class="simple">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><ul class="first simple">
 <li><cite>effect</cite>: an &lt;effect&gt; XML node from the game data file.</li>
 <li><cite>game</cite>: the <cite>game</cite> attribute of <a class="reference internal" href="#dataParser.GameParser" title="dataParser.GameParser"><tt class="xref py py-class docutils literal"><span class="pre">GameParser</span></tt></a>.</li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"></td>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><ul class="first last simple">
+<li>A populated <a class="reference internal" href="dev_core.html#core.components.Effect" title="core.components.Effect"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Effect</span></tt></a>.</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
-<ul class="simple">
-<li>A populated <a class="reference internal" href="dev_core.html#core.components.Effect" title="core.components.Effect"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Effect</span></tt></a>.</li>
-</ul>
 </dd></dl>
 
 <dl class="method">
@@ -168,24 +150,18 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<ul class="simple">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><ul class="first simple">
 <li><cite>resource</cite>: a &lt;resource&gt; XML node from the game data file.</li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"></td>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns :</th><td class="field-body"><ul class="first last simple">
+<li>A populated <a class="reference internal" href="dev_core.html#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Resource</span></tt></a>.</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
-<ul class="simple">
-<li>A populated <a class="reference internal" href="dev_core.html#core.components.Resource" title="core.components.Resource"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Resource</span></tt></a>.</li>
-</ul>
 </dd></dl>
 
 <dl class="method">
@@ -198,35 +174,23 @@ gather all the information.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<ul class="simple">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><ul class="first simple">
 <li><cite>gameDataFile</cite>: a string to the XML file e.g. &#8220;game1.xml&#8221;.</li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Exceptions :</th><td class="field-body"></td>
+</td>
 </tr>
-</tbody>
-</table>
-<ul class="simple">
+<tr class="field-even field"><th class="field-name">Exceptions :</th><td class="field-body"><ul class="first simple">
 <li>&#8220;Error loading game file.&#8221; is the file is not found or if the file contains bad XML.</li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"></td>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"><ul class="first last simple">
+<li>A populated <a class="reference internal" href="dev_core.html#core.components.Game" title="core.components.Game"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Game</span></tt></a> object.</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
-<ul class="simple">
-<li>A populated <a class="reference internal" href="dev_core.html#core.components.Game" title="core.components.Game"><tt class="xref py py-class docutils literal"><span class="pre">core.components.Game</span></tt></a> object.</li>
-</ul>
 </dd></dl>
 
 <dl class="method">
@@ -237,14 +201,14 @@ gather all the information.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<ul class="simple">
+<tr class="field-odd field"><th class="field-name">Returns :</th><td class="field-body"><ul class="first last simple">
 <li><tt class="docutils literal"><span class="pre">True</span></tt> if string <tt class="docutils literal"><span class="pre">s</span></tt> equals &#8220;True&#8221;.</li>
 <li><tt class="docutils literal"><span class="pre">False</span></tt> otherwise.</li>
 </ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>

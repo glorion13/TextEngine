@@ -1,0 +1,6 @@
+Sphinx
+--------
+
+To install Sphinx-doc, you need to make sure you have "easy_install" already installed (https://pypi.python.org/pypi/setuptools).
+
+Then all you need to do is run install_sphinx.bat in Windows or install_sphinx.sh in Linux.
