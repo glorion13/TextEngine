@@ -1,14 +1,13 @@
 TAINT: Text Adventure and Interactive Novel Toolkit
-==========
+=======================================================
 
 Engine for interactive novels and text adventure games, in Python.
 
 The main motivation of the TAINT project is to allow non-technical people to bring their own stories to life, which they can then share with their friends and family or even release on a greater scale.
 
-Documentation
---------------
-
-To read through the documentation (both user and developer) open /build/html/index.html and read through.
+	- Documentation: http://gouvatsos.com/Media/Default/Apps/TextEngineEditor/docs/build/html/index.html
+	- Editor (windows only): http://www.gouvatsos.com/Media/Default/Apps/TextEngineEditor/publish.htm
+	- Games hub: http://taintgameshub.appspot.com/
 
 Motivation
 -----------
