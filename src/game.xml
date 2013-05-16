@@ -1,28 +1,74 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Game>
-	<GameName>ZORK I: The Great Underground Empire</GameName>
-	<Author>Infocom, Inc.</Author>
-	<StartingScene>West of House</StartingScene>
+	<GameName>Escape from the cave</GameName>
+	<Author>Alex</Author>
+	<StartingScene>cave</StartingScene>
 	<GlobalResources/>
 	<GlobalActions/>
 	<Scenes>
 		<Scene>
-			<Name>West of House</Name>
-			<Description>You are standing in an open field west of a white house, with a boarded front door. There is a small mailbox here.</Description>
+			<ID>0</ID>
+			<Name>cave</Name>
+			<Description>You find yourself in a big cave.</Description>
 			<Resources/>
 			<Actions>
 				<Action>
-					<Name>open mailbox</Name>
+					<Name>Run outside</Name>
 					<Visible>False</Visible>
 					<Enabled>True</Enabled>
 					<Active>True</Active>
-					<Keywords/>
+					<Conditions>
+						<Condition>
+							<ConditionFunction>less than</ConditionFunction>
+							<LeftHandSide Type="Number">1</LeftHandSide>
+							<RightHandSide Type="Number">4</RightHandSide>
+						</Condition>
+						<Condition>
+							<ConditionFunction>equals</ConditionFunction>
+							<LeftHandSide Type="Boolean">True</LeftHandSide>
+							<RightHandSide Type="Boolean">True</RightHandSide>
+						</Condition>
+						<Condition>
+							<ConditionFunction>equals</ConditionFunction>
+							<LeftHandSide Type="Text">hax</LeftHandSide>
+							<RightHandSide Type="Text">hax</RightHandSide>
+						</Condition>
+					</Conditions>
+					<EffectsIfTrue>
+						<Effect>
+							<EffectFunction>Tell player</EffectFunction>
+							<args>
+								<arg Type="Text">You run and run.</arg>
+							</args>
+						</Effect>
+						<Effect>
+							<EffectFunction>Go to scene</EffectFunction>
+							<args>
+								<arg Type="Scene">beach</arg>
+							</args>
+						</Effect>
+					</EffectsIfTrue>
+					<EffectsIfFalse/>
+				</Action>
+			</Actions>
+		</Scene>
+		<Scene>
+			<ID>0</ID>
+			<Name>beach</Name>
+			<Description>You stop running and find yourself in a sancy beach. Congratulations, you escaped from the cave!</Description>
+			<Resources/>
+			<Actions>
+				<Action>
+					<Name>laugh</Name>
+					<Visible>False</Visible>
+					<Enabled>True</Enabled>
+					<Active>True</Active>
 					<Conditions/>
 					<EffectsIfTrue>
 						<Effect>
 							<EffectFunction>Tell player</EffectFunction>
 							<args>
-								<arg Type="Text">Opening the small mailbox reveals a leaflet.</arg>
+								<arg Type="Text">You laugh hard.</arg>
 							</args>
 						</Effect>
 					</EffectsIfTrue>
