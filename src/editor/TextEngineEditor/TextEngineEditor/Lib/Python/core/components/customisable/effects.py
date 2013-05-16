@@ -1,3 +1,8 @@
+"""
+Copyright (c) 2013 ICRL
+See the file license.txt for copying permission.
+"""
+
 class EffectFunctions:
     """
     This class contains all the customisable functions which are used to represent the output of an action e.g. go to another scene or give information to the player.

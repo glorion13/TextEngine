@@ -1,3 +1,6 @@
+.. Copyright (c) 2013 ICRL
+   See the file license.txt for copying permission.
+
 .. _scripted_components:
 
 How to extend TAINT with custom functions?

@@ -1,3 +1,6 @@
+.. Copyright (c) 2013 ICRL
+   See the file license.txt for copying permission.
+
 .. _game_xml:
 
 How is a game stored?

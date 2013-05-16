@@ -1,3 +1,6 @@
+.. Copyright (c) 2013 ICRL
+   See the file license.txt for copying permission.
+
 core
 ==============================
 The :mod:`core` module contains the following submodules:
