@@ -1,4 +1,8 @@
-﻿using System;
+﻿/// <copyright>
+/// Copyright (c) 2013 ICRL
+/// See the file license.txt for copying permission.
+/// </copyright>
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;

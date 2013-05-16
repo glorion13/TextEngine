@@ -150,87 +150,87 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TAINT Editor.exe" size="61952">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TAINT Editor.exe" size="61440">
       <assemblyIdentity name="TAINT Editor" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>e9JGSWNdi6mSYc3qr57DSjJ5xBMG4D0VfxkqkII4qzA=</dsig:DigestValue>
+        <dsig:DigestValue>EgrrrrJqcPJY2FiOCpU5RMrkUHxYSNEOkcavS2VtEW4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="Lib\Python\core\__init__.py" size="24">
+  <file name="Lib\Python\core\__init__.py" size="111">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>EQtVD0V+vEnlxgtuY/tjL/vtC5rIitLfLKMYD5+blaA=</dsig:DigestValue>
+      <dsig:DigestValue>OzG+nBDDeDqCy3cBaECOYEIYxwWWrkX/+F5GkUxAZK8=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Lib\Python\core\components\__init__.py" size="10890">
+  <file name="Lib\Python\core\components\__init__.py" size="10977">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>sIlV5ToHC4rq5Sh2aopE3opoj0+R3uKzJiIe7OP/l4M=</dsig:DigestValue>
+      <dsig:DigestValue>w2HeU36DZ7W3yVGP0ihVealLMD9p5nT4dj2ayOmVnx0=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Lib\Python\core\components\customisable\__init__.py" size="417">
+  <file name="Lib\Python\core\components\customisable\__init__.py" size="504">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>AoyVgmNLGZciGwgaJbiHuz/hsil/Js7LCkL/GgGDtRE=</dsig:DigestValue>
+      <dsig:DigestValue>fFZRHopqqsQFqFkVZHTjU4WhBcUT7yd30iD0255fKKs=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Lib\Python\core\components\customisable\conditions.py" size="658">
+  <file name="Lib\Python\core\components\customisable\conditions.py" size="745">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>yjfYjI2scYPh5nb+ar2XPaSNPzrsYJV930w0qhoPVk4=</dsig:DigestValue>
+      <dsig:DigestValue>XBkxGsbct9mN1jlh7DSSkwQDJR21R1IgjrX3s6Km3/0=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Lib\Python\core\components\customisable\effects.py" size="2530">
+  <file name="Lib\Python\core\components\customisable\effects.py" size="2617">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>e3h11t+78uAePppna878PlOA+Qfa3tGx+QTm+VvELJo=</dsig:DigestValue>
+      <dsig:DigestValue>ONLbvXR4+H/LKnSieKs1+zabge3gZqWlA42k8nirVeI=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Lib\Python\dataParser\__init__.py" size="7891">
+  <file name="Lib\Python\dataParser\__init__.py" size="7998">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>qvO7q3+UacH9dHeWGcr989lgraK+e5NGqCe9fp6hAdw=</dsig:DigestValue>
+      <dsig:DigestValue>R/vX0RalbNWAhJFA6j2OC3DB6sOiIwg1cZUz0Ok0E54=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Lib\Python\interpreter.py" size="1791">
+  <file name="Lib\Python\interpreter.py" size="1954">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>rf8UHgEh3627kEM2m8VUvbC9fHaLX19l6bX5ogcMRp0=</dsig:DigestValue>
+      <dsig:DigestValue>bIZvW+pnGbP4l7XIEcXbF8koDnQpLYUjYdL4A7g1G7w=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="TAINT Editor.exe.config" size="187">
+  <file name="TAINT Editor.exe.config" size="277">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>xm4bo26HQ0LNVwz1vdPYtzhkpMnp2AI5i+f0b+OahTI=</dsig:DigestValue>
+      <dsig:DigestValue>zcQpKCslfAGQoNlqixdZHItH87OLaEgkSKoIGtissvw=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

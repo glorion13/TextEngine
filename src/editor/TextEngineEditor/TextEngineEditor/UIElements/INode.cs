@@ -1,4 +1,8 @@
-﻿using GalaSoft.MvvmLight;
+﻿/// <copyright>
+/// Copyright (c) 2013 ICRL
+/// See the file license.txt for copying permission.
+/// </copyright>
+using GalaSoft.MvvmLight;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,0 +1,18 @@
+extensions: designer.cs generated.cs
+extensions: .cs .cpp .h
+/// <copyright>
+/// Copyright (c) 2013 ICRL
+/// See the file license.txt for copying permission.
+/// </copyright>
+extensions: .aspx .ascx
+<%-- 
+Copyright (c) 2013 ICRL
+See the file license.txt for copying permission.
+--%>
+extensions: .vb
+'Sample license text.
+extensions:  .xml .xaml .config .xsd
+<!--
+Copyright (c) 2013 ICRL
+See the file license.txt for copying permission.
+-->

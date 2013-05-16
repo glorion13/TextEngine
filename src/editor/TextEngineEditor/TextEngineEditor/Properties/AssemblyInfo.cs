@@ -1,4 +1,8 @@
-﻿using System.Reflection;
+﻿/// <copyright>
+/// Copyright (c) 2013 ICRL
+/// See the file license.txt for copying permission.
+/// </copyright>
+using System.Reflection;
 using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;

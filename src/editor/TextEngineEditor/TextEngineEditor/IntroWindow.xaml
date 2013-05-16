@@ -1,4 +1,8 @@
-﻿<Window x:Class="TextEngineEditor.IntroWindow"
+﻿<!--
+Copyright (c) 2013 ICRL
+See the file license.txt for copying permission.
+-->
+<Window x:Class="TextEngineEditor.IntroWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         DataContext="{Binding Intro, Source={StaticResource Locator}}"

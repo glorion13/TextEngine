@@ -178,7 +178,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="TextEngineEditor_TemporaryKey.pfx" />
+    <None Include="TextEngineEditor.licenseheader" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

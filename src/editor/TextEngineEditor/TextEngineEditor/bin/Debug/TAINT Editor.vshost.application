@@ -14,14 +14,14 @@
     <framework targetVersion="4.5" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="TAINT Editor.exe.manifest" size="12712">
+    <dependentAssembly dependencyType="install" codebase="TAINT Editor.exe.manifest" size="12713">
       <assemblyIdentity name="TAINT Editor.exe" version="1.0.0.12" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>+uVZbaEUzaAmpp+2CedR3pCcA8MTtFcTrkBDPJ7caJ0=</dsig:DigestValue>
+        <dsig:DigestValue>KmDyJT6xavAabW0R5LIW95hwKTC9jzV2bOb3fSxXzuc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

@@ -1,3 +1,8 @@
+"""
+Copyright (c) 2013 ICRL
+See the file license.txt for copying permission.
+"""
+
 class EffectFunctions:
     """
     This class contains all the customisable functions which are used to represent the output of an action e.g. go to another scene or give information to the player.
@@ -6,12 +11,12 @@ class EffectFunctions:
     def cmdOutputText(self, text):
         self.narrative += [text]
     def goToScene(self, scene):
-        self.currentScene = scene
-        self.cmdOutputText(scene.description)
+    	self.currentScene = scene
+    	self.cmdOutputText(scene.description)
     def outputVisibleSceneActions(self, scene):
-        possibleActions = [ action.name for action in scene.actions if action.visible ]
-        if not possibleActions == []:
-            self.cmdOutputText(str(possibleActions))
+    	possibleActions = [ action.name for action in scene.actions if action.visible ]
+    	if not possibleActions == []:
+    		self.cmdOutputText(str(possibleActions))
     def addGlobalResource(self, text, primitive):
         self.addResource(text, primitive)
     def editGlobalResource(self, gresource, primitive):
