@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="TAINT Editor.exe" version="1.0.0.11" publicKeyToken="0e92c9302df76439" language="neutral" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="TAINT Editor.exe" version="1.0.0.13" publicKeyToken="0e92c9302df76439" language="neutral" processorArchitecture="msil" type="win32" />
   <application />
   <entryPoint>
     <assemblyIdentity name="TAINT Editor" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
@@ -150,87 +150,87 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TAINT Editor.exe" size="61952">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TAINT Editor.exe" size="62976">
       <assemblyIdentity name="TAINT Editor" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>K7LY84M60utMnqTaOLv8/uBNL6QjMa4Y+8eJj15UTY8=</dsig:DigestValue>
+        <dsig:DigestValue>UDHmwpR6Ut8EVeKa/ex2ghHmXmwQwcy/NLeioD8HPLA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="Lib\Python\core\__init__.py" size="24">
+  <file name="Lib\Python\core\__init__.py" size="111">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>EQtVD0V+vEnlxgtuY/tjL/vtC5rIitLfLKMYD5+blaA=</dsig:DigestValue>
+      <dsig:DigestValue>OzG+nBDDeDqCy3cBaECOYEIYxwWWrkX/+F5GkUxAZK8=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Lib\Python\core\components\__init__.py" size="10890">
+  <file name="Lib\Python\core\components\__init__.py" size="10977">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>sIlV5ToHC4rq5Sh2aopE3opoj0+R3uKzJiIe7OP/l4M=</dsig:DigestValue>
+      <dsig:DigestValue>w2HeU36DZ7W3yVGP0ihVealLMD9p5nT4dj2ayOmVnx0=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Lib\Python\core\components\customisable\__init__.py" size="417">
+  <file name="Lib\Python\core\components\customisable\__init__.py" size="504">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>AoyVgmNLGZciGwgaJbiHuz/hsil/Js7LCkL/GgGDtRE=</dsig:DigestValue>
+      <dsig:DigestValue>fFZRHopqqsQFqFkVZHTjU4WhBcUT7yd30iD0255fKKs=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Lib\Python\core\components\customisable\conditions.py" size="658">
+  <file name="Lib\Python\core\components\customisable\conditions.py" size="745">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>yjfYjI2scYPh5nb+ar2XPaSNPzrsYJV930w0qhoPVk4=</dsig:DigestValue>
+      <dsig:DigestValue>XBkxGsbct9mN1jlh7DSSkwQDJR21R1IgjrX3s6Km3/0=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Lib\Python\core\components\customisable\effects.py" size="2530">
+  <file name="Lib\Python\core\components\customisable\effects.py" size="3079">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>e3h11t+78uAePppna878PlOA+Qfa3tGx+QTm+VvELJo=</dsig:DigestValue>
+      <dsig:DigestValue>b0Mo5btXa4rfEFsD8eftUy9j+lfGqA2vrb3XNM5Z6uo=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Lib\Python\dataParser\__init__.py" size="7891">
+  <file name="Lib\Python\dataParser\__init__.py" size="7998">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>qvO7q3+UacH9dHeWGcr989lgraK+e5NGqCe9fp6hAdw=</dsig:DigestValue>
+      <dsig:DigestValue>R/vX0RalbNWAhJFA6j2OC3DB6sOiIwg1cZUz0Ok0E54=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Lib\Python\interpreter.py" size="1739">
+  <file name="Lib\Python\interpreter.py" size="1954">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>DARS0xDihKqtBU1wgq+gBtQ1I7/XEn9pDsUqptmmfJ8=</dsig:DigestValue>
+      <dsig:DigestValue>bIZvW+pnGbP4l7XIEcXbF8koDnQpLYUjYdL4A7g1G7w=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="TAINT Editor.exe.config" size="187">
+  <file name="TAINT Editor.exe.config" size="277">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>xm4bo26HQ0LNVwz1vdPYtzhkpMnp2AI5i+f0b+OahTI=</dsig:DigestValue>
+      <dsig:DigestValue>zcQpKCslfAGQoNlqixdZHItH87OLaEgkSKoIGtissvw=</dsig:DigestValue>
     </hash>
   </file>
-<publisherIdentity name="CN=HRA2Z\alex.guvastsos" issuerKeyHash="0b52e751771c91caa7de5a28722d3ca8ffafc191" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>PDSJwl9nB30FnsZQc+X3xLazfYwhBRfiLZd0WALtRck=</DigestValue></Reference></SignedInfo><SignatureValue>WVAmpg2dhRCqfIHbPs0dt0GwH/SZU/e2N0MQv2kLTKgWHYCsplZFXmw46JxCR9JkAYQGdoeVqbQxD4WbWHsqtCZOBgxmeqMkSXJBTcCVEdaaDjy9ZSvjeY+3oawDiYCG6OZrCluQ0qS3MjZHlNleIPaPuy5XNSLXXII+lGl8IfU=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>i/2AgY5fAEpqzXEShZEGmoLE54oHP99z9NgOQqVbiebKH3LptsmGPCpSBRgG1HlXEW992iEE2aAUFvmQz9C/5VhcD4c6/i361gQ5/gQENsSr5RSZPdlB1xqemanO47QijdvKR4ftXi4Zq4YTRfiPnubkPEqPs632drrDqjjT17k=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="c945ed025874972de21705218c7db3b6c4f7e57350c69e057d07675fc289343c" Description="" Url=""><as:assemblyIdentity name="TAINT Editor.exe" version="1.0.0.11" publicKeyToken="0e92c9302df76439" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=HRA2Z\alex.guvastsos</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>7K/eAiiO7y/BbQ28aHwhiY3qenp9+CfKlv1qQU93AVw=</DigestValue></Reference></SignedInfo><SignatureValue>bIUKAr21RCmHWnLYx3mHp1zrjIyEurc0dtDCJUc4jWN9q0Cyt5tofxs5hC9BoVfdbzcpO/7+3cpLHP3rOsoVtMWy+MPLAKpANPL/mmHX1YhTiGx6bWIScBbGi/eAj1Vo/WHDwbHuln4os6zrP7nCGOwb76vDZom8Szn2Pfel5R4=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>i/2AgY5fAEpqzXEShZEGmoLE54oHP99z9NgOQqVbiebKH3LptsmGPCpSBRgG1HlXEW992iEE2aAUFvmQz9C/5VhcD4c6/i361gQ5/gQENsSr5RSZPdlB1xqemanO47QijdvKR4ftXi4Zq4YTRfiPnubkPEqPs632drrDqjjT17k=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB6TCCAVKgAwIBAgIQN37yJIibVYFKYkp3IaQ0njANBgkqhkiG9w0BAQsFADAzMTEwLwYDVQQDHigASABSAEEAMgBaAFwAYQBsAGUAeAAuAGcAdQB2AGEAcwB0AHMAbwBzMB4XDTEzMDUxNDE0MTUwMVoXDTE0MDUxNDIwMTUwMVowMzExMC8GA1UEAx4oAEgAUgBBADIAWgBcAGEAbABlAHgALgBnAHUAdgBhAHMAdABzAG8AczCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAi/2AgY5fAEpqzXEShZEGmoLE54oHP99z9NgOQqVbiebKH3LptsmGPCpSBRgG1HlXEW992iEE2aAUFvmQz9C/5VhcD4c6/i361gQ5/gQENsSr5RSZPdlB1xqemanO47QijdvKR4ftXi4Zq4YTRfiPnubkPEqPs632drrDqjjT17kCAwEAATANBgkqhkiG9w0BAQsFAAOBgQB3MaiqcdleT4biV6laZhnMcA2p4JdmW3YvOU+HlAEC0f2tKBsa+Os/ZoCFTLTWaWYcCqYXDatbEzTP8NYRmd1NaI9GTUK+7HNoQx9rMrqCrzBUBSGE1tldwl3n9w7Lm2BGNIAJofl21wpKTHzOdOIfqQxgyZ0Mtr+DVv8UO4929w==</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
+<publisherIdentity name="CN=HRA2Z\alex.guvastsos" issuerKeyHash="0b52e751771c91caa7de5a28722d3ca8ffafc191" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>5+IfB21QRYf/wypQMS7JC8OVl0t1jhaIArD2h24NXZA=</DigestValue></Reference></SignedInfo><SignatureValue>JvZhmB9V+X8mjk1rbKy5Owll14c4ggBMI/ajOr0k3PzacNzS/e1o1+ZO8rDPON3FBbBUOtsD6E1go3SvjacwAhzktGGIPOJOupFHVQfdsMTQjigyFtAgfKm90zHVwhLZv9bgZ2I8/n2EJdOeW0Lvv9tiWyjY3j2+SLtVDslMu60=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>i/2AgY5fAEpqzXEShZEGmoLE54oHP99z9NgOQqVbiebKH3LptsmGPCpSBRgG1HlXEW992iEE2aAUFvmQz9C/5VhcD4c6/i361gQ5/gQENsSr5RSZPdlB1xqemanO47QijdvKR4ftXi4Zq4YTRfiPnubkPEqPs632drrDqjjT17k=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="905d0d6e87f6b00288168e754b9795c30bc92e31502ac3ff8745506d071fe2e7" Description="" Url=""><as:assemblyIdentity name="TAINT Editor.exe" version="1.0.0.13" publicKeyToken="0e92c9302df76439" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=HRA2Z\alex.guvastsos</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>lhUM2J9UuoB62+hSPUdq26tMkF09gGnGXpinGc+mZOw=</DigestValue></Reference></SignedInfo><SignatureValue>e3VOWLLQ2nsunbeHJFRT3dn0AIL68cWIEus3nW9vX/PXKzfJcpiJryBpmkr5nGtGPHs8HAGEhM/xpHXL7CYcnkBzCLTIdJi7XGc+EogbM1vgj/t2zej3MuuVAFI3CECnydanlvHQdZp0nBuMUBRv7zJm00mrrgTzYhX5fEhUtio=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>i/2AgY5fAEpqzXEShZEGmoLE54oHP99z9NgOQqVbiebKH3LptsmGPCpSBRgG1HlXEW992iEE2aAUFvmQz9C/5VhcD4c6/i361gQ5/gQENsSr5RSZPdlB1xqemanO47QijdvKR4ftXi4Zq4YTRfiPnubkPEqPs632drrDqjjT17k=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB6TCCAVKgAwIBAgIQN37yJIibVYFKYkp3IaQ0njANBgkqhkiG9w0BAQsFADAzMTEwLwYDVQQDHigASABSAEEAMgBaAFwAYQBsAGUAeAAuAGcAdQB2AGEAcwB0AHMAbwBzMB4XDTEzMDUxNDE0MTUwMVoXDTE0MDUxNDIwMTUwMVowMzExMC8GA1UEAx4oAEgAUgBBADIAWgBcAGEAbABlAHgALgBnAHUAdgBhAHMAdABzAG8AczCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAi/2AgY5fAEpqzXEShZEGmoLE54oHP99z9NgOQqVbiebKH3LptsmGPCpSBRgG1HlXEW992iEE2aAUFvmQz9C/5VhcD4c6/i361gQ5/gQENsSr5RSZPdlB1xqemanO47QijdvKR4ftXi4Zq4YTRfiPnubkPEqPs632drrDqjjT17kCAwEAATANBgkqhkiG9w0BAQsFAAOBgQB3MaiqcdleT4biV6laZhnMcA2p4JdmW3YvOU+HlAEC0f2tKBsa+Os/ZoCFTLTWaWYcCqYXDatbEzTP8NYRmd1NaI9GTUK+7HNoQx9rMrqCrzBUBSGE1tldwl3n9w7Lm2BGNIAJofl21wpKTHzOdOIfqQxgyZ0Mtr+DVv8UO4929w==</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

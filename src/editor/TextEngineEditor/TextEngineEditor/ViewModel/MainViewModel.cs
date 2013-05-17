@@ -93,8 +93,7 @@ namespace TextEngineEditor.ViewModel
                     "Text",
                     "Boolean",
                     "Number",
-                    "Resource",
-                    "Scene"
+                    "Resource"
                 };
 
                 SceneLayoutVisibility = "Collapsed";
@@ -333,7 +332,9 @@ namespace TextEngineEditor.ViewModel
         public ICommand RemoveSceneCommand { get; set; }
         private void RemoveScene(SceneNode scene)
         {
-            SceneNodes.Remove(scene);
+            bool confirmation = ConfirmDeletion("scene " + scene.Name);
+            if (confirmation)
+                SceneNodes.Remove(scene);
         }
 
         public ICommand AddGActionCommand { get; set; }
@@ -352,7 +353,9 @@ namespace TextEngineEditor.ViewModel
         public ICommand RemoveGActionCommand { get; set; }
         private void RemoveGAction(ActionNode action)
         {
-            GlobalActionNodes.Remove(action);
+            bool confirmation = ConfirmDeletion("action " + action.Name);
+            if (confirmation)
+                GlobalActionNodes.Remove(action);
         }
 
         public ICommand AddGResourceCommand { get; set; }
@@ -371,7 +374,9 @@ namespace TextEngineEditor.ViewModel
         public ICommand RemoveGResourceCommand { get; set; }
         private void RemoveGResource(ResourceNode resource)
         {
-            GlobalResourceNodes.Remove(resource);
+            bool confirmation = ConfirmDeletion("resource " + resource.Name);
+            if (confirmation)
+                GlobalResourceNodes.Remove(resource);
         }
 
         public ICommand AddLActionCommand { get; set; }
@@ -390,7 +395,9 @@ namespace TextEngineEditor.ViewModel
         public ICommand RemoveLActionCommand { get; set; }
         private void RemoveLAction(ActionNode action)
         {
-            SelectedSceneNode.Actions.Remove(action);
+            bool confirmation = ConfirmDeletion("action " + action.Name);
+            if (confirmation)
+                SelectedSceneNode.Actions.Remove(action);
         }
 
         public ICommand AddLResourceCommand { get; set; }
@@ -409,7 +416,9 @@ namespace TextEngineEditor.ViewModel
         public ICommand RemoveLResourceCommand { get; set; }
         private void RemoveLResource(ResourceNode resource)
         {
-            SelectedSceneNode.Resources.Remove(resource);
+            bool confirmation = ConfirmDeletion("resource " + resource.Name);
+            if (confirmation)
+                SelectedSceneNode.Resources.Remove(resource);
         }
 
         public ICommand AddConditionCommand { get; set; }
@@ -421,7 +430,9 @@ namespace TextEngineEditor.ViewModel
         public ICommand RemoveConditionCommand { get; set; }
         private void RemoveCondition(ConditionNode condition)
         {
-            SelectedActionNode.Conditions.Remove(condition);
+            bool confirmation = ConfirmDeletion("this condition");
+            if (confirmation)
+                SelectedActionNode.Conditions.Remove(condition);
         }
 
         public ICommand AddTrueEffectCommand { get; set; }
@@ -433,7 +444,9 @@ namespace TextEngineEditor.ViewModel
         public ICommand RemoveTrueEffectCommand { get; set; }
         private void RemoveTrueEffect(EffectNode effect)
         {
-            SelectedActionNode.EffectsIfTrue.Remove(effect);
+            bool confirmation = ConfirmDeletion("this effect");
+            if (confirmation)
+                SelectedActionNode.EffectsIfTrue.Remove(effect);
         }
 
         public ICommand AddFalseEffectCommand { get; set; }
@@ -445,7 +458,9 @@ namespace TextEngineEditor.ViewModel
         public ICommand RemoveFalseEffectCommand { get; set; }
         private void RemoveFalseEffect(EffectNode effect)
         {
-            SelectedActionNode.EffectsIfFalse.Remove(effect);
+            bool confirmation = ConfirmDeletion("this effect");
+            if (confirmation)
+                SelectedActionNode.EffectsIfFalse.Remove(effect);
         }
 
         public ICommand ExportXmlCommand { get; set; }
@@ -458,133 +473,21 @@ namespace TextEngineEditor.ViewModel
         {
             if (SceneNodes.Count > 0)
             {
-                using (System.Xml.XmlWriter writer = System.Xml.XmlWriter.Create("game.xml"))
+                if (StartingScene != null)
                 {
-                    writer.WriteStartDocument();
-                    #region <Game>
-                    writer.WriteStartElement("Game");
-
-                    writer.WriteElementString("GameName", GameName);
-                    writer.WriteElementString("Author", Author);
-                    writer.WriteElementString("StartingScene", StartingScene.Name);
-
-                    #region <GlobalResources>
-                    writer.WriteStartElement("GlobalResources");
-                    foreach (ResourceNode resource in GlobalResourceNodes)
+                    using (System.Xml.XmlWriter writer = System.Xml.XmlWriter.Create("game.xml"))
                     {
-                        writer.WriteStartElement("Resource");
-                        writer.WriteElementString("Name", resource.Name);
-                        writer.WriteElementString("Type", resource.Type);
-                        writer.WriteElementString("Value", resource.Value);
-                        writer.WriteEndElement();
-                    }
-                    writer.WriteEndElement();
-                    #endregion <GlobalResources>
+                        writer.WriteStartDocument();
+                        #region <Game>
+                        writer.WriteStartElement("Game");
 
-                    #region <GlobalActions>
-                    writer.WriteStartElement("GlobalActions");
-                    foreach (ActionNode action in GlobalActionNodes)
-                    {
-                        #region <Action>
-                        writer.WriteStartElement("Action");
-                        writer.WriteElementString("Name", action.Name);
-                        writer.WriteElementString("Visible", action.Visible.ToString().Substring(0, 1).ToUpper() + action.Visible.ToString().Substring(1));
-                        writer.WriteElementString("Enabled", action.Enabled.ToString().Substring(0, 1).ToUpper() + action.Enabled.ToString().Substring(1));
-                        writer.WriteElementString("Active", action.Active.ToString().Substring(0, 1).ToUpper() + action.Active.ToString().Substring(1));
+                        writer.WriteElementString("GameName", GameName);
+                        writer.WriteElementString("Author", Author);
+                        writer.WriteElementString("StartingScene", StartingScene.Name);
 
-                        #region <Keywords>
-                        writer.WriteStartElement("Keywords");
-                        foreach (string keyword in action.Keywords)
-                        {
-                            writer.WriteElementString("Keyword", keyword);
-                        }
-                        writer.WriteEndElement();
-                        #endregion <Keywords>
-
-                        #region <Conditions>
-                        writer.WriteStartElement("Conditions");
-                        foreach (ConditionNode condition in action.Conditions)
-                        {
-                            #region <Condition>
-                            writer.WriteStartElement("Condition");
-
-                            writer.WriteElementString("ConditionFunction", condition.ConditionType.ToString());
-
-                            writer.WriteStartElement("LeftHandSide");
-                            if (condition.LeftHandSideType != "")
-                                writer.WriteAttributeString("Type", condition.LeftHandSideType);
-                            writer.WriteString(condition.LeftHandSideValue);
-                            writer.WriteEndElement();
-
-                            writer.WriteStartElement("RightHandSide");
-                            if (condition.RightHandSideType != "")
-                                writer.WriteAttributeString("Type", condition.RightHandSideType);
-                            writer.WriteString(condition.RightHandSideValue);
-                            writer.WriteEndElement();
-
-                            writer.WriteEndElement();
-                            #endregion <Condition>
-                        }
-                        writer.WriteEndElement();
-                        #endregion <Conditions>
-
-                        #region <Effects>
-                        writer.WriteStartElement("EffectsIfTrue");
-                        foreach (EffectNode effect in action.EffectsIfTrue)
-                        {
-                            writer.WriteStartElement("Effect");
-                            writer.WriteElementString("EffectFunction", effect.EffectFunction);
-                            writer.WriteStartElement("args");
-                            foreach (ArgumentNode arg in effect.Arguments)
-                            {
-                                writer.WriteStartElement("arg");
-                                if (arg.Type != "")
-                                    writer.WriteAttributeString("Type", arg.Type);
-                                writer.WriteString(arg.Selection.ToString());
-                                writer.WriteEndElement();
-                            }
-                            writer.WriteEndElement();
-                            writer.WriteEndElement();
-                        }
-                        writer.WriteEndElement();
-
-                        writer.WriteStartElement("EffectsIfFalse");
-                        foreach (EffectNode effect in action.EffectsIfFalse)
-                        {
-                            writer.WriteStartElement("Effect");
-                            writer.WriteElementString("EffectFunction", effect.EffectFunction);
-                            writer.WriteStartElement("args");
-                            foreach (ArgumentNode arg in effect.Arguments)
-                            {
-                                writer.WriteStartElement("arg");
-                                if (arg.Type != "")
-                                    writer.WriteAttributeString("Type", arg.Type);
-                                writer.WriteString(arg.Selection.ToString());
-                                writer.WriteEndElement();
-                            }
-                            writer.WriteEndElement();
-                            writer.WriteEndElement();
-                        }
-                        writer.WriteEndElement();
-                        #endregion <Effects>
-
-                        writer.WriteEndElement();
-                        #endregion <Action>
-                    }
-                    writer.WriteEndElement();
-                    #endregion <GlobalActions>
-
-                    #region <Scenes>
-                    writer.WriteStartElement("Scenes");
-                    foreach (SceneNode scene in SceneNodes)
-                    {
-                        #region <Scene>
-                        writer.WriteStartElement("Scene");
-                        writer.WriteElementString("Name", scene.Name);
-                        writer.WriteElementString("Description", scene.Description);
-                        #region <Resources>
-                        writer.WriteStartElement("Resources");
-                        foreach (ResourceNode resource in scene.Resources)
+                        #region <GlobalResources>
+                        writer.WriteStartElement("GlobalResources");
+                        foreach (ResourceNode resource in GlobalResourceNodes)
                         {
                             writer.WriteStartElement("Resource");
                             writer.WriteElementString("Name", resource.Name);
@@ -593,10 +496,11 @@ namespace TextEngineEditor.ViewModel
                             writer.WriteEndElement();
                         }
                         writer.WriteEndElement();
-                        #endregion <Resources>
-                        #region <Actions>
-                        writer.WriteStartElement("Actions");
-                        foreach (ActionNode action in scene.Actions)
+                        #endregion <GlobalResources>
+
+                        #region <GlobalActions>
+                        writer.WriteStartElement("GlobalActions");
+                        foreach (ActionNode action in GlobalActionNodes)
                         {
                             #region <Action>
                             writer.WriteStartElement("Action");
@@ -621,7 +525,7 @@ namespace TextEngineEditor.ViewModel
                                 #region <Condition>
                                 writer.WriteStartElement("Condition");
 
-                                writer.WriteElementString("ConditionFunction", condition.ConditionType.ToString());
+                                writer.WriteElementString("ConditionFunction", condition.ConditionFunction.ToString());
 
                                 writer.WriteStartElement("LeftHandSide");
                                 if (condition.LeftHandSideType != "")
@@ -651,7 +555,8 @@ namespace TextEngineEditor.ViewModel
                                 foreach (ArgumentNode arg in effect.Arguments)
                                 {
                                     writer.WriteStartElement("arg");
-                                    writer.WriteAttributeString("Type", arg.Type);
+                                    if (arg.Type != "")
+                                        writer.WriteAttributeString("Type", arg.Type);
                                     writer.WriteString(arg.Selection.ToString());
                                     writer.WriteEndElement();
                                 }
@@ -669,7 +574,8 @@ namespace TextEngineEditor.ViewModel
                                 foreach (ArgumentNode arg in effect.Arguments)
                                 {
                                     writer.WriteStartElement("arg");
-                                    writer.WriteAttributeString("Type", arg.Type);
+                                    if (arg.Type != "")
+                                        writer.WriteAttributeString("Type", arg.Type);
                                     writer.WriteString(arg.Selection.ToString());
                                     writer.WriteEndElement();
                                 }
@@ -683,18 +589,135 @@ namespace TextEngineEditor.ViewModel
                             #endregion <Action>
                         }
                         writer.WriteEndElement();
-                        #endregion <Actions>
-                        writer.WriteEndElement();
-                        #endregion <Scene>
-                    }
-                    writer.WriteEndElement();
-                    #endregion <Scenes>
+                        #endregion <GlobalActions>
 
-                    writer.WriteEndElement();
-                    #endregion <Game>
-                    writer.WriteEndDocument();
+                        #region <Scenes>
+                        writer.WriteStartElement("Scenes");
+                        foreach (SceneNode scene in SceneNodes)
+                        {
+                            #region <Scene>
+                            writer.WriteStartElement("Scene");
+                            writer.WriteElementString("Name", scene.Name);
+                            writer.WriteElementString("Description", scene.Description);
+                            #region <Resources>
+                            writer.WriteStartElement("Resources");
+                            foreach (ResourceNode resource in scene.Resources)
+                            {
+                                writer.WriteStartElement("Resource");
+                                writer.WriteElementString("Name", resource.Name);
+                                writer.WriteElementString("Type", resource.Type);
+                                writer.WriteElementString("Value", resource.Value);
+                                writer.WriteEndElement();
+                            }
+                            writer.WriteEndElement();
+                            #endregion <Resources>
+                            #region <Actions>
+                            writer.WriteStartElement("Actions");
+                            foreach (ActionNode action in scene.Actions)
+                            {
+                                #region <Action>
+                                writer.WriteStartElement("Action");
+                                writer.WriteElementString("Name", action.Name);
+                                writer.WriteElementString("Visible", action.Visible.ToString().Substring(0, 1).ToUpper() + action.Visible.ToString().Substring(1));
+                                writer.WriteElementString("Enabled", action.Enabled.ToString().Substring(0, 1).ToUpper() + action.Enabled.ToString().Substring(1));
+                                writer.WriteElementString("Active", action.Active.ToString().Substring(0, 1).ToUpper() + action.Active.ToString().Substring(1));
+
+                                #region <Keywords>
+                                writer.WriteStartElement("Keywords");
+                                foreach (string keyword in action.Keywords)
+                                {
+                                    writer.WriteElementString("Keyword", keyword);
+                                }
+                                writer.WriteEndElement();
+                                #endregion <Keywords>
+
+                                #region <Conditions>
+                                writer.WriteStartElement("Conditions");
+                                foreach (ConditionNode condition in action.Conditions)
+                                {
+                                    #region <Condition>
+                                    writer.WriteStartElement("Condition");
+
+                                    writer.WriteElementString("ConditionFunction", condition.ConditionFunction.ToString());
+
+                                    writer.WriteStartElement("LeftHandSide");
+                                    if (condition.LeftHandSideType != "")
+                                        writer.WriteAttributeString("Type", condition.LeftHandSideType);
+                                    writer.WriteString(condition.LeftHandSideValue);
+                                    writer.WriteEndElement();
+
+                                    writer.WriteStartElement("RightHandSide");
+                                    if (condition.RightHandSideType != "")
+                                        writer.WriteAttributeString("Type", condition.RightHandSideType);
+                                    writer.WriteString(condition.RightHandSideValue);
+                                    writer.WriteEndElement();
+
+                                    writer.WriteEndElement();
+                                    #endregion <Condition>
+                                }
+                                writer.WriteEndElement();
+                                #endregion <Conditions>
+
+                                #region <Effects>
+                                writer.WriteStartElement("EffectsIfTrue");
+                                foreach (EffectNode effect in action.EffectsIfTrue)
+                                {
+                                    writer.WriteStartElement("Effect");
+                                    writer.WriteElementString("EffectFunction", effect.EffectFunction);
+                                    writer.WriteStartElement("args");
+                                    foreach (ArgumentNode arg in effect.Arguments)
+                                    {
+                                        writer.WriteStartElement("arg");
+                                        writer.WriteAttributeString("Type", arg.Type);
+                                        writer.WriteString(arg.Selection.ToString());
+                                        writer.WriteEndElement();
+                                    }
+                                    writer.WriteEndElement();
+                                    writer.WriteEndElement();
+                                }
+                                writer.WriteEndElement();
+
+                                writer.WriteStartElement("EffectsIfFalse");
+                                foreach (EffectNode effect in action.EffectsIfFalse)
+                                {
+                                    writer.WriteStartElement("Effect");
+                                    writer.WriteElementString("EffectFunction", effect.EffectFunction);
+                                    writer.WriteStartElement("args");
+                                    foreach (ArgumentNode arg in effect.Arguments)
+                                    {
+                                        writer.WriteStartElement("arg");
+                                        writer.WriteAttributeString("Type", arg.Type);
+                                        writer.WriteString(arg.Selection.ToString());
+                                        writer.WriteEndElement();
+                                    }
+                                    writer.WriteEndElement();
+                                    writer.WriteEndElement();
+                                }
+                                writer.WriteEndElement();
+                                #endregion <Effects>
+
+                                writer.WriteEndElement();
+                                #endregion <Action>
+                            }
+                            writer.WriteEndElement();
+                            #endregion <Actions>
+                            writer.WriteEndElement();
+                            #endregion <Scene>
+                        }
+                        writer.WriteEndElement();
+                        #endregion <Scenes>
+
+                        writer.WriteEndElement();
+                        #endregion <Game>
+                        writer.WriteEndDocument();
+                    }
+                    return true;
                 }
-                return true;
+                else
+                {
+                    MessageBox.Show("Please select a starting scene!");
+                    return false;
+                }
             }
             else
             {
@@ -706,9 +729,27 @@ namespace TextEngineEditor.ViewModel
         public ICommand ImportXmlCommand { get; set; }
         private void ImportFromXml()
         {
+            // IronPython does not currently support the ElementTree python module.
             //dynamic dataParser = Python.CreateRuntime().ImportModule("Python/dataParser");
             //dynamic gp = dataParser.GameParser();
             //dynamic game = gp.loadXMLGameData("game.xml");
+        }
+
+        private bool ConfirmDeletion(string itemToBeDeleted)
+        {
+            MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure you want to remove " + itemToBeDeleted + "?", "Confirm removal", MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                return true;
+            }
+            else if (messageBoxResult == MessageBoxResult.No)
+            {
+                return false;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public ICommand RunInterpreterCommand { get; set; }

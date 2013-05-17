@@ -11,12 +11,12 @@ class EffectFunctions:
     def cmdOutputText(self, text):
         self.narrative += [text]
     def goToScene(self, scene):
-    	self.currentScene = scene
-    	self.cmdOutputText(scene.description)
+        self.currentScene = scene
+        self.cmdOutputText(scene.description)
     def outputVisibleSceneActions(self, scene):
-    	possibleActions = [ action.name for action in scene.actions if action.visible ]
-    	if not possibleActions == []:
-    		self.cmdOutputText(str(possibleActions))
+        possibleActions = [ action.name for action in scene.actions if action.visible ]
+        if not possibleActions == []:
+            self.cmdOutputText(str(possibleActions))
     def addGlobalResource(self, text, primitive):
         self.addResource(text, primitive)
     def editGlobalResource(self, gresource, primitive):
@@ -29,16 +29,22 @@ class EffectFunctions:
         lresource.value = primitive
     def deleteLocalResource(self, lresource):
         self.currentScene.removeResource(lresource)
-    def enableAction(self):
-        return 0
-    def disableAction(self):
-        return 0
-    def makeActionVisible(self):
-        return 0
-    def makeActionInvisible(self):
-        return 0
-    def outputAllActions(self):
-        return 0
+    #def enableGlobalAction(self, gaction):
+    #    return 0
+    #def disableGlobalAction(self, gaction):
+    #    return 0
+    #def makeGlobalActionVisible(self, gaction):
+    #    return 0
+    #def makeGlobalActionInvisible(self, gaction):
+    #    return 0
+    #def enableLocalAction(self, laction):
+    #    return 0
+    #def disableLocalAction(self, laction):
+    #    return 0
+    #def makeLocalActionVisible(self, laction):
+    #    return 0
+    #def makeLocalActionInvisible(self, laction):
+    #    return 0
 
     effectDict = {
         'Tell player'                   : cmdOutputText,
@@ -48,11 +54,13 @@ class EffectFunctions:
         'Add local resource'            : addLocalResource,
         'Edit local resource'           : editLocalResource,
         'Delete local resource'         : deleteLocalResource,
-        'Enable action'                 : enableAction,
-        'Disable action'                : disableAction,
-        'Make action visible'           : makeActionVisible,
-        'Make action invisible'         : makeActionInvisible,
-        'Go to scene'                   : goToScene,
-        'Display all visible actions'   : outputVisibleSceneActions,
-        'Display all actions'           : outputAllActions
+        #'Enable global action'          : enableGlobalAction,
+        #'Disable global action'         : disableGlobalAction,
+        #'Make global action visible'    : makeGlobalActionVisible,
+        #'Make global action invisible'  : makeGlobalActionInvisible,
+        #'Enable local action'           : enableLocalAction,
+        #'Disable local action'          : disableLocalAction,
+        #'Make local action visible'     : makeLocalActionVisible,
+        #'Make local action invisible'   : makeLocalActionInvisible,
+        'Go to scene'                   : goToScene
     }

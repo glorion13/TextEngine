@@ -12,16 +12,16 @@ namespace TextEngineEditor
 {
     public class ConditionNode : INode
     {
-        private string conditionType;
-        public string ConditionType
+        private string conditionFunction;
+        public string ConditionFunction
         {
             get
             {
-                return conditionType;
+                return conditionFunction;
             }
             set
             {
-                Set(() => ConditionType, ref conditionType, value);
+                Set(() => ConditionFunction, ref conditionFunction, value);
             }
         }
 
@@ -99,7 +99,7 @@ namespace TextEngineEditor
 
         public ConditionNode(dynamic pythonCore)
         {
-            ConditionType = "";
+            ConditionFunction = "";
             PythonCore = pythonCore;
         }
     }

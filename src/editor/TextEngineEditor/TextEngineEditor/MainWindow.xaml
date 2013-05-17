@@ -77,9 +77,9 @@ See the file license.txt for copying permission.
                 </StackPanel>
 
                 <!-- Mind map -->
-                <Canvas>
-                    
-                </Canvas>
+                <Grid Grid.Row="1" Grid.ColumnSpan="6">
+                    <TextBlock TextWrapping="Wrap" Text="SPACE WHERE DESIGN TOOLS (e.g. MINDMAP) WOULD BE" FontSize="36" />
+                </Grid>
                 <!--<ListBox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="5">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -211,10 +211,22 @@ See the file license.txt for copying permission.
                                         <StackPanel Orientation="Horizontal">
                                             <Button Content="X" Command="{Binding Main.RemoveConditionCommand, Source={StaticResource Locator}}" CommandParameter="{Binding}" />
                                             <ComboBox ItemsSource="{Binding Main.PythonConditionTypes, Source={StaticResource Locator}}" SelectedValue="{Binding LeftHandSideType, Mode=TwoWay}" />
-                                            <ComboBox ItemsSource="{Binding LeftHandSideAutofill}" Text="{Binding LeftHandSideValue, Mode=TwoWay}" IsEditable="True" />
-                                            <ComboBox ItemsSource="{Binding Main.PythonConditions, Source={StaticResource Locator}}" SelectedItem="{Binding ConditionType, Mode=TwoWay}" />
+                                            <ComboBox ItemsSource="{Binding LeftHandSideAutofill}" Text="{Binding LeftHandSideValue, Mode=TwoWay}" IsEditable="True">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding}" />
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                            <ComboBox ItemsSource="{Binding Main.PythonConditions, Source={StaticResource Locator}}" SelectedItem="{Binding ConditionFunction, Mode=TwoWay}" />
                                             <ComboBox ItemsSource="{Binding Main.PythonConditionTypes, Source={StaticResource Locator}}" SelectedItem="{Binding RightHandSideType, Mode=TwoWay}" />
-                                            <ComboBox ItemsSource="{Binding RightHandSideAutofill}" Text="{Binding RightHandSideValue, Mode=TwoWay}" IsEditable="True" />
+                                            <ComboBox ItemsSource="{Binding RightHandSideAutofill}" Text="{Binding RightHandSideValue, Mode=TwoWay}" IsEditable="True">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding}" />
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
