@@ -10,7 +10,7 @@ if __name__ == '__main__':
 
 	# Load Data
 	parser = dataParser.GameParser()
-	game = parser.loadXMLGameData("game.xml")
+	game = parser.loadXMLGameData("game (2).xml")
 	# Load game
 
 	# Print game information

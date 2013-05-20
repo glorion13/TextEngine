@@ -189,7 +189,7 @@ class GameParser:
 		resourceType = resource.find("Type").text
 		resourceValue = ""
 		if resourceType == "Boolean":
-			resourceValue = bool(resource.find("Value").text)
+			resourceValue = resource.find("Value").text
 		elif resourceType == "Number":
 			resourceValue = float(resource.find("Value").text)
 		elif resourceType == "Text":

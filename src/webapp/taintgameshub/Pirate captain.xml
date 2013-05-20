@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Game>
+	<GameName>Pirate captain</GameName>
+	<Author>Alexandros Gouvatsos</Author>
+	<StartingScene>Ship</StartingScene>
+	<GlobalResources>
+		<Resource>
+			<Name>MoraleBoosted</Name>
+			<Type>Boolean</Type>
+			<Value>False</Value>
+		</Resource>
+		<Resource>
+			<Name>CanonsManned</Name>
+			<Type>Boolean</Type>
+			<Value>False</Value>
+		</Resource>
+		<Resource>
+			<Name>MenEquipped</Name>
+			<Type>Boolean</Type>
+			<Value>False</Value>
+		</Resource>
+	</GlobalResources>
+	<GlobalActions/>
+	<Scenes>
+		<Scene>
+			<Name>Ship</Name>
+			<Description>You are the captain of a pirate ship. You have been waiting in these waters for many days until finally a possible target ship has been spotted!
+
+Before you give the signal to attack the ship, you need to make sure that everything and everyone is prepared.</Description>
+			<Resources/>
+			<Actions>
+				<Action>
+					<Name>Man the canons</Name>
+					<Visible>True</Visible>
+					<Enabled>True</Enabled>
+					<Active>True</Active>
+					<Keywords/>
+					<Conditions>
+						<Condition>
+							<ConditionFunction>equals</ConditionFunction>
+							<LeftHandSide Type="Resource">CanonsManned</LeftHandSide>
+							<RightHandSide Type="Boolean">False</RightHandSide>
+						</Condition>
+					</Conditions>
+					<EffectsIfTrue>
+						<Effect>
+							<EffectFunction>Edit global resource</EffectFunction>
+							<args>
+								<arg Type="Resource">CanonsManned</arg>
+								<arg Type="Boolean">True</arg>
+							</args>
+						</Effect>
+						<Effect>
+							<EffectFunction>Tell player</EffectFunction>
+							<args>
+								<arg Type="Text">&quot;Man the canons!&quot; you cry, and -well trained and eager- your pirates man the canons and prepare them for the upcoming battle.</arg>
+							</args>
+						</Effect>
+					</EffectsIfTrue>
+					<EffectsIfFalse>
+						<Effect>
+							<EffectFunction>Tell player</EffectFunction>
+							<args>
+								<arg Type="Text">&quot;Man the canons!&quot; you cry again, but your men look at you confused as they are already in position.</arg>
+							</args>
+						</Effect>
+					</EffectsIfFalse>
+				</Action>
+				<Action>
+					<Name>Give an epic speech to boost morale</Name>
+					<Visible>True</Visible>
+					<Enabled>True</Enabled>
+					<Active>True</Active>
+					<Keywords/>
+					<Conditions>
+						<Condition>
+							<ConditionFunction>equals</ConditionFunction>
+							<LeftHandSide Type="Resource">MoraleBoosted</LeftHandSide>
+							<RightHandSide Type="Boolean">False</RightHandSide>
+						</Condition>
+					</Conditions>
+					<EffectsIfTrue>
+						<Effect>
+							<EffectFunction>Edit global resource</EffectFunction>
+							<args>
+								<arg Type="Resource">MoraleBoosted</arg>
+								<arg Type="Boolean">True</arg>
+							</args>
+						</Effect>
+						<Effect>
+							<EffectFunction>Tell player</EffectFunction>
+							<args>
+								<arg Type="Text">You give the most epic speech that anyone has ever given. The pirates are all pumped with adrenaline now and ready to loot and pillage!</arg>
+							</args>
+						</Effect>
+					</EffectsIfTrue>
+					<EffectsIfFalse>
+						<Effect>
+							<EffectFunction>Tell player</EffectFunction>
+							<args>
+								<arg Type="Text">You try to give another speech but your inspiration is gone. Thankfully everyone was already so pumped they just shouted in agreement without actually listening to what you said.</arg>
+							</args>
+						</Effect>
+					</EffectsIfFalse>
+				</Action>
+				<Action>
+					<Name>Attack!</Name>
+					<Visible>True</Visible>
+					<Enabled>True</Enabled>
+					<Active>True</Active>
+					<Keywords/>
+					<Conditions/>
+					<EffectsIfTrue>
+						<Effect>
+							<EffectFunction>Go to scene</EffectFunction>
+							<args>
+								<arg Type="Scene">Attack</arg>
+							</args>
+						</Effect>
+					</EffectsIfTrue>
+					<EffectsIfFalse/>
+				</Action>
+				<Action>
+					<Name>Give weapons and equipment to your men</Name>
+					<Visible>True</Visible>
+					<Enabled>True</Enabled>
+					<Active>True</Active>
+					<Keywords/>
+					<Conditions>
+						<Condition>
+							<ConditionFunction>equals</ConditionFunction>
+							<LeftHandSide Type="Resource">MenEquipped</LeftHandSide>
+							<RightHandSide Type="Boolean">False</RightHandSide>
+						</Condition>
+					</Conditions>
+					<EffectsIfTrue>
+						<Effect>
+							<EffectFunction>Edit global resource</EffectFunction>
+							<args>
+								<arg Type="Resource">MenEquipped</arg>
+								<arg Type="Boolean">True</arg>
+							</args>
+						</Effect>
+						<Effect>
+							<EffectFunction>Tell player</EffectFunction>
+							<args>
+								<arg Type="Text">You give the command and all the pirates line up to grap a weapon from the armory. Soon, everyone is carrying swords, scimitars and other more exotic weapons!</arg>
+							</args>
+						</Effect>
+					</EffectsIfTrue>
+					<EffectsIfFalse>
+						<Effect>
+							<EffectFunction>Tell player</EffectFunction>
+							<args>
+								<arg Type="Text">Your men already carry as many weapons and as much equipment as they can.</arg>
+							</args>
+						</Effect>
+					</EffectsIfFalse>
+				</Action>
+			</Actions>
+		</Scene>
+		<Scene>
+			<Name>Attack</Name>
+			<Description>You wait until your ship is close enough to the target ship and then cry out &quot;Attack!!!&quot;.</Description>
+			<Resources/>
+			<Actions>
+				<Action>
+					<Name>Fight</Name>
+					<Visible>False</Visible>
+					<Enabled>True</Enabled>
+					<Active>False</Active>
+					<Keywords/>
+					<Conditions>
+						<Condition>
+							<ConditionFunction>equals</ConditionFunction>
+							<LeftHandSide Type="Resource">MoraleBoosted</LeftHandSide>
+							<RightHandSide Type="Boolean">True</RightHandSide>
+						</Condition>
+						<Condition>
+							<ConditionFunction>equals</ConditionFunction>
+							<LeftHandSide Type="Resource">CanonsManned</LeftHandSide>
+							<RightHandSide Type="Boolean">True</RightHandSide>
+						</Condition>
+						<Condition>
+							<ConditionFunction>equals</ConditionFunction>
+							<LeftHandSide Type="Resource">MenEquipped</LeftHandSide>
+							<RightHandSide Type="Boolean">True</RightHandSide>
+						</Condition>
+					</Conditions>
+					<EffectsIfTrue>
+						<Effect>
+							<EffectFunction>Tell player</EffectFunction>
+							<args>
+								<arg Type="Text">Your preparations were perfect and your men overwhelm the opponent ship. Well done, you are now one richer pirate captain!</arg>
+							</args>
+						</Effect>
+					</EffectsIfTrue>
+					<EffectsIfFalse>
+						<Effect>
+							<EffectFunction>Tell player</EffectFunction>
+							<args>
+								<arg Type="Text">While at first everything seemed to be going fine, soon the opponent ship's men prove more than a match for yours. Before you know it, everyone is retreating and you are force to abandon your ship and jump into the water.</arg>
+							</args>
+						</Effect>
+						<Effect>
+							<EffectFunction>Tell player</EffectFunction>
+							<args>
+								<arg Type="Text">Who knows... was it that you forgot to man the canons? Was it that you forgot to give weapons to your men? Perhaps you didn't boost your men's morale and that is why they cowered and retreated. Better luck next time!</arg>
+							</args>
+						</Effect>
+					</EffectsIfFalse>
+				</Action>
+			</Actions>
+		</Scene>
+	</Scenes>
+</Game>
