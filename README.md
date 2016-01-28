@@ -5,7 +5,7 @@ Engine for interactive novels and text adventure games, in Python.
 
 The main motivation of the TAINT project is to allow non-technical people to bring their own stories to life, which they can then share with their friends and family or even release on a greater scale.
 
-	- Documentation: http://gouvatsos.com/Media/Default/Apps/TextEngineEditor/docs/build/html/index.html
+	- Documentation: http://gouvatsos.com/TextEngine/html/index.html
 	- Games hub: http://taintgameshub.appspot.com/
 
 Motivation
